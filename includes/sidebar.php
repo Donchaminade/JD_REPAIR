@@ -16,22 +16,22 @@
             </div>
 
             <nav class="space-y-3">
-                <a href="/JD_REPAIR/index.php" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-gray-700 transition-all duration-300 group hover:shadow-md hover:-translate-y-1 border-l-4 border-transparent hover:border-blue-500">
+                <a href="/JD_REPAIR/admin/dashboard.php" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-gray-700 transition-all duration-300 group hover:shadow-md hover:-translate-y-1 border-l-4 border-transparent hover:border-blue-500">
                     <i class="fa-solid fa-chart-line text-xl group-hover:text-blue-500 transition-colors duration-300 w-8 text-center"></i>
                     <span class="md:block font-medium text-gray-700 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300 sidebar-text">Tableau de bord</span>
                 </a>
 
-                <a href="/JD_REPAIR/demande/index.php" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-gray-700 transition-all duration-300 group hover:shadow-md hover:-translate-y-1 border-l-4 border-transparent hover:border-green-500">
+                <a href="/JD_REPAIR/admin/demande/index.php" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-gray-700 transition-all duration-300 group hover:shadow-md hover:-translate-y-1 border-l-4 border-transparent hover:border-green-500">
                     <i class="fa-solid fa-file-circle-plus text-xl group-hover:text-green-500 transition-colors duration-300 w-8 text-center"></i>
                     <span class="md:block font-medium text-gray-700 dark:text-gray-200 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors duration-300 sidebar-text">Demandes</span>
                 </a>
 
-                <a href="/JD_REPAIR/traitement/index.php" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-gray-700 transition-all duration-300 group hover:shadow-md hover:-translate-y-1 border-l-4 border-transparent hover:border-purple-500">
+                <a href="/JD_REPAIR/admin/traitement/index.php" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-gray-700 transition-all duration-300 group hover:shadow-md hover:-translate-y-1 border-l-4 border-transparent hover:border-purple-500">
                     <i class="fa-solid fa-hand-holding-medical text-xl group-hover:text-purple-500 transition-colors duration-300 w-8 text-center"></i>
                     <span class="md:block font-medium text-gray-700 dark:text-gray-200 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300 sidebar-text">Traitements</span>
                 </a>
 
-                <a href="/JD_REPAIR/reparation/index.php" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-gray-700 transition-all duration-300 group hover:shadow-md hover:-translate-y-1 border-l-4 border-transparent hover:border-yellow-500">
+                <a href="/JD_REPAIR/admin/reparation/index.php" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-gray-700 transition-all duration-300 group hover:shadow-md hover:-translate-y-1 border-l-4 border-transparent hover:border-yellow-500">
                     <div class="relative">
                         <i class="fa-solid fa-screwdriver-wrench text-xl group-hover:text-yellow-500 transition-colors duration-300 w-8 text-center"></i>
                         <i class="fa-solid fa-bolt absolute -bottom-1 -right-1 text-xs bg-orange-400 rounded-full p-0.5 text-white"></i>
@@ -39,12 +39,12 @@
                     <span class="md:block font-medium text-gray-700 dark:text-gray-200 group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors duration-300 sidebar-text">Réparations</span>
                 </a>
 
-                <a href="/JD_REPAIR/facture/index.php" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-gray-700 transition-all duration-300 group hover:shadow-md hover:-translate-y-1 border-l-4 border-transparent hover:border-red-500">
+                <a href="/JD_REPAIR/admin/facture/index.php" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-gray-700 transition-all duration-300 group hover:shadow-md hover:-translate-y-1 border-l-4 border-transparent hover:border-red-500">
                     <i class="fa-solid fa-receipt text-xl group-hover:text-red-500 transition-colors duration-300 w-8 text-center"></i>
                     <span class="md:block font-medium text-gray-700 dark:text-gray-200 group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors duration-300 sidebar-text">Factures</span>
                 </a>
 
-                <a href="/JD_REPAIR/utilisateurs/index.php" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-gray-700 transition-all duration-300 group hover:shadow-md hover:-translate-y-1 border-l-4 border-transparent hover:border-indigo-500">
+                <a href="/JD_REPAIR/admin/utilisateurs/index.php" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-gray-700 transition-all duration-300 group hover:shadow-md hover:-translate-y-1 border-l-4 border-transparent hover:border-indigo-500">
                     <i class="fa-solid fa-user-gear text-xl group-hover:text-indigo-500 transition-colors duration-300 w-8 text-center"></i>
                     <span class="md:block font-medium text-gray-700 dark:text-gray-200 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-300 sidebar-text">Utilisateurs</span>
                 </a>
