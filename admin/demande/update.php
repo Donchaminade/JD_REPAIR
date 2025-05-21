@@ -45,7 +45,11 @@ include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/sidebar.php';
   <?php endfor; ?>
 </style>
 
+        <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-700 dark:text-white hover:text-red-500">
+            <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
 <div class="container mx-auto py-10 px-6 max-w-3xl bg-white dark:bg-gray-900 rounded-xl shadow-xl transition-all duration-500">
+    
     <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-6 text-center animate__animated animate__fadeInDown">
         ✏️ Modifier la Demande de Réparation
     </h2>
@@ -103,5 +107,15 @@ include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/sidebar.php';
         </div>
     </form>
 </div>
+
+
+<script>
+    function closeModal() {
+            const modal = document.getElementById('detailModal');
+            if (modal) {
+            modal.classList.add('hidden');
+            }
+        }
+</script>
 
 <?php include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/footer.php'; ?>

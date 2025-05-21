@@ -90,9 +90,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_demande'])) {
                                 <button onclick='openModal(<?= json_encode($demande) ?>)' class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-700 text-xs flex items-center gap-1">
                                     <i data-lucide="eye" class="w-4 h-4"></i> Voir détails
                                 </button>
-                                <a href="update.php?id_demande=<?= $demande['id_demande'] ?>" class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600 text-xs flex items-center gap-1">
-                                    <i data-lucide="edit" class="w-4 h-4"></i> Modifier
-                                </a>
+                                <button onclick="openUpdateModal(<?= htmlspecialchars(json_encode($demande)) ?>)" class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-blue-700 text-xs flex items-center gap-1">
+                                    <i data-lucide="edit" class="w-4 h-4"></i>Modifier
+                                </button>
+                                
                                 <a href="delete.php?id_demande=<?= $demande['id_demande'] ?>" onclick="return confirm('Supprimer cette demande ?')" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-800 text-xs flex items-center gap-1">
                                     <i data-lucide="trash" class="w-4 h-4"></i> Supprimer
                                 </a>
@@ -105,42 +106,105 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_demande'])) {
     </div>
 </div>
 
-<!-- MODALE VOIR DETAILS -->
-<!-- MODALE VOIR DETAILS -->
-<div id="detailModal" class="fixed inset-0 hidden bg-black bg-opacity-50 z-50 flex items-center justify-center">
-  <div class="bg-white dark:bg-gray-800 rounded-lg w-full max-w-lg p-6 relative">
-    <button onclick="closeModal()" class="absolute top-2 right-2 text-gray-700 dark:text-white hover:text-red-500">
-      <i data-lucide="x" class="w-6 h-6"></i>
-    </button>
-    <h2 class="text-lg font-semibold text-gray-800 dark:text-white mb-4 text-center">Détails de la demande</h2>
-    <div id="detailContent" class="text-center mx-auto max-w-md text-sm text-gray-700 dark:text-white"></div>
-  </div>
-</div>
-    <script>
-    function openModal() {
-        const paragraphs = [
-        "Premier paragraphe de détails.",
-        "Deuxième paragraphe de détails.",
-        "Troisième paragraphe de détails."
-        ];
 
-        const detailContent = document.getElementById('detailContent');
-        detailContent.innerHTML = paragraphs.map(text =>
-        `<p class="border-b border-gray-300 last:border-b-0 py-2">${text}</p>`
-        ).join('');
+        <!-- MODAL UPDATE -->
+        <div id="updateModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+            <div class="bg-white dark:bg-gray-900 p-6 rounded-xl w-full max-w-3xl shadow-lg relative">
+                <button onclick="closeUpdateModal()" class="absolute top-4 right-4 text-gray-700 dark:text-white hover:text-red-500">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4 text-center">Modifier la Demande</h2>
 
-        document.getElementById('detailModal').classList.remove('hidden');
+                <form method="POST" action="update.php" class="space-y-4">
+                    <input type="hidden" name="id_demande" id="update_id_demande">
 
-        // Recharge les icônes Lucide si présentes
-        if (window.lucide) {
-        window.lucide.replace();
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nom complet</label>
+                        <input type="text" name="nom_complet" id="update_nom_complet" required class="w-full px-4 py-2 border rounded-md bg-gray-100 dark:bg-gray-800 dark:text-white">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Numéro</label>
+                        <input type="text" name="numero" id="update_numero" required class="w-full px-4 py-2 border rounded-md bg-gray-100 dark:bg-gray-800 dark:text-white">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
+                        <input type="email" name="email" id="update_email" class="w-full px-4 py-2 border rounded-md bg-gray-100 dark:bg-gray-800 dark:text-white">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Adresse</label>
+                        <input type="text" name="adresse" id="update_adresse" class="w-full px-4 py-2 border rounded-md bg-gray-100 dark:bg-gray-800 dark:text-white">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Marque du téléphone</label>
+                        <input type="text" name="marque_telephone" id="update_marque_telephone" required class="w-full px-4 py-2 border rounded-md bg-gray-100 dark:bg-gray-800 dark:text-white">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Problème</label>
+                        <textarea name="probleme" id="update_probleme" rows="3" required class="w-full px-4 py-2 border rounded-md bg-gray-100 dark:bg-gray-800 dark:text-white"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Date de la demande</label>
+                        <input type="date" name="date_demande" id="update_date_demande" required class="w-full px-4 py-2 border rounded-md bg-gray-100 dark:bg-gray-800 dark:text-white">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Type de réparation</label>
+                        <select name="type_reparation" id="update_type_reparation" required class="w-full px-4 py-2 border rounded-md bg-gray-100 dark:bg-gray-800 dark:text-white">
+                            <option value="express">Express</option>
+                            <option value="standard">Standard</option>
+                        </select>
+                    </div>
+
+                    <div class="text-center pt-4">
+                        <button type="submit" class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-md">Mettre à jour</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- MODALE VOIR DETAILS -->
+        <div id="detailModal" class="fixed inset-0 hidden bg-black bg-opacity-50 z-50 flex items-center justify-center">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-3xl p-8 relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-700 dark:text-white hover:text-red-500">
+            <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <h2 class="text-2xl font-bold text-center text-gray-800 dark:text-white mb-6">Détails de la demande</h2>
+            
+            <div id="detailContent" class="space-y-4 text-base text- text-gray-700 dark:text-white divide-y divide-gray-300 dark:divide-gray-600">
+            <!-- Chaque paragraphe ajouté dynamiquement aura un séparateur -->
+            <!-- Exemple dynamique :
+            <p class="pt-4">Nom: Jean Dupont</p>
+            <p class="pt-4">Type: Réparation urgente</p>
+            -->
+            </div>
+        </div>
+        </div>
+
+        <script>
+        function closeModal() {
+            const modal = document.getElementById('detailModal');
+            if (modal) {
+            modal.classList.add('hidden');
+            }
         }
-    }
 
-    function closeModal() {
-        document.getElementById('detailModal').classList.add('hidden');
-    }
-    </script>
+        function openModal() {
+            const modal = document.getElementById('detailModal');
+            if (modal) {
+            modal.classList.remove('hidden');
+            }
+
+            if (window.lucide) {
+            window.lucide.replace(); // Recharge les icônes Lucide si utilisées
+            }
+        }
+        </script>
 
 
 <!-- MODALE AJOUT -->
@@ -173,6 +237,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_demande'])) {
         </form>
     </div>
 </div>
+    <script>
+    function closeModal() {
+        const modal = document.getElementById('detailModal');
+        if (modal) {
+        modal.classList.add('hidden');
+        }
+    }
+    </script>
 
 <script>
     lucide.createIcons();
@@ -197,6 +269,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_demande'])) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+
+<script>
+    function openUpdateModal(demande) {
+        document.getElementById('updateModal').classList.remove('hidden');
+        document.getElementById('update_id_demande').value = demande.id_demande;
+        document.getElementById('update_nom_complet').value = demande.nom_complet;
+        document.getElementById('update_numero').value = demande.numero;
+        document.getElementById('update_email').value = demande.email;
+        document.getElementById('update_adresse').value = demande.adresse;
+        document.getElementById('update_marque_telephone').value = demande.marque_telephone;
+        document.getElementById('update_probleme').value = demande.probleme;
+        document.getElementById('update_date_demande').value = demande.date_demande;
+        document.getElementById('update_type_reparation').value = demande.type_reparation;
+    }
+
+    function closeUpdateModal() {
+        document.getElementById('updateModal').classList.add('hidden');
+    }
+</script>
 
 
 <script>
@@ -233,6 +325,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_demande'])) {
         doc.save("demandes_reparation.pdf");
     }
 
+
     // Export Excel
     function exportToExcel() {
         const wb = XLSX.utils.book_new();
@@ -252,6 +345,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_demande'])) {
         XLSX.utils.book_append_sheet(wb, ws, "Demandes");
         XLSX.writeFile(wb, "demandes_reparation.xlsx");
     }
+
 </script>
 
 
