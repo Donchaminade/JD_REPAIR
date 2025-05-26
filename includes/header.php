@@ -12,7 +12,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <script>
+    <!-- <script>
         // Configuration Tailwind
         tailwind.config = {
             darkMode: 'class',
@@ -37,7 +37,7 @@
         }
 
         // Gestion du thème
-        (function() {
+        (function toggleTheme() {
             // Vérifie le thème au chargement
             if (localStorage.theme === 'dark' ||
                 (!('theme' in localStorage) &&
@@ -59,40 +59,7 @@
             }
         })()
 
-        // Fonction pour basculer la visibilité du sidebar
-       // Fonction pour basculer la visibilité du sidebar
-        window.toggleSidebar = function() {
-            const sidebar = document.getElementById('sidebar');
-            const mainContent = document.getElementById('main-content');
-            const expanded = sidebar.getAttribute('data-sidebar-expanded') === 'true';
-            sidebar.setAttribute('data-sidebar-expanded', !expanded);
-
-            if (expanded) {
-                sidebar.classList.remove('w-64');
-                sidebar.classList.add('w-20');
-                mainContent.classList.remove('md:ml-64');
-                document.querySelectorAll('.sidebar-text').forEach(el => el.classList.add('hidden'));
-                document.querySelectorAll('#sidebar nav a').forEach(el => el.classList.replace('gap-3', 'justify-center'));
-                document.querySelectorAll('#sidebar nav a i').forEach(el => el.classList.replace('md:text-lg', 'text-xl'));
-                const logoIcon = document.querySelector('#sidebar h1 i.fa-screwdriver-wrench');
-                if (logoIcon) logoIcon.classList.replace('text-3xl', 'text-4xl');
-                // Cacher les textes "Thème" et "Paramètres" du bas
-                const bottomBarTexts = sidebar.querySelectorAll('.space-y-3.mt-6 button span.sidebar-text');
-                bottomBarTexts.forEach(text => text.classList.add('hidden'));
-            } else {
-                sidebar.classList.remove('w-20');
-                sidebar.classList.add('w-64');
-                mainContent.classList.add('md:ml-64');
-                document.querySelectorAll('.sidebar-text').forEach(el => el.classList.remove('hidden'));
-                document.querySelectorAll('#sidebar nav a').forEach(el => el.classList.replace('justify-center', 'gap-3'));
-                document.querySelectorAll('#sidebar nav a i').forEach(el => el.classList.replace('text-xl', 'md:text-lg'));
-                const logoIcon = document.querySelector('#sidebar h1 i.fa-screwdriver-wrench');
-                if (logoIcon) logoIcon.classList.replace('text-4xl', 'text-3xl');
-                // Afficher les textes "Thème" et "Paramètres" du bas
-                const bottomBarTexts = sidebar.querySelectorAll('.space-y-3.mt-6 button span.sidebar-text.hidden');
-                bottomBarTexts.forEach(text => text.classList.remove('hidden'));
-            }
-        }
-    </script>
+    
+    </script> -->
 </head>
 <body class="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white transition-colors duration-300 ease-in-out flex h-screen">
