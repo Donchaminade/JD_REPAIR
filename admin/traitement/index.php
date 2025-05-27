@@ -99,15 +99,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enregistrer_reparatio
                             <td class="px-6 py-4"><?= htmlspecialchars($traitement['type_reparation']) ?></td>
                             <td class="px-6 py-4"><?= htmlspecialchars($traitement['nom_technicien'] ?: 'Non assigné') ?></td>
                             <td class="px-6 py-4 flex gap-2 no-export">
-                                <button
-                                    onclick="openReparationModal(<?= htmlspecialchars(json_encode($traitement)) ?>)"
-                                    class="<?= $isRepare ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700' ?> text-white px-2 py-1 rounded text-xs flex items-center gap-1"
-                                    <?= $isRepare ? 'disabled' : '' ?>>
-                                    <i class="fa-solid fa-screwdriver-wrench"></i> <?= $isRepare ? 'Réparé' : 'Réparer' ?>
-                                </button>
-                                <button onclick='openModal(<?= json_encode($demande) ?>)' class="bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-700 text-xs flex items-center gap-1">
-                                    <i class="fa-solid fa-eye "></i> détails
-                                </button>
+                                        <button
+                                            onclick="openReparationModal(<?= htmlspecialchars(json_encode($traitement)) ?>)"
+                                            class="<?= $isRepare ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700' ?> text-white px-2 py-1 rounded text-xs flex items-center gap-1"
+                                            <?= $isRepare ? 'disabled' : '' ?>>
+                                            <i class="fa fa-wrench"></i> <?= $isRepare ? 'Réparé' : 'Réparer' ?>
+                                        </button>
+                                        <button onclick='openDetailsModal(<?= json_encode($traitement) ?>)' class="bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-700 text-xs flex items-center gap-1">
+                                            <i class="fa fa-eye"></i> détails
+                                        </button>
+                                        <?php if ($isRepare): ?>
+                                           
+                                        <?php endif; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -117,24 +120,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enregistrer_reparatio
     </div>
 </div>
 
-
-        <div id="detailModal" class="fixed inset-0 hidden bg-black bg-opacity-50 z-50 flex items-center justify-center">
-        <div class="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-3xl p-8 relative">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-700 dark:text-white hover:text-red-500">
-            <i data-lucide="x" class="w-6 h-6">❌</i>
-            </button>
-            <h2 class="text-2xl font-bold text-center text-gray-800 dark:text-white mb-6">Détails du traitement</h2>
-
-            <div id="detailContent" class="space-y-4 text-base text- text-gray-700 dark:text-white divide-y divide-gray-300 dark:divide-gray-600">
-            </div>
-        </div>
-        </div>
-
-
 <div id="reparationModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
     <div class="bg-white dark:bg-gray-900 p-6 rounded-xl w-full max-w-md shadow-lg relative">
         <button onclick="closeReparationModal()" class="absolute top-4 right-4 text-gray-700 dark:text-white hover:text-red-500">
-            <i data-lucide="x" class="w-6 h-6"></i>
+            <i data-lucide="x" class="w-6 h-6">❌</i>
         </button>
         <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4 text-center">Enregistrer la Réparation</h2>
 
@@ -178,6 +167,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enregistrer_reparatio
     </div>
 </div>
 
+
+
+<!-- Modal de detail -->
+<div id="detailModal" class="fixed inset-0 hidden bg-black bg-opacity-50 z-50 flex items-center justify-center">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-3xl p-8 relative">
+        <button onclick="closeDetailsModal()" class="absolute top-4 right-4 text-gray-700 dark:text-white hover:text-red-500">
+            <i class="fa fa-times w-6 h-6"></i>
+        </button>
+        <h2 class="text-2xl font-bold text-center text-gray-800 dark:text-white mb-6">Détails du traitement</h2>
+        <div id="detailContent" class="space-y-4 text-base text- text-gray-700 dark:text-white divide-y divide-gray-300 dark:divide-gray-600">
+        </div>
+    </div>
+</div>
+
+
+
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -191,45 +198,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enregistrer_reparatio
     
     lucide.createIcons();
 
-
-            function openModal() {
-            const modal = document.getElementById('detailModal');
-            if (modal) {
-            modal.classList.remove('hidden');
-            }
-
-            if (window.lucide) {
-            window.lucide.replace(); // Recharge les icônes Lucide si utilisées
-            }
-        }
-
-            function closeModal() {
-            const modal = document.getElementById('detailModal');
-            if (modal) {
-            modal.classList.add('hidden');
-            }
-        }
-
-
-            function openModal(data) {
+        // modal de detail
+        function openDetailsModal(data) {
         const detailModal = document.getElementById('detailModal');
         const content = document.getElementById('detailContent');
         content.innerHTML = `
-            <p><strong>Nom : </strong> ${data.nom_complet}</p>
-            <p><strong>Numéro : </strong> ${data.numero}</p>
-            <p><strong>Email : </strong> ${data.email}</p>
-            <p><strong>Adresse : </strong> ${data.adresse}</p>
-            <p><strong>Marque : </strong> ${data.marque_telephone}</p>
-            <p><strong>Problème : </strong> ${data.probleme}</p>
-            <p><strong>Date : </strong> ${data.date_demande}</p>
+            <p><strong>ID Traitement : </strong> ${data.id_traitement}</p>
+            <p><strong>Nom : </strong> ${data.nom_demandeur}</p>
+            <p><strong>Date Réception : </strong> ${data.date_reception}</p>
+            <p><strong>Montant Total : </strong> ${data.montant_traitement} FCFA</p>
+            <p><strong>Montant Payé : </strong> ${data.montant_paye_traitement} FCFA</p>
             <p><strong>Type : </strong> ${data.type_reparation}</p>
+            <p><strong>Technicien : </strong> ${data.nom_technicien || 'Non assigné'}</p>
+            <p><strong>ID Demande : </strong> ${data.id_demande}</p>
         `;
         detailModal.classList.remove('hidden');
-        if (window.lucide) {
-            window.lucide.replace();
-        }
     }
 
+    function closeDetailsModal() {
+        const detailModal = document.getElementById('detailModal');
+        if (detailModal) {
+            detailModal.classList.add('hidden');
+        }
+    }
+    // -----------------
 
     function openReparationModal(traitement) {
         document.getElementById('reparationModal').classList.remove('hidden');

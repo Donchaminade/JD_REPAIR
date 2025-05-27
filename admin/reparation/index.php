@@ -52,6 +52,7 @@ $reparations = $stmt->fetchAll();
                         <th class="px-6 py-3 no-export">Actions</th>
                     </tr>
                 </thead>
+
                 <tbody id="reparationsTable">
                     <?php foreach ($reparations as $reparation): ?>
                         <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
@@ -63,11 +64,16 @@ $reparations = $stmt->fetchAll();
                             <td class="px-6 py-4"><?= htmlspecialchars($reparation['reste_a_payer']) ?></td>
                             <td class="px-6 py-4"><?= htmlspecialchars($reparation['statut']) ?></td>
                             <td class="px-6 py-4 flex gap-2 no-export">
-                                <button onclick='openModal(<?= json_encode($reparation) ?>)' class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-700 text-xs flex items-center gap-1">
+                                <button onclick='openDetailsModal(<?= json_encode($reparation) ?>)' class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-700 text-xs flex items-center gap-1">
                                     <i class="fa-solid fa-eye"></i> Voir
                                 </button>
+                                <?php if ($reparation['statut'] === 'Prêt à récupérer'): ?>
+                                    <button onclick="openFactureModal(<?= htmlspecialchars(json_encode($reparation)) ?>)" class="bg-indigo-600 text-white px-2 py-1 rounded hover:bg-indigo-700 text-xs flex items-center gap-1">
+                                        <i class="fa fa-file-text"></i> Facturer
+                                    </button>
+                                <?php endif; ?>
                                 <button onclick="confirmDelete(<?= $reparation['id_reparation'] ?>)" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-800 text-xs flex items-center gap-1">
-                                    <i  class="fa-solid fa-trash"></i> Supp
+                                    <i class="fa fa-trash"></i> Supp
                                 </button>
                             </td>
                         </tr>
@@ -78,23 +84,157 @@ $reparations = $stmt->fetchAll();
     </div>
 </div>
 
-<div id="detailModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-xl w-full relative">
-        <button onclick="closeModal()" class="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-xl">
-            <i data-lucide="x" class="w-6 h-6">❌</i>
+
+<!-- modal detal -->
+    <div id="detailModal" class="fixed inset-0 hidden bg-black bg-opacity-50 z-50 flex items-center justify-center">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-3xl p-8 relative">
+        <button onclick="closeDetailsModal()" class="absolute top-4 right-4 text-gray-700 dark:text-white hover:text-red-500">
+            <i class="fa fa-times w-6 h-6"></i>
         </button>
-        <h2 class="text-xl font-bold mb-4 text-blue-600">Détails de la réparation</h2>
-        <div id="modalContent" class="space-y-2 text-sm text-gray-800 dark:text-gray-200">
-            </div>
+        <h2 class="text-2xl font-bold text-center text-gray-800 dark:text-white mb-6">Détails de la réparation</h2>
+        <div id="detailContent" class="space-y-4 text-base text-gray-700 dark:text-white divide-y divide-gray-300 dark:divide-gray-600">
+        </div>
     </div>
 </div>
+ <!-- ---------------------- -->
+
+
+<!-- modal facture -->
+ <!-- Moodal de facture -->
+ <div id="factureModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-md w-full relative">
+        <button onclick="closeFactureModal()" class="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-xl">
+            <i class="fa fa-times w-6 h-6"></i>
+        </button>
+        <h2 class="text-xl font-bold mb-4 text-indigo-600">Informations de la facture</h2>
+        <form id="factureForm" action="save_facture.php" method="POST" class="space-y-4">
+            <input type="hidden" name="id_reparation" id="facture_id_reparation_traitement">
+            <input type="hidden" name="from_traitement" value="true">
+            <div>
+                <label for="facture_nom_demandeur_traitement" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Nom du demandeur:</label>
+                <input type="text" id="facture_nom_demandeur_traitement" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none focus:ring-2 dark:bg-gray-700 dark:text-gray-200" readonly>
+            </div>
+
+            <div>
+                <label for="facture_technicien_traitement" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Technicien:</label>
+                <input type="text" id="facture_technicien_traitement" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none focus:ring-2 dark:bg-gray-700 dark:text-gray-200" readonly>
+            </div>
+
+            <div>
+                <label for="facture_date_reception_traitement" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Date de Réception:</label>
+                <input type="text" id="facture_date_reception_traitement" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none focus:ring-2 dark:bg-gray-700 dark:text-gray-200" readonly>
+            </div>
+
+            <div>
+                <label for="facture_montant_total_traitement" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Montant Total (FCFA):</label>
+                <input type="text" id="facture_montant_total_traitement" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none focus:ring-2 dark:bg-gray-700 dark:text-gray-200" readonly>
+                <input type="hidden" name="facture_montant_total" id="facture_montant_total_hidden_traitement">
+            </div>
+
+            <div>
+                <label for="facture_montant_regle_traitement" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Montant Réglé (FCFA):</label>
+                <input type="number" step="0.01" name="montant_regle" id="facture_montant_regle_traitement" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none focus:ring-2 dark:bg-gray-700 dark:text-gray-200" required>
+            </div>
+
+            <div>
+                <label for="facture_date_facture_traitement" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Date de la Facture:</label>
+                <input type="date" name="date_facture" id="facture_date_facture_traitement" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none focus:ring-2 dark:bg-gray-700 dark:text-gray-200" required>
+            </div>
+
+            <div>
+                <label for="facture_details_traitement" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Détails supplémentaires:</label>
+                <textarea name="details" id="facture_details_traitement" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none focus:ring-2 dark:bg-gray-700 dark:text-gray-200"></textarea>
+            </div>
+
+            <div class="flex justify-end gap-4">
+                <button type="button" onclick="closeFactureModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400">
+                    Annuler
+                </button>
+                <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
+                    Sauvegarder la Facture
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+ <!-- ---------------------- -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
+
 <script>
     lucide.createIcons();
+
+
+
+    // Ouvrir le modal de détails
+        function openDetailsModal(data) {
+        const detailModal = document.getElementById('detailModal');
+        const content = document.getElementById('detailContent');
+        content.innerHTML = `
+            <p><strong>ID Réparation : </strong> ${data.id_reparation}</p>
+            <p><strong>Nom du Demandeur : </strong> ${data.nom_demandeur}</p>
+            <p><strong>Technicien : </strong> ${data.nom_technicien || 'Non assigné'}</p>
+            <p><strong>Date Réparation : </strong> ${data.date_reparation}</p>
+            <p><strong>Montant Total : </strong> ${data.montant_total} FCFA</p>
+            <p><strong>Montant Payé : </strong> ${data.montant_paye} FCFA</p>
+            <p><strong>Reste à Payer : </strong> ${data.reste_a_payer} FCFA</p>
+            <p><strong>Statut : </strong> ${data.statut}</p>
+            `;
+        detailModal.classList.remove('hidden');
+        detailModal.classList.add('flex');
+    }
+
+    function closeDetailsModal() {
+        const detailModal = document.getElementById('detailModal');
+        if (detailModal) {
+            detailModal.classList.add('hidden');
+            detailModal.classList.remove('flex');
+        }
+    }
+
+
+        // modal de facture
+            function openFactureModal(data) {
+        const factureId = document.getElementById('facture_id_reparation_traitement');
+        const factureNom = document.getElementById('facture_nom_demandeur_traitement');
+        const factureTech = document.getElementById('facture_technicien_traitement');
+        const factureDateRec = document.getElementById('facture_date_reception_traitement');
+        const factureMontantTotal = document.getElementById('facture_montant_total_traitement');
+        const factureMontantTotalHidden = document.getElementById('facture_montant_total_hidden_traitement');
+        const factureMontantRegle = document.getElementById('facture_montant_regle_traitement');
+        const factureDateFacture = document.getElementById('facture_date_facture_traitement');
+        const factureDetails = document.getElementById('facture_details_traitement');
+
+        if (factureId) factureId.value = data.id_traitement || ''; // Utilisez l'ID du traitement ici
+        if (factureNom) factureNom.value = data.nom_demandeur || '';
+        if (factureTech) factureTech.value = data.nom_technicien || 'Non assigné';
+        if (factureDateRec) factureDateRec.value = data.date_reception || '';
+        if (factureMontantTotal) factureMontantTotal.value = data.montant_traitement || '';
+        if (factureMontantTotalHidden) factureMontantTotalHidden.value = data.montant_traitement || '';
+        if (factureMontantRegle) factureMontantRegle.value = '';
+        if (factureDateFacture) factureDateFacture.value = new Date().toISOString().split('T')[0];
+        if (factureDetails) factureDetails.value = '';
+
+        const factureModal = document.getElementById("factureModal");
+        if (factureModal) {
+            factureModal.classList.remove("hidden");
+            factureModal.classList.add("flex");
+        }
+    }
+
+    function closeFactureModal() {
+        const factureModal = document.getElementById("factureModal");
+        if (factureModal) {
+            factureModal.classList.add("hidden");
+            factureModal.classList.remove("flex");
+        }
+    }
+    // ---------------------------------------
+
+    
 
     function exportToPDF() {
         const { jsPDF } = window.jspdf;
@@ -145,35 +285,7 @@ $reparations = $stmt->fetchAll();
         XLSX.writeFile(wb, "reparations.xlsx");
     }
 
-    function openModal(data) {
-        const content = `
-            <p><strong>Nom du Demandeur :</strong> ${data.nom_demandeur}</p>
-            <p><strong>Technicien :</strong> ${data.nom_technicien || 'Non assigné'}</p>
-            <p><strong>Date réparation :</strong> ${data.date_reparation}</p>
-            <p><strong>Montant Total :</strong> ${data.montant_total}</p>
-            <p><strong>Montant Payé :</strong> ${data.montant_paye}</p>
-            <p><strong>Reste à Payer :</strong> ${data.reste_a_payer}</p>
-            <p><strong>Statut :</strong> ${data.statut}</p>
-        `;
-        const modalContent = document.getElementById("modalContent");
-        if (modalContent) {
-            modalContent.innerHTML = content;
-        }
 
-        const detailModal = document.getElementById("detailModal");
-        if (detailModal) {
-            detailModal.classList.remove("hidden");
-            detailModal.classList.add("flex");
-        }
-    }
-
-    function closeModal() {
-        const detailModal = document.getElementById("detailModal");
-        if (detailModal) {
-            detailModal.classList.add("hidden");
-            detailModal.classList.remove("flex");
-        }
-    }
 
     function searchTable() {
         const input = document.getElementById("searchInput");
