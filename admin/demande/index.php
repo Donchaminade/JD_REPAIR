@@ -101,23 +101,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_demande'])) {
                             <td class="px-6 py-4 flex gap-2 no-export">
 
                                 <button onclick='openModal(<?= json_encode($demande) ?>)' class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-700 text-xs flex items-center gap-1">
-                                    <i data-lucide="eye" class="w-4 h-4"></i> détails
+                                    <i class="fa-solid fa-eye "></i> détails
                                 </button>
 
                                 <button
                                     onclick="<?= $isTraite ? 'return false' : 'openTraitementModal('.htmlspecialchars(json_encode($demande)).')' ?>"
                                     class="<?= $isTraite ? 'bg-gray-400 cursor-not-allowed' : 'bg-purple-600 hover:bg-purple-800' ?> text-white px-2 py-1 rounded text-xs flex items-center gap-1"
-                                    <?= $isTraite ? 'disabled' : '' ?>
-                                >
-                                    <i data-lucide='wrench' class='w-4 h-4'></i> <?= $isTraite ? 'Déjà traité' : 'Traiter' ?>
+                                    <?= $isTraite ? 'disabled' : '' ?>>
+                                    
+                                    <i class="fa-solid fa-wrench "></i> <?= $isTraite ? 'Déjà traité' : 'Traiter' ?>
                                 </button>
 
                                 <button onclick="openUpdateModal(<?= htmlspecialchars(json_encode($demande)) ?>)" class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-blue-700 text-xs flex items-center gap-1">
-                                    <i data-lucide="edit" class="w-4 h-4"></i>Modifier
+                                    <i class="fa-solid fa-edit "></i> Modif
                                 </button>
 
                                 <a href="delete.php?id_demande=<?= $demande['id_demande'] ?>" onclick="return confirm('Supprimer cette demande ?')" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-800 text-xs flex items-center gap-1">
-                                    <i data-lucide="trash" class="w-4 h-4"></i> Supprimer
+                                    <i class="fa-solid fa-trash "></i> Supp
                                 </a>
 
                             </td>
@@ -134,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_demande'])) {
         <div id="updateModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
             <div class="bg-white dark:bg-gray-900 p-6 rounded-xl w-full max-w-3xl shadow-lg relative">
                 <button onclick="closeUpdateModal()" class="absolute top-4 right-4 text-gray-700 dark:text-white hover:text-red-500">
-                    <i data-lucide="x" class="w-6 h-6"></i>
+                    <i data-lucide="x" class="w-6 h-6">❌</i>
                 </button>
                 <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4 text-center">Modifier la Demande</h2>
 
@@ -194,7 +194,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_demande'])) {
         <div id="detailModal" class="fixed inset-0 hidden bg-black bg-opacity-50 z-50 flex items-center justify-center">
         <div class="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-3xl p-8 relative">
             <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-700 dark:text-white hover:text-red-500">
-            <i data-lucide="x" class="w-6 h-6"></i>
+            <i data-lucide="x" class="w-6 h-6">❌</i>
             </button>
             <h2 class="text-2xl font-bold text-center text-gray-800 dark:text-white mb-6">Détails de la demande</h2>
 
@@ -226,7 +226,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_demande'])) {
 <div id="traitementModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
     <div class="bg-white dark:bg-gray-900 p-6 rounded-xl w-full max-w-2xl shadow-lg relative">
         <button onclick="closeTraitementModal()" class="absolute top-4 right-4 text-gray-700 dark:text-white hover:text-red-500">
-            <i data-lucide="x" class="w-6 h-6"></i>
+            <i data-lucide="x" class="w-6 h-6">❌</i>
         </button>
         <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4 text-center">Traitement de la Demande</h2>
 

@@ -37,7 +37,7 @@
                 <a href="/JD_REPAIR/admin/reparation/index.php" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-gray-700 transition-all duration-300 group hover:shadow-md hover:-translate-y-1 border-l-4 border-transparent hover:border-yellow-500" tabindex="0">
                     <div class="relative">
                         <i class="fa-solid fa-screwdriver-wrench text-xl group-hover:text-yellow-500 transition-colors duration-300 w-8 text-center" aria-hidden="true"></i>
-                        <i class="fa-solid fa-bolt absolute -bottom-1 -right-1 text-xs bg-orange-400 rounded-full p-0.5 text-white" aria-hidden="true"></i>
+                        <!-- <i class="fa-solid fa-bolt absolute -bottom-1 -right-1 text-xs bg-orange-400 rounded-full p-0.5 text-white" aria-hidden="true"></i> -->
                     </div>
                     <span class="md:block font-medium text-gray-700 dark:text-gray-200 group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors duration-300 sidebar-text">Réparations</span>
                 </a>

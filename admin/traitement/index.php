@@ -102,9 +102,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enregistrer_reparatio
                                 <button
                                     onclick="openReparationModal(<?= htmlspecialchars(json_encode($traitement)) ?>)"
                                     class="<?= $isRepare ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700' ?> text-white px-2 py-1 rounded text-xs flex items-center gap-1"
-                                    <?= $isRepare ? 'disabled' : '' ?>
-                                >
-                                    <i data-lucide="settings" class="w-4 h-4"></i> <?= $isRepare ? 'Réparé' : 'Réparer' ?>
+                                    <?= $isRepare ? 'disabled' : '' ?>>
+                                    <i class="fa-solid fa-screwdriver-wrench"></i> <?= $isRepare ? 'Réparé' : 'Réparer' ?>
+                                </button>
+                                <button onclick='openModal(<?= json_encode($demande) ?>)' class="bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-700 text-xs flex items-center gap-1">
+                                    <i class="fa-solid fa-eye "></i> détails
                                 </button>
                             </td>
                         </tr>
@@ -114,6 +116,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enregistrer_reparatio
         </div>
     </div>
 </div>
+
+
+        <div id="detailModal" class="fixed inset-0 hidden bg-black bg-opacity-50 z-50 flex items-center justify-center">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-3xl p-8 relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-700 dark:text-white hover:text-red-500">
+            <i data-lucide="x" class="w-6 h-6">❌</i>
+            </button>
+            <h2 class="text-2xl font-bold text-center text-gray-800 dark:text-white mb-6">Détails du traitement</h2>
+
+            <div id="detailContent" class="space-y-4 text-base text- text-gray-700 dark:text-white divide-y divide-gray-300 dark:divide-gray-600">
+            </div>
+        </div>
+        </div>
+
 
 <div id="reparationModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
     <div class="bg-white dark:bg-gray-900 p-6 rounded-xl w-full max-w-md shadow-lg relative">
@@ -171,7 +187,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enregistrer_reparatio
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
 <script>
+
+    
     lucide.createIcons();
+
+
+            function openModal() {
+            const modal = document.getElementById('detailModal');
+            if (modal) {
+            modal.classList.remove('hidden');
+            }
+
+            if (window.lucide) {
+            window.lucide.replace(); // Recharge les icônes Lucide si utilisées
+            }
+        }
+
+            function closeModal() {
+            const modal = document.getElementById('detailModal');
+            if (modal) {
+            modal.classList.add('hidden');
+            }
+        }
+
+
+            function openModal(data) {
+        const detailModal = document.getElementById('detailModal');
+        const content = document.getElementById('detailContent');
+        content.innerHTML = `
+            <p><strong>Nom : </strong> ${data.nom_complet}</p>
+            <p><strong>Numéro : </strong> ${data.numero}</p>
+            <p><strong>Email : </strong> ${data.email}</p>
+            <p><strong>Adresse : </strong> ${data.adresse}</p>
+            <p><strong>Marque : </strong> ${data.marque_telephone}</p>
+            <p><strong>Problème : </strong> ${data.probleme}</p>
+            <p><strong>Date : </strong> ${data.date_demande}</p>
+            <p><strong>Type : </strong> ${data.type_reparation}</p>
+        `;
+        detailModal.classList.remove('hidden');
+        if (window.lucide) {
+            window.lucide.replace();
+        }
+    }
+
 
     function openReparationModal(traitement) {
         document.getElementById('reparationModal').classList.remove('hidden');

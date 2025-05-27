@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JD Repair - Réparation de téléphones professionnelle</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        .delay-1 { animation-delay: 0.5s; }
+        .delay-2 { animation-delay: 1s; }
+        .delay-3 { animation-delay: 1.5s; }
+        
+        /* Custom carousel */
+        .carousel {
+            scroll-snap-type: x mandatory;
+        }
+        .carousel-item {
+            scroll-snap-align: start;
+        }
+        
+        /* Pulse effect for CTA */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+        }
+        .pulse:hover {
+            animation: pulse 1.5s infinite;
+        }
+        
+        /* WhatsApp button animation */
+        @keyframes whatsapp-pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .whatsapp-float {
+            animation: whatsapp-pulse 2s infinite;
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50">
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/1234567890" 
+       class="fixed bottom-8 right-8 bg-green-500 text-white w-16 h-16 rounded-full flex items-center justify-center text-3xl shadow-lg hover:bg-green-600 transition whatsapp-float z-50">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Header -->
+    <header class="bg-blue-600 text-white shadow-lg sticky top-0 z-40">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-mobile-alt text-3xl"></i>
+                <h1 class="text-2xl font-bold">JD Repair</h1>
+            </div>
+            <nav class="hidden md:flex space-x-8">
+                <a href="index.html" class="hover:text-blue-200 transition">Accueil</a>
+                <a href="services.html" class="hover:text-blue-200 transition">Services</a>
+                <a href="about.html" class="hover:text-blue-200 transition">À propos</a>
+                <a href="reviews.html" class="hover:text-blue-200 transition">Avis</a>
+                <a href="contact.html" class="hover:text-blue-200 transition">Contact</a>
+                <a href="check-request.html" class="bg-white text-blue-600 px-4 py-2 rounded-full font-bold hover:bg-gray-100 transition">
+                    Vérifier ma demande
+                </a>
+            </nav>
+            <button class="md:hidden text-2xl" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <!-- Mobile menu -->
+        <div class="md:hidden hidden bg-blue-700 pb-4" id="mobile-menu">
+            <div class="container mx-auto px-4 flex flex-col space-y-3">
+                <a href="index.html" class="py-2 hover:text-blue-200 transition">Accueil</a>
+                <a href="services.html" class="py-2 hover:text-blue-200 transition">Services</a>
+                <a href="about.html" class="py-2 hover:text-blue-200 transition">À propos</a>
+                <a href="reviews.html" class="py-2 hover:text-blue-200 transition">Avis</a>
+                <a href="contact.html" class="py-2 hover:text-blue-200 transition">Contact</a>
+                <a href="check-request.html" class="bg-white text-blue-600 px-4 py-2 rounded-full font-bold hover:bg-gray-100 transition text-center mt-2">
+                    Vérifier ma demande
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section with Carousel -->
+    <section class="relative overflow-hidden">
+        <div class="carousel flex overflow-x-auto snap-x snap-mandatory h-96 md:h-[32rem] w-full">
+            <!-- Slide 1 -->
+            <div class="carousel-item flex-shrink-0 w-full bg-gradient-to-r from-blue-500 to-blue-700 flex items-center justify-center">
+                <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 text-white text-center md:text-left mb-8 md:mb-0">
+                        <h2 class="text-4xl md:text-5xl font-bold mb-4">Réparation rapide de votre téléphone</h2>
+                        <p class="text-xl mb-6">Service express en moins de 30 minutes pour la plupart des réparations.</p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a href="contact.html" class="bg-white text-blue-600 px-6 py-3 rounded-full font-bold hover:bg-gray-100 transition inline-block pulse">
+                                Demander un devis
+                            </a>
+                            <a href="check-request.html" class="bg-transparent border-2 border-white text-white px-6 py-3 rounded-full font-bold hover:bg-white hover:text-blue-600 transition inline-block">
+                                Vérifier ma demande
+                            </a>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 flex justify-center">
+                        <img src="https://images.unsplash.com/photo-1598128558393-8ffc423f8f5b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                             alt="Réparation de téléphone" 
+                             class="w-64 md:w-80 float-animation rounded-lg shadow-xl">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Slide 2 -->
+            <div class="carousel-item flex-shrink-0 w-full bg-gradient-to-r from-purple-500 to-purple-700 flex items-center justify-center">
+                <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 text-white text-center md:text-left mb-8 md:mb-0">
+                        <h2 class="text-4xl md:text-5xl font-bold mb-4">Écran cassé? Nous le réparons!</h2>
+                        <p class="text-xl mb-6">Remplacement d'écran avec des pièces de qualité premium.</p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a href="contact.html" class="bg-white text-purple-600 px-6 py-3 rounded-full font-bold hover:bg-gray-100 transition inline-block pulse">
+                                Prendre rendez-vous
+                            </a>
+                            <a href="check-request.html" class="bg-transparent border-2 border-white text-white px-6 py-3 rounded-full font-bold hover:bg-white hover:text-purple-600 transition inline-block">
+                                Vérifier ma demande
+                            </a>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 flex justify-center">
+                        <img src="https://images.unsplash.com/photo-1601784551446-66c9e1e7b96f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                             alt="Écran de téléphone cassé" 
+                             class="w-64 md:w-80 float-animation delay-1 rounded-lg shadow-xl">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Slide 3 -->
+            <div class="carousel-item flex-shrink-0 w-full bg-gradient-to-r from-green-500 to-green-700 flex items-center justify-center">
+                <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 text-white text-center md:text-left mb-8 md:mb-0">
+                        <h2 class="text-4xl md:text-5xl font-bold mb-4">Batterie faible? Nous la changeons!</h2>
+                        <p class="text-xl mb-6">Remplacement de batterie avec garantie d'un an.</p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a href="contact.html" class="bg-white text-green-600 px-6 py-3 rounded-full font-bold hover:bg-gray-100 transition inline-block pulse">
+                                Consulter nos tarifs
+                            </a>
+                            <a href="check-request.html" class="bg-transparent border-2 border-white text-white px-6 py-3 rounded-full font-bold hover:bg-white hover:text-green-600 transition inline-block">
+                                Vérifier ma demande
+                            </a>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 flex justify-center">
+                        <img src="https://images.unsplash.com/photo-1603302576837-37586bdee5c7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                             alt="Batterie de téléphone" 
+                             class="w-64 md:w-80 float-animation delay-2 rounded-lg shadow-xl">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Carousel indicators -->
+        <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
+            <button class="w-3 h-3 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 transition" onclick="scrollCarousel(0)"></button>
+            <button class="w-3 h-3 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 transition" onclick="scrollCarousel(1)"></button>
+            <button class="w-3 h-3 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 transition" onclick="scrollCarousel(2)"></button>
+        </div>
+    </section>
+
+    <!-- Services Section with Animated Icons -->
+    <section id="services" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Nos Services</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Service 1 -->
+                <div class="bg-gray-50 p-6 rounded-xl shadow-md hover:shadow-lg transition text-center">
+                    <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-mobile-alt text-blue-600 text-2xl float-animation"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Remplacement d'écran</h3>
+                    <p class="text-gray-600">Remplacement rapide de votre écran cassé avec des pièces de qualité.</p>
+                    <a href="screen-repair.html" class="mt-4 text-blue-600 font-semibold hover:text-blue-800 transition inline-block">
+                        En savoir plus <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="bg-gray-50 p-6 rounded-xl shadow-md hover:shadow-lg transition text-center">
+                    <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-battery-three-quarters text-purple-600 text-2xl float-animation delay-1"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Remplacement de batterie</h3>
+                    <p class="text-gray-600">Votre téléphone ne tient plus la charge? Nous avons la solution.</p>
+                    <a href="battery-replacement.html" class="mt-4 text-purple-600 font-semibold hover:text-purple-800 transition inline-block">
+                        En savoir plus <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="bg-gray-50 p-6 rounded-xl shadow-md hover:shadow-lg transition text-center">
+                    <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-plug text-green-600 text-2xl float-animation delay-2"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Réparation de chargeur</h3>
+                    <p class="text-gray-600">Problème de charge? Nous diagnostiquons et réparons votre port de charge.</p>
+                    <a href="charging-port-repair.html" class="mt-4 text-green-600 font-semibold hover:text-green-800 transition inline-block">
+                        En savoir plus <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+                
+                <!-- Service 4 -->
+                <div class="bg-gray-50 p-6 rounded-xl shadow-md hover:shadow-lg transition text-center">
+                    <div class="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-water text-yellow-600 text-2xl float-animation delay-3"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Dégâts des eaux</h3>
+                    <p class="text-gray-600">Votre téléphone est tombé dans l'eau? Agissez rapidement pour le sauver.</p>
+                    <a href="water-damage-repair.html" class="mt-4 text-yellow-600 font-semibold hover:text-yellow-800 transition inline-block">
+                        En savoir plus <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="services.html" class="bg-blue-600 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-700 transition inline-block">
+                    Voir tous nos services
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                         alt="Technicien JD Repair" 
+                         class="rounded-xl shadow-lg w-full max-w-md mx-auto">
+                </div>
+                <div class="md:w-1/2 md:pl-12">
+                    <h2 class="text-3xl font-bold mb-6">À propos de JD Repair</h2>
+                    <p class="text-gray-700 mb-4">
+                        Fondé en 2015, JD Repair est devenu le leader de la réparation de téléphones dans la région. 
+                        Notre équipe de techniciens certifiés a réparé plus de 10,000 appareils avec un taux de 
+                        satisfaction client de 98%.
+                    </p>
+                    <p class="text-gray-700 mb-6">
+                        Nous utilisons uniquement des pièces de qualité premium et offrons une garantie sur toutes 
+                        nos réparations. Votre satisfaction est notre priorité absolue.
+                    </p>
+                    <div class="flex flex-wrap gap-4 mb-6">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Techniciens certifiés</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Pièces de qualité</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Garantie sur les réparations</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Service rapide</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="about.html" class="bg-blue-600 text-white px-6 py-3 rounded-full font-bold hover:bg-blue-700 transition inline-block">
+                            En savoir plus
+                        </a>
+                        <a href="contact.html" class="bg-white border-2 border-blue-600 text-blue-600 px-6 py-3 rounded-full font-bold hover:bg-blue-50 transition inline-block">
+                            Contactez-nous
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Ce que nos clients disent</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Review 1 -->
+                <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="font-semibold">5.0</span>
+                    </div>
+                    <p class="text-gray-700 mb-4">
+                        "Mon écran était complètement cassé après une chute. JD Repair l'a remplacé en moins d'une heure 
+                        et maintenant il est comme neuf! Service exceptionnel."
+                    </p>
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                            <i class="fas fa-user text-blue-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Marie D.</h4>
+                            <p class="text-sm text-gray-500">Client depuis 2022</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Review 2 -->
+                <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="font-semibold">5.0</span>
+                    </div>
+                    <p class="text-gray-700 mb-4">
+                        "Ma batterie ne tenait plus la charge. JD Repair a fait un diagnostic rapide et changé la batterie. 
+                        Maintenant mon téléphone tient toute la journée. Je recommande!"
+                    </p>
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center mr-3">
+                            <i class="fas fa-user text-purple-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Jean P.</h4>
+                            <p class="text-sm text-gray-500">Client depuis 2021</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Review 3 -->
+                <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="font-semibold">4.5</span>
+                    </div>
+                    <p class="text-gray-700 mb-4">
+                        "Mon téléphone est tombé dans l'eau et ne fonctionnait plus. JD Repair l'a sauvé! 
+                        Le service était un peu cher mais ça valait le coup pour sauver mes photos."
+                    </p>
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mr-3">
+                            <i class="fas fa-user text-green-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Sophie L.</h4>
+                            <p class="text-sm text-gray-500">Client depuis 2023</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="reviews.html" class="bg-blue-600 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-700 transition inline-block">
+                    Lire tous les avis
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-blue-600 text-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <h2 class="text-3xl font-bold mb-6">Contactez-nous</h2>
+                    <p class="mb-6">
+                        Vous avez besoin de réparer votre téléphone? Remplissez le formulaire ou contactez-nous directement.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-4 text-xl"></i>
+                            <span>123 Rue de la Réparation, 75000 Paris</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-phone-alt mr-4 text-xl"></i>
+                            <span>01 23 45 67 89</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope mr-4 text-xl"></i>
+                            <span>contact@jdrepair.fr</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-clock mr-4 text-xl"></i>
+                            <span>Lundi-Vendredi: 9h-19h | Samedi: 10h-18h</span>
+                        </div>
+                    </div>
+                    <div class="mt-8 flex space-x-4">
+                        <a href="#" class="bg-white text-blue-600 w-10 h-10 rounded-full flex items-center justify-center hover:bg-gray-100 transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="bg-white text-blue-600 w-10 h-10 rounded-full flex items-center justify-center hover:bg-gray-100 transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="bg-white text-blue-600 w-10 h-10 rounded-full flex items-center justify-center hover:bg-gray-100 transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 md:pl-12">
+                    <form class="bg-white text-gray-800 p-6 rounded-xl shadow-lg">
+                        <h3 class="text-xl font-bold mb-4 text-blue-600">Demande de consultation</h3>
+                        <div class="mb-4">
+                            <label for="name" class="block text-gray-700 mb-2">Nom complet</label>
+                            <input type="text" id="name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="block text-gray-700 mb-2">Email</label>
+                            <input type="email" id="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div class="mb-4">
+                            <label for="phone" class="block text-gray-700 mb-2">Téléphone</label>
+                            <input type="tel" id="phone" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div class="mb-4">
+                            <label for="device" class="block text-gray-700 mb-2">Appareil à réparer</label>
+                            <select id="device" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="">Sélectionnez votre appareil</option>
+                                <option value="iphone">iPhone</option>
+                                <option value="samsung">Samsung</option>
+                                <option value="huawei">Huawei</option>
+                                <option value="other">Autre</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="problem" class="block text-gray-700 mb-2">Problème rencontré</label>
+                            <textarea id="problem" rows="3" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition">
+                            Envoyer la demande
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Check Request Page -->
+    <section id="check-request" class="hidden py-16 bg-white">
+        <div class="container mx-auto px-4 max-w-2xl">
+            <div class="bg-gray-50 p-8 rounded-xl shadow-lg">
+                <h2 class="text-3xl font-bold text-center mb-8">Vérifier l'état de ma demande</h2>
+                
+                <div class="mb-6">
+                    <label for="request-number" class="block text-gray-700 mb-2">Numéro de demande</label>
+                    <input type="text" id="request-number" placeholder="Ex: JD20230001" 
+                           class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                
+                <div class="mb-6">
+                    <label for="client-email" class="block text-gray-700 mb-2">Email utilisé pour la demande</label>
+                    <input type="email" id="client-email" placeholder="Votre email" 
+                           class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                
+                <button id="check-status-btn" class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition mb-6">
+                    Vérifier le statut
+                </button>
+                
+                <div id="request-status" class="hidden p-6 bg-blue-50 rounded-lg border border-blue-200">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-info-circle text-blue-600 text-xl mr-3"></i>
+                        <h3 class="text-xl font-semibold">Statut de votre demande</h3>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <span class="font-medium mr-2">Numéro:</span>
+                        <span id="status-number" class="text-blue-600">JD20230001</span>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <span class="font-medium mr-2">Statut:</span>
+                        <span id="status-state" class="px-3 py-1 rounded-full text-sm font-semibold bg-green-100 text-green-800">
+                            En cours de réparation
+                        </span>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        <span class="font-medium mr-2">Date de dépôt:</span>
+                        <span id="status-date">15/06/2023</span>
+                    </div>
+                    <div class="mt-4">
+                        <p id="status-message">Votre téléphone est actuellement en cours de réparation par notre technicien. Nous vous contacterons dès qu'il sera prêt à être récupéré.</p>
+                    </div>
+                </div>
+                
+                <div class="mt-8 text-center">
+                    <p class="text-gray-600">Vous n'avez pas encore fait de demande?</p>
+                    <a href="contact.html" class="text-blue-600 font-semibold hover:text-blue-800 transition inline-block mt-2">
+                        Faire une demande de réparation <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-mobile-alt text-2xl text-blue-400"></i>
+                        <h3 class="text-xl font-bold">JD Repair</h3>
+                    </div>
+                    <p class="text-gray-400 max-w-xs">
+                        Leader de la réparation de téléphones depuis 2015. Service rapide et professionnel avec garantie.
+                    </p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Liens rapides</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#index" class="text-gray-400 hover:text-white transition">Accueil</a></li>
+                            <li><a href="#services" class="text-gray-400 hover:text-white transition">Services</a></li>
+                            <li><a href="#about" class="text-gray-400 hover:text-white transition">À propos</a></li>
+                            <li><a href="#reviews" class="text-gray-400 hover:text-white transition">Avis</a></li>
+                            <li><a href="#contact" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Services</h4>
+                        <ul class="space-y-2">
+                            <li><a href="screen-repair.html" class="text-gray-400 hover:text-white transition">Écran cassé</a></li>
+                            <li><a href="battery-replacement.html" class="text-gray-400 hover:text-white transition">Batterie</a></li>
+                            <li><a href="charging-port-repair.html" class="text-gray-400 hover:text-white transition">Chargeur</a></li>
+                            <li><a href="water-damage-repair.html" class="text-gray-400 hover:text-white transition">Dégâts des eaux</a></li>
+                            <li><a href="check-request.html" class="text-gray-400 hover:text-white transition">Vérifier ma demande</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Legal</h4>
+                        <ul class="space-y-2">
+                            <li><a href="legal.html" class="text-gray-400 hover:text-white transition">Mentions légales</a></li>
+                            <li><a href="terms.html" class="text-gray-400 hover:text-white transition">CGV</a></li>
+                            <li><a href="privacy.html" class="text-gray-400 hover:text-white transition">Politique de confidentialité</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2023 JD Repair. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+        
+        // Carousel navigation
+        function scrollCarousel(index) {
+            const carousel = document.querySelector('.carousel');
+            const items = document.querySelectorAll('.carousel-item');
+            if (index >= 0 && index < items.length) {
+                items[index].scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest',
+                    inline: 'start'
+                });
+            }
+        }
+        
+        // Auto-scroll carousel
+        let currentSlide = 0;
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % 3;
+            scrollCarousel(currentSlide);
+        }, 5000);
+        
+        // Form submission
+        const form = document.querySelector('form');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Merci pour votre demande! Nous vous contacterons rapidement.');
+                form.reset();
+            });
+        }
+        
+        // Check request status
+        const checkRequestBtn = document.getElementById('check-status-btn');
+        if (checkRequestBtn) {
+            checkRequestBtn.addEventListener('click', function() {
+                const requestStatus = document.getElementById('request-status');
+                requestStatus.classList.remove('hidden');
+                
+                // Scroll to the status
+                requestStatus.scrollIntoView({ behavior: 'smooth' });
+            });
+        }
+        
+        // Handle page switching for demo purposes
+        const urlParams = new URLSearchParams(window.location.search);
+        const page = urlParams.get('page');
+        
+        if (page === 'check-request') {
+            document.getElementById('check-request').classList.remove('hidden');
+            document.querySelector('main').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : lun. 26 mai 2025 à 12:51
+-- Généré le : lun. 26 mai 2025 à 20:47
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -44,7 +44,10 @@ CREATE TABLE `demande_reparation` (
 --
 
 INSERT INTO `demande_reparation` (`id_demande`, `nom_complet`, `numero`, `email`, `adresse`, `marque_telephone`, `probleme`, `date_demande`, `type_reparation`) VALUES
-(1, 'jane smith', '+22899181726', 'adc@email.com', 'dfvdhidllfe', '0882993933', ' hkjllnknk.m,.m,.m,.m.m.', '2025-05-20', 'standard');
+(3, 'kknknk smith', '+22899181626', 'chamiawsadjolou@gmail.com', 'dfvdhidllfe', 'SAMSUNG NOTE 10+ 5G 256GB', 'ECRAN COMPLET', '2025-05-26', 'express'),
+(4, 'rkgklrgklrlkfgr', '+22899181726', 'adc@email.com', 'dfvdhidllfe', 'SAMSUNG NOTE 10+ 5G 256GB', 'WRJLGLLLGHOEIOLHVSDVBKEWEGW', '2025-05-26', 'standard'),
+(5, 'rkgklrgklrlkfgr', '+22899181726', 'adc@email.com', 'dfvdhidllfe', 'SAMSUNG NOTE 10+ 5G 256GB', 'WRJLGLLLGHOEIOLHVSDVBKEWEGW', '2025-05-26', 'standard'),
+(9, 'rkgklrgklrlkfgr', '+22899181726', 'adc@email.com', 'dfvdhidllfe', 'SAMSUNG NOTE 10+ 5G 256GB', 'jkdjrjgjkeeooflef', '2025-05-26', 'express');
 
 -- --------------------------------------------------------
 
@@ -57,9 +60,10 @@ CREATE TABLE `facture` (
   `id_reparation` int(11) DEFAULT NULL,
   `date_facture` date DEFAULT NULL,
   `montant_total` decimal(10,2) DEFAULT NULL,
-  `montant_paye` decimal(10,2) DEFAULT NULL,
+  `montant_regle` decimal(10,2) DEFAULT NULL,
   `reste_a_payer` decimal(10,2) DEFAULT NULL,
-  `statut_paiement` enum('Payée','Non payée') DEFAULT 'Non payée'
+  `details` text DEFAULT NULL,
+  `statut_paiement` enum('Payée','Partiellement payée','Non payée') DEFAULT 'Non payée'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -79,6 +83,13 @@ CREATE TABLE `reparation` (
   `statut` enum('En cours','Terminé','Prêt à récupérer') DEFAULT 'En cours'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Déchargement des données de la table `reparation`
+--
+
+INSERT INTO `reparation` (`id_reparation`, `id_demande`, `id_traitement`, `date_reparation`, `montant_total`, `montant_paye`, `reste_a_payer`, `statut`) VALUES
+(2, 5, 2, '2025-05-26', 12000.00, 11000.00, 1000.00, 'Prêt à récupérer');
+
 -- --------------------------------------------------------
 
 --
@@ -95,6 +106,14 @@ CREATE TABLE `traitement` (
   `type_reparation` enum('express','standard') DEFAULT 'standard',
   `id_technicien` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `traitement`
+--
+
+INSERT INTO `traitement` (`id_traitement`, `id_demande`, `date_reception`, `montant_total`, `montant_paye`, `type_reparation`, `id_technicien`) VALUES
+(1, 3, '2025-05-26', 15000.00, 12000.00, 'express', 2),
+(2, 5, '2025-05-26', 12000.00, 11000.00, 'standard', 2);
 
 -- --------------------------------------------------------
 
@@ -167,7 +186,7 @@ ALTER TABLE `utilisateurs`
 -- AUTO_INCREMENT pour la table `demande_reparation`
 --
 ALTER TABLE `demande_reparation`
-  MODIFY `id_demande` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_demande` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT pour la table `facture`
@@ -179,13 +198,13 @@ ALTER TABLE `facture`
 -- AUTO_INCREMENT pour la table `reparation`
 --
 ALTER TABLE `reparation`
-  MODIFY `id_reparation` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_reparation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `traitement`
 --
 ALTER TABLE `traitement`
-  MODIFY `id_traitement` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_traitement` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `utilisateurs`
@@ -201,7 +220,7 @@ ALTER TABLE `utilisateurs`
 -- Contraintes pour la table `facture`
 --
 ALTER TABLE `facture`
-  ADD CONSTRAINT `facture_ibfk_1` FOREIGN KEY (`id_reparation`) REFERENCES `reparation` (`id_reparation`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `facture_ibfk_1` FOREIGN KEY (`id_reparation`) REFERENCES `reparation` (`id_reparation`) ON DELETE SET NULL;
 
 --
 -- Contraintes pour la table `reparation`

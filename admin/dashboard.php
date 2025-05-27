@@ -40,14 +40,17 @@ if ($pdo) {
         // Chiffre d'affaires (somme des montants totaux des factures payées)
         $stmt = $pdo->query("SELECT COALESCE(SUM(montant_total), 0) FROM facture WHERE statut_paiement = 'Payée'");
         $chiffreAffaires = $stmt->fetchColumn();
+        // Chiffre d'affaires montant paye(somme des montants totaux des factures payées)
+        $stmt = $pdo->query("SELECT COALESCE(SUM(montant_paye), 0) FROM traitement ");
+        $chiffreAffairesmp = $stmt->fetchColumn();
 
         // Nombre de factures payées
         $stmt = $pdo->query("SELECT COUNT(*) FROM facture WHERE statut_paiement = 'Payée'");
         $nombreFacturesPayees = $stmt->fetchColumn();
 
         // Nombre de factures non payées
-        $stmt = $pdo->query("SELECT COUNT(*) FROM facture WHERE statut_paiement = 'Non payée'");
-        $nombreFacturesNonPayees = $stmt->fetchColumn();
+        $stmt = $pdo->query("SELECT COUNT(*) FROM reparation WHERE statut = 'Endommagé'");
+        $nombrerepfail = $stmt->fetchColumn();
 
         // Nombre d'utilisateurs (tous)
         $stmt = $pdo->query("SELECT COUNT(*) FROM utilisateurs");
@@ -93,7 +96,7 @@ if ($pdo) {
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <div class="bg-white dark:bg-gray-700 shadow rounded-lg p-4 flex items-center justify-center h-32 w-full md:w-auto">
             <div class="text-blue-500 mr-4 text-center md:text-left">
-                <i class="fa-solid fa-envelope fa-2x"></i>
+                <i class="fa-solid fa-book fa-2x"></i>
             </div>
             <div>
                 <p class="text-sm text-gray-500 dark:text-gray-300">Demandes</p>
@@ -101,7 +104,7 @@ if ($pdo) {
             </div>
         </div>
 
-        <div class="bg-white dark:bg-gray-700 shadow rounded-lg p-4 flex items-center justify-center h-32 w-full md:w-auto">
+        <div class="bg-white dark:bg-purple-700 shadow rounded-lg p-4 flex items-center justify-center h-32 w-full md:w-auto">
             <div class="text-yellow-500 mr-4 text-center md:text-left">
                 <i class="fa-solid fa-wrench fa-2x"></i>
             </div>
@@ -121,13 +124,22 @@ if ($pdo) {
             </div>
         </div>
 
-        <div class="bg-green-500 text-white shadow rounded-lg p-4 flex items-center justify-center h-32 w-full md:w-auto">
+        <div class="bg-green-900 text-white shadow rounded-lg p-4 flex items-center justify-center h-32 w-full md:w-auto">
             <div class="mr-4 text-center md:text-left">
                 <i class="fa-solid fa-coins fa-2x"></i>
             </div>
             <div>
                 <p class="text-sm text-white/70">Chiffre d'affaires</p>
                 <p class="text-lg font-semibold"><?= htmlspecialchars(number_format($chiffreAffaires, 2)) ?> FCFA</p>
+            </div>
+        </div>
+        <div class="bg-blue-900 text-white shadow rounded-lg p-4 flex items-center justify-center h-32 w-full md:w-auto">
+            <div class="mr-4 text-center md:text-left">
+                <i class="fa-solid fa-coins fa-2x"></i>
+            </div>
+            <div>
+                <p class="text-sm text-white/70">Total Avance recu</p>
+                <p class="text-lg font-semibold"><?= htmlspecialchars(number_format($chiffreAffairesmp, 2)) ?> FCFA</p>
             </div>
         </div>
 
@@ -141,17 +153,17 @@ if ($pdo) {
             </div>
         </div>
 
-        <div class="bg-white dark:bg-gray-700 shadow rounded-lg p-4 flex items-center justify-center h-32 w-full md:w-auto">
+        <div class="bg-white dark:bg-orange-400 shadow rounded-lg p-4 flex items-center justify-center h-32 w-full md:w-auto">
             <div class="text-red-500 mr-4 text-center md:text-left">
                 <i class="fa-solid fa-times-circle fa-2x"></i>
             </div>
             <div>
-                <p class="text-sm text-gray-500 dark:text-gray-300">Impayées</p>
-                <p class="text-lg font-semibold text-gray-800 dark:text-gray-200"><?= htmlspecialchars($nombreFacturesNonPayees) ?></p>
+                <p class="text-sm text-gray-500 dark:text-gray-300">Reparations Echouee</p>
+                <p class="text-lg font-semibold text-gray-800 dark:text-gray-200"><?= htmlspecialchars($nombrerepfail) ?></p>
             </div>
         </div>
 
-        <div class="bg-white dark:bg-gray-700 shadow rounded-lg p-4 flex items-center justify-center h-32 w-full md:w-auto">
+        <div class="bg-yellow-900 dark:bg-gray-700 shadow rounded-lg p-4 flex items-center justify-center h-32 w-full md:w-auto">
             <div class="text-purple-600 mr-4 text-center md:text-left">
                 <i class="fa-solid fa-users fa-2x"></i>
             </div>
@@ -181,8 +193,8 @@ if ($pdo) {
             </div>
         </div>
     </div>
-
-<h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">Statistiques et Actions</h3>
+<br>
+<h1 class="text-xl text-center justify-center font-semibold text-gray-800 dark:text-gray-200 mb-4">Raccourcis Details Tableau</h1>
     <div class="flex mb-6">
         <div class="w-1/3 pr-4">
             <div class="bg-white dark:bg-gray-700 shadow rounded-lg overflow-x-auto">
@@ -231,10 +243,10 @@ if ($pdo) {
         <div class="flex-1">
             <div class="bg-white dark:bg-gray-700 shadow rounded-lg overflow-x-auto">
                 <div class="p-4">
-                    <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">Dernières 20 demandes</h4>
+                    <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">Dernières demandes</h4>
                     <?php
                     if ($pdo) {
-                        $stmt = $pdo->query("SELECT id_demande, nom_complet, numero, date_demande FROM demande_reparation ORDER BY date_demande DESC LIMIT 20");
+                        $stmt = $pdo->query("SELECT id_demande, nom_complet, numero, date_demande FROM demande_reparation ORDER BY date_demande ASC LIMIT 20");
                         $dernieresDemandes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                         if (count($dernieresDemandes) > 0) {
@@ -254,7 +266,7 @@ if ($pdo) {
                                 echo '<td class="py-4 px-6">' . htmlspecialchars($demande['numero']) . '</td>';
                                 echo '<td class="py-4 px-6">' . htmlspecialchars($demande['date_demande']) . '</td>';
                                 echo '<td class="py-4 px-6">';
-                                echo '<a href="/JD_REPAIR/traitement_demande.php?id=' . htmlspecialchars($demande['id_demande']) . '" class="text-indigo-500 hover:underline"><i class="fa-solid fa-pen-to-square"></i> Traiter</a>';
+                                echo '<a href="/JD_REPAIR/demande/update.php?id=' . htmlspecialchars($demande['id_demande']) . '" class="text-indigo-500 hover:underline"><i class="fa-solid fa-pen-to-square"></i> Traiter</a>';
                                 echo '</td>';
                                 echo '</tr>';
                             }
@@ -272,7 +284,7 @@ if ($pdo) {
         </div>
     </div>
 
-    <div class="flex justify-center mb-6">
+    <!-- <div class="flex">
         <div class="bg-white dark:bg-gray-700 shadow rounded-lg overflow-x-auto w-full md:w-2/3 lg:w-1/2">
             <div class="p-4">
                 <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2 text-center">Techniciens et réparations en cours</h4>
@@ -312,7 +324,7 @@ if ($pdo) {
                 ?>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 
 <?php include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/footer.php'; ?>
