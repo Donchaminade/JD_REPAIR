@@ -38,11 +38,11 @@ if ($pdo) {
         $nombreFactures = $stmt->fetchColumn();
 
         // Chiffre d'affaires (somme des montants totaux des factures payées)
-        $stmt = $pdo->query("SELECT COALESCE(SUM(montant_total), 0) FROM facture WHERE statut_paiement = 'Payée'");
+        $stmt = $pdo->query("SELECT COALESCE(SUM(montant_paye), 0) FROM traitement");
         $chiffreAffaires = $stmt->fetchColumn();
         // Chiffre d'affaires montant paye(somme des montants totaux des factures payées)
-        $stmt = $pdo->query("SELECT COALESCE(SUM(montant_paye), 0) FROM traitement ");
-        $chiffreAffairesmp = $stmt->fetchColumn();
+        // $stmt = $pdo->query("SELECT COALESCE(SUM(montant_paye), 0) FROM traitement ");
+        // $chiffreAffairesmp = $stmt->fetchColumn();
 
         // Nombre de factures payées
         $stmt = $pdo->query("SELECT COUNT(*) FROM facture WHERE statut_paiement = 'Payée'");
@@ -104,7 +104,7 @@ if ($pdo) {
             </div>
         </div>
 
-        <div class="bg-white dark:bg-purple-700 shadow rounded-lg p-4 flex items-center justify-center h-32 w-full md:w-auto">
+        <div class="bg-white dark:bg-gray-700 shadow rounded-lg p-4 flex items-center justify-center h-32 w-full md:w-auto">
             <div class="text-yellow-500 mr-4 text-center md:text-left">
                 <i class="fa-solid fa-wrench fa-2x"></i>
             </div>
@@ -124,7 +124,7 @@ if ($pdo) {
             </div>
         </div>
 
-        <div class="bg-green-900 text-white shadow rounded-lg p-4 flex items-center justify-center h-32 w-full md:w-auto">
+        <div class="bg-gray-700 text-white shadow rounded-lg p-4 flex items-center justify-center h-32 w-full md:w-auto">
             <div class="mr-4 text-center md:text-left">
                 <i class="fa-solid fa-coins fa-2x"></i>
             </div>
@@ -133,15 +133,15 @@ if ($pdo) {
                 <p class="text-lg font-semibold"><?= htmlspecialchars(number_format($chiffreAffaires, 2)) ?> FCFA</p>
             </div>
         </div>
-        <div class="bg-blue-900 text-white shadow rounded-lg p-4 flex items-center justify-center h-32 w-full md:w-auto">
+        <!-- <div class="bg-blue-900 text-white shadow rounded-lg p-4 flex items-center justify-center h-32 w-full md:w-auto">
             <div class="mr-4 text-center md:text-left">
                 <i class="fa-solid fa-coins fa-2x"></i>
             </div>
             <div>
                 <p class="text-sm text-white/70">Total Avance recu</p>
-                <p class="text-lg font-semibold"><?= htmlspecialchars(number_format($chiffreAffairesmp, 2)) ?> FCFA</p>
+                
             </div>
-        </div>
+        </div> -->
 
         <div class="bg-white dark:bg-gray-700 shadow rounded-lg p-4 flex items-center justify-center h-32 w-full md:w-auto">
             <div class="text-green-500 mr-4 text-center md:text-left">
@@ -153,7 +153,7 @@ if ($pdo) {
             </div>
         </div>
 
-        <div class="bg-white dark:bg-orange-400 shadow rounded-lg p-4 flex items-center justify-center h-32 w-full md:w-auto">
+        <div class="bg-white dark:bg-gray-700 shadow rounded-lg p-4 flex items-center justify-center h-32 w-full md:w-auto">
             <div class="text-red-500 mr-4 text-center md:text-left">
                 <i class="fa-solid fa-times-circle fa-2x"></i>
             </div>

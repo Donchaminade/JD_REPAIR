@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : lun. 26 mai 2025 à 20:47
+-- Généré le : mar. 27 mai 2025 à 19:34
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -45,7 +45,7 @@ CREATE TABLE `demande_reparation` (
 
 INSERT INTO `demande_reparation` (`id_demande`, `nom_complet`, `numero`, `email`, `adresse`, `marque_telephone`, `probleme`, `date_demande`, `type_reparation`) VALUES
 (3, 'kknknk smith', '+22899181626', 'chamiawsadjolou@gmail.com', 'dfvdhidllfe', 'SAMSUNG NOTE 10+ 5G 256GB', 'ECRAN COMPLET', '2025-05-26', 'express'),
-(4, 'rkgklrgklrlkfgr', '+22899181726', 'adc@email.com', 'dfvdhidllfe', 'SAMSUNG NOTE 10+ 5G 256GB', 'WRJLGLLLGHOEIOLHVSDVBKEWEGW', '2025-05-26', 'standard'),
+(4, 'rkgklrgklrlkfgr', '+22899181726', 'adc@email.com', 'dfvdhidllfe', 'SAMSUNG NOTE 10+ 5G 256GB', 'WRJLGLLLGHOEIOLHVSDVBKEWEGW', '2025-05-30', 'standard'),
 (5, 'rkgklrgklrlkfgr', '+22899181726', 'adc@email.com', 'dfvdhidllfe', 'SAMSUNG NOTE 10+ 5G 256GB', 'WRJLGLLLGHOEIOLHVSDVBKEWEGW', '2025-05-26', 'standard'),
 (9, 'rkgklrgklrlkfgr', '+22899181726', 'adc@email.com', 'dfvdhidllfe', 'SAMSUNG NOTE 10+ 5G 256GB', 'jkdjrjgjkeeooflef', '2025-05-26', 'express');
 
@@ -80,7 +80,7 @@ CREATE TABLE `reparation` (
   `montant_total` decimal(10,2) DEFAULT NULL,
   `montant_paye` decimal(10,2) DEFAULT NULL,
   `reste_a_payer` decimal(10,2) DEFAULT NULL,
-  `statut` enum('En cours','Terminé','Prêt à récupérer') DEFAULT 'En cours'
+  `statut` enum('En cours','Endommagé','Prêt à récupérer') DEFAULT 'En cours'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -88,7 +88,7 @@ CREATE TABLE `reparation` (
 --
 
 INSERT INTO `reparation` (`id_reparation`, `id_demande`, `id_traitement`, `date_reparation`, `montant_total`, `montant_paye`, `reste_a_payer`, `statut`) VALUES
-(2, 5, 2, '2025-05-26', 12000.00, 11000.00, 1000.00, 'Prêt à récupérer');
+(2, 5, 2, '2025-05-26', 12000.00, 12000.00, 1000.00, 'Prêt à récupérer');
 
 -- --------------------------------------------------------
 
@@ -192,13 +192,13 @@ ALTER TABLE `demande_reparation`
 -- AUTO_INCREMENT pour la table `facture`
 --
 ALTER TABLE `facture`
-  MODIFY `id_facture` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_facture` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT pour la table `reparation`
 --
 ALTER TABLE `reparation`
-  MODIFY `id_reparation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_reparation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `traitement`

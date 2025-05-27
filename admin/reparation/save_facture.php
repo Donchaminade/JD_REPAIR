@@ -1,188 +1,173 @@
 <?php
 include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/config/db.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/libs/fpdf/fpdf.php');
 
-// Chemin vers la librairie TCPDF (à adapter selon votre structure de dossiers)
-require_once($_SERVER['DOCUMENT_ROOT'] . '/JD_REPAIR/tcpdf/tcpdf.php');
+class PDF extends FPDF
+{
+    private $primaryColor = array(63, 169, 245);
+    private $secondaryColor = array(52, 58, 64);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id_reparation = $_POST['id_reparation'] ?? null;
-    $montant_total = $_POST['facture_montant_total'] ?? null;
-    $montant_regle = $_POST['montant_regle'] ?? null;
-    $date_facture = $_POST['date_facture'] ?? null;
-    $details = $_POST['details'] ?? '';
-    $from_traitement = isset($_POST['from_traitement']);
+    function Header()
+    {
+        $this->SetMargins(15, 15, 15);
+        $this->SetFillColor($this->primaryColor[0], $this->primaryColor[1], $this->primaryColor[2]);
+        $this->Rect(0, 0, 210, 10, 'F');
 
-    if ($id_reparation === null || $montant_total === null || $montant_regle === null || $date_facture === null) {
-        echo "Erreur : Veuillez fournir toutes les informations nécessaires pour la facture.";
-        exit;
+        $this->SetFont('Arial','B',12);
+        $this->SetTextColor($this->secondaryColor[0], $this->secondaryColor[1], $this->secondaryColor[2]);
+        $this->SetXY(15, 15);
+        $this->Cell(0, 6, $this->sansAccent('JD Repair'), 0, 1, 'L');
+        $this->SetFont('Arial','',10);
+        $this->Cell(0, 5, $this->sansAccent('Votre Adresse Ici'), 0, 1, 'L');
+
+        $this->SetFont('Arial','B',14);
+        $this->SetXY(15, 35);
+        $this->SetTextColor($this->primaryColor[0], $this->primaryColor[1], $this->primaryColor[2]);
+        $this->Cell(0, 7, $this->sansAccent('Facture'), 0, 1, 'L');
+        $this->SetTextColor($this->secondaryColor[0], $this->secondaryColor[1], $this->secondaryColor[2]);
+
+        $this->SetFont('Arial','B',10);
+        $this->SetXY(150, 15);
+        $this->Cell(30, 5, $this->sansAccent('Facture No'), 0, 0, 'L');
+        $this->SetFont('Arial','',10);
+        global $id_facture_pdf;
+        $this->Cell(0, 5, 'FAC-'.$id_facture_pdf, 0, 1, 'L');
+
+        $this->SetFont('Arial','B',10);
+        $this->SetXY(150, 20);
+        $this->Cell(30, 5, $this->sansAccent('Date'), 0, 0, 'L');
+        $this->SetFont('Arial','',10);
+        global $date_facture_pdf;
+        $this->Cell(0, 5, $date_facture_pdf, 0, 1, 'L');
+
+        $this->Ln(20);
     }
+
+    function Footer()
+    {
+        $this->SetFillColor($this->primaryColor[0], $this->primaryColor[1], $this->primaryColor[2]);
+        $this->Rect(0, $this->GetY() + 15, 210, 5, 'F');
+
+        $this->SetY(-15);
+        $this->SetFont('Arial','I',8);
+        $this->SetTextColor($this->secondaryColor[0], $this->secondaryColor[1], $this->secondaryColor[2]);
+        $this->Cell(0,10,$this->sansAccent('Page ').$this->PageNo().'/{nb}',0,0,'C');
+    }
+
+    function Cell($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=false, $link='')
+    {
+        $this->SetTextColor($this->secondaryColor[0], $this->secondaryColor[1], $this->secondaryColor[2]);
+        parent::Cell($w, $h, $this->sansAccent($txt), $border, $ln, $align, $fill, $link);
+    }
+
+    function MultiCell($w, $h, $txt='', $border=0, $align='L', $fill=false)
+    {
+        $this->SetTextColor($this->secondaryColor[0], $this->secondaryColor[1], $this->secondaryColor[2]);
+        parent::MultiCell($w, $h, $this->sansAccent($txt), $border, $align, $fill);
+    }
+
+    function sansAccent($str) {
+        $str = str_replace(array('é', 'è', 'ê', 'ë', 'à', 'â', 'ä', 'î', 'ï', 'ô', 'ö', 'û', 'ü', 'ç'),
+                           array('e', 'e', 'e', 'e', 'a', 'a', 'a', 'i', 'i', 'o', 'o', 'u', 'u', 'c'),
+                           $str);
+        return $str;
+    }
+
+    function FancyTable($header, $data)
+    {
+        $this->SetFillColor(220, 220, 220);
+        $this->SetTextColor($this->secondaryColor[0], $this->secondaryColor[1], $this->secondaryColor[2]);
+        $this->SetDrawColor(200, 200, 200);
+        $this->SetLineWidth(.3);
+        $this->SetFont('Arial','B',12);
+
+        $w = array(70, 0);
+        $w[1] = $this->GetPageWidth() - $this->GetX() - $this->rMargin;
+        for($i=0;$i<count($header);$i++)
+            $this->Cell($w[$i],7,$this->sansAccent($header[$i]),1,0,'L',true);
+        $this->Ln();
+
+        $this->SetFont('Arial','',11);
+        $fill = false;
+        foreach($data as $row)
+        {
+            $this->Cell($w[0],6,$this->sansAccent($row[0]),'LR',0,'L',$fill);
+            $this->Cell($w[1],6,$row[1],'LR',0,'L',$fill);
+            $this->Ln();
+            $fill = !$fill;
+        }
+        $this->Cell(array_sum($w),0,'','T');
+    }
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id_reparation = $_POST['id_reparation'];
+    $date_facture = $_POST['date_facture'];
+    $montant_total = $_POST['facture_montant_total'];
+    $montant_regle = $_POST['montant_regle'];
+    $details = $_POST['details'];
+    $date_facture_pdf = $date_facture;
+
+    $stmt_reparation = $pdo->prepare("
+        SELECT
+            dr.nom_complet,
+            dr.marque_telephone,
+            dr.probleme,
+            r.montant_total,
+            r.montant_paye,
+            CASE WHEN r.montant_total = r.montant_paye THEN 'Oui' ELSE 'Non' END AS solde
+        FROM reparation r
+        INNER JOIN demande_reparation dr ON r.id_demande = dr.id_demande
+        WHERE r.id_reparation = ?
+    ");
+    $stmt_reparation->execute([$id_reparation]);
+    $reparation_info = $stmt_reparation->fetch(PDO::FETCH_ASSOC);
+
+    $nom_demandeur = $reparation_info['nom_complet'];
+    $marque_telephone = $reparation_info['marque_telephone'];
+    $probleme = $reparation_info['probleme'];
+    $montant_total_reparation = $reparation_info['montant_total'];
+    $montant_paye = $reparation_info['montant_paye'];
+    $solde = $reparation_info['solde'];
 
     $reste_a_payer = $montant_total - $montant_regle;
-    $statut_paiement = ($reste_a_payer <= 0) ? 'Payée' : (($montant_regle > 0) ? 'Partiellement payée' : 'Non payée');
 
-    $nom_demandeur = '';
-    $date_reparation_facture = '';
+    $stmt_facture_insert = $pdo->prepare("INSERT INTO facture (id_reparation, date_facture, montant_total, montant_regle, reste_a_payer, details) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt_facture_insert->execute([$id_reparation, $date_facture, $montant_total, $montant_regle, $reste_a_payer, $details]);
 
-    if ($from_traitement) {
-        // Récupérer les informations du traitement
-        $stmt_traitement = $pdo->prepare("
-            SELECT
-                t.id_traitement,
-                d.nom_complet AS nom_demandeur,
-                t.date_reception AS date_reparation,
-                t.montant_total
-            FROM traitement t
-            JOIN demande_reparation d ON t.id_demande = d.id_demande
-            WHERE t.id_traitement = ?
-        ");
-        $stmt_traitement->execute([$id_reparation]);
-        $source_info = $stmt_traitement->fetch(PDO::FETCH_ASSOC);
-        if ($source_info) {
-            $nom_demandeur = $source_info['nom_demandeur'];
-            $date_reparation_facture = $source_info['date_reparation'];
-            $montant_total = $source_info['montant_total']; // S'assurer d'utiliser le montant du traitement
-        } else {
-            echo "Erreur: Traitement non trouvé.";
-            header("Location: liste_traitements.php?error=traitement_not_found");
-            exit();
-        }
+    $id_facture = $pdo->lastInsertId();
+    $id_facture_pdf = $id_facture;
 
-        // Vérifier si une facture existe déjà pour ce traitement
-        $stmt_check_facture = $pdo->prepare("SELECT id_facture FROM facture WHERE id_reparation = ?");
-        $stmt_check_facture->execute([$id_reparation]);
-        if ($stmt_check_facture->fetch()) {
-            echo "<script>alert('Une facture existe déjà pour ce traitement.'); window.location.href = 'liste_traitements.php';</script>";
-            exit();
-        }
-
-        // Sauvegarder la facture en utilisant l'ID du traitement comme id_reparation
-        $stmt_facture = $pdo->prepare("
-            INSERT INTO facture (id_reparation, date_facture, montant_total, montant_regle, reste_a_payer, details, statut_paiement)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        ");
-        $stmt_facture->execute([$id_reparation, $date_facture, $montant_total, $montant_regle, $reste_a_payer, $details, $statut_paiement]);
-        $id_facture = $pdo->lastInsertId();
-
-    } else {
-        // Si la facturation provient de la page des réparations
-        $stmt_reparation = $pdo->prepare("
-            SELECT
-                r.*,
-                dr.nom_complet AS nom_demandeur
-            FROM reparation r
-            INNER JOIN demande_reparation dr ON r.id_demande = dr.id_demande
-            WHERE r.id_reparation = ?
-        ");
-        $stmt_reparation->execute([$id_reparation]);
-        $reparation = $stmt_reparation->fetch(PDO::FETCH_ASSOC);
-
-        if ($reparation) {
-            $nom_demandeur = $reparation['nom_demandeur'];
-            $date_reparation_facture = $reparation['date_reparation'];
-
-            // Sauvegarder dans la table facture
-            $stmt_facture = $pdo->prepare("
-                INSERT INTO facture (id_reparation, date_facture, montant_total, montant_regle, reste_a_payer, details, statut_paiement)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
-            ");
-            $stmt_facture->execute([$id_reparation, $date_facture, $montant_total, $montant_regle, $reste_a_payer, $details, $statut_paiement]);
-            $id_facture = $pdo->lastInsertId();
-        } else {
-            echo "Erreur: Réparation non trouvée.";
-            header("Location: index.php?error=reparation_not_found");
-            exit();
-        }
-    }
-
-    // Générer le PDF avec TCPDF
-    $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-
-    // set document information
-    $pdf->SetCreator(PDF_CREATOR);
-    $pdf->SetAuthor('Votre Nom/Nom de l\'Entreprise');
-    $pdf->SetTitle('Facture N° ' . $id_facture);
-    $pdf->SetSubject('Facture');
-    $pdf->SetKeywords('facture, réparation');
-
-    // set default header data
-    $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE.' 001', PDF_HEADER_STRING);
-
-    // set header and footer fonts
-    $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-    $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
-
-    // set default monospaced font
-    $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
-
-    // set margins
-    $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-    $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-    $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
-
-    // set auto page breaks
-    $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-
-    // set image scale factor
-    $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
-
-    // set some language-dependent strings (optional)
-    if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
-        require_once(dirname(__FILE__).'/lang/eng.php');
-        $pdf->setLanguageArray($l);
-    }
-
-    // ---------------------------------------------------------
-
-    // set default font subsetting mode
-    $pdf->setFontSubsetting(true);
-
-    // Set font
-    $pdf->SetFont('helvetica', '', 12, '', true);
-
-    // Add a page
+    $pdf = new PDF('P');
+    $pdf->AliasNbPages();
     $pdf->AddPage();
 
-    // Titre de la facture
-    $pdf->SetFont('helvetica', 'B', 16);
-    $pdf->Cell(0, 10, 'FACTURE N° ' . $id_facture, 0, 1, 'C');
+    $header = array('Description', 'Details');
+    $data = array(
+        array('Nom du demandeur', $nom_demandeur),
+        array('Marque du telephone', $marque_telephone),
+        array('Probleme', $probleme),
+        array('Montant Total', number_format($montant_total_reparation, 2) . ' FCFA'),
+        array('Montant Paye', number_format($montant_paye, 2) . ' FCFA'),
+        array('Solde', $solde)
+    );
+    $pdf->FancyTable($header, $data);
+
     $pdf->Ln(10);
+    $pdf->SetFont('Arial','',10);
+     $pdf->MultiCell(0, 6, $pdf->sansAccent('Details supplementaires: ') . htmlspecialchars($pdf->sansAccent($details)), 0, 'L');
 
-    // Informations
-    $pdf->SetFont('helvetica', '', 12);
-    $pdf->Cell(60, 10, 'Nom du client:', 0, 0);
-    $pdf->Cell(130, 10, htmlspecialchars($nom_demandeur), 0, 1);
+    $pdf->Ln(5);
+    $pdf->SetFont('Arial','',10);
+    $pdf->MultiCell(0, 6, $pdf->sansAccent('Conditions et modalites de paiement: Le paiement est du dans 15 jours.'), 0, 'L');
 
-    $pdf->Cell(60, 10, 'Date de reparation:', 0, 0);
-    $pdf->Cell(130, 10, htmlspecialchars($date_reparation_facture), 0, 1);
+    $pdf->SetY(-30);
+    $pdf->SetFont('Arial','I',10);
+    $pdf->Cell(0, 5, $pdf->sansAccent('Signature'), 0, 1, 'R');
 
-    $pdf->Cell(60, 10, 'Date de la facture:', 0, 0);
-    $pdf->Cell(130, 10, htmlspecialchars($date_facture), 0, 1);
-
-    $pdf->Cell(60, 10, 'Montant Total:', 0, 0);
-    $pdf->Cell(130, 10, htmlspecialchars($montant_total) . ' FCFA', 0, 1);
-
-    $pdf->Cell(60, 10, 'Montant Regle:', 0, 0);
-    $pdf->Cell(130, 10, htmlspecialchars($montant_regle) . ' FCFA', 0, 1);
-
-    $pdf->Cell(60, 10, 'Reste a Payer:', 0, 0);
-    $pdf->Cell(130, 10, htmlspecialchars($reste_a_payer) . ' FCFA', 0, 1);
-
-    $pdf->Cell(60, 10, 'Statut Paiement:', 0, 0);
-    $pdf->Cell(130, 10, htmlspecialchars($statut_paiement), 0, 1);
-
-    if ($details) {
-        $pdf->Ln(5);
-        $pdf->MultiCell(0, 10, 'Details: ' . htmlspecialchars($details));
-    }
-
-    // ---------------------------------------------------------
-
-    // Close and output PDF document
-    $pdf->Output('facture_' . $id_facture . '.pdf', 'D');
-    exit();
+    $pdf->Output('facture_' . $id_facture . '.pdf', 'I');
 
 } else {
-    header("Location: index.php");
-    exit();
+    echo "Methode non autorisee.";
 }
 ?>
