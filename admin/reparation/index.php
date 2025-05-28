@@ -426,10 +426,27 @@ $reparations = $stmt->fetchAll();
         }
     }
 
+
     function exportToPDF() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
-        doc.text("Liste des réparations", 14, 10);
+        const pageWidth = doc.internal.pageSize.getWidth();
+
+        // --- Ajouter le Logo (Centré et taille ajustée) ---
+        const imgData = 'jd.png'; // Assurez-vous que le chemin est correct
+        const logoWidth = 40;
+        const logoHeight = 27;
+        const logoX = (pageWidth - logoWidth) / 2;
+        const logoY = 5;
+        doc.addImage(imgData, 'PNG', logoX, logoY, logoWidth, logoHeight);
+        const yAfterLogo = logoY + logoHeight + 5;
+
+        doc.setFontSize(14);
+        const title = "Liste des réparations";
+        const titleWidth = doc.getTextWidth(title);
+        const titleX = (pageWidth - titleWidth) / 2;
+        doc.text(title, titleX, yAfterLogo + 7);
+        const yAfterTitle = yAfterLogo + 12;
 
         const headers = [];
         const rows = [];
@@ -455,10 +472,10 @@ $reparations = $stmt->fetchAll();
             head: [headers],
             body: rows,
             styles: { fontSize: 8 },
-            startY: 20,
+            startY: yAfterTitle + 5,
         });
 
-        doc.save("reparations.pdf");
+        doc.save("reparations_avec_logo.pdf");
     }
 
     function exportToExcel() {

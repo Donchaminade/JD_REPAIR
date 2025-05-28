@@ -47,15 +47,16 @@ $factures = $stmt->fetchAll();
                             <td class="px-6 py-4"><?= htmlspecialchars($facture['reste_a_payer']) ?> FCFA</td>
                             <td class="px-6 py-4"><?= htmlspecialchars($facture['statut_paiement']) ?></td>
                             <td class="px-6 py-4 flex gap-2">
-                                <a href="#" onclick="openViewFactureModal(<?= $facture['id_facture'] ?>)" class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-700 text-xs flex items-center gap-1">
+                                <button onclick='openDetailsModal(<?= htmlspecialchars(json_encode($facture)) ?>)' class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-700 text-xs flex items-center gap-1">
                                     <i class="fa-solid fa-eye"></i> Voir
-                                </a>
+                                </button>
                                 <button onclick="confirmDeleteFacture(<?= $facture['id_facture'] ?>)" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-800 text-xs flex items-center gap-1">
                                     <i class="fa fa-trash"></i> Supp
                                 </button>
-                                <a href="generate_pdf_facture.php?id_facture=<?= $facture['id_facture'] ?>" target="_blank" class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-700 text-xs flex items-center gap-1">
-                                    <i class="fa fa-print"></i> Imprimer
-                                </a>
+                                <button onclick="exportFacturesToPDF()" class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-700 text-xs flex items-center gap-1">
+                                    <i class="fa fa-file-pdf"></i> PDF
+                                </button>
+                                
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -65,57 +66,115 @@ $factures = $stmt->fetchAll();
     </div>
 </div>
 
-<div id="viewFactureModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-2xl w-full relative">
-        <button onclick="closeViewFactureModal()" class="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-xl">
+<div id="detailModal" class="fixed inset-0 hidden bg-black bg-opacity-50 z-50 flex items-center justify-center">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-3xl p-8 relative">
+        <button onclick="closeDetailsModal()" class="absolute top-4 right-4 text-gray-700 dark:text-white hover:text-red-500">
             <i class="fa fa-times w-6 h-6"></i>
         </button>
-        <div class="p-6">
-            <h2 class="text-xl font-bold mb-4 text-indigo-600">Détails de la Facture</h2>
-            <div id="factureDetailsContent" class="space-y-2 text-gray-700 dark:text-gray-200">
-                </div>
+        <h2 class="text-2xl font-bold text-center text-gray-800 dark:text-white mb-6">Détails de la Facture</h2>
+        <div id="detailContent" class="space-y-4 text-base text-gray-700 dark:text-white divide-y divide-gray-300 dark:divide-gray-600">
         </div>
     </div>
 </div>
-
 <script>
-    function openViewFactureModal(id_facture) {
-        fetch('get_facture_details.php?id_facture=' + id_facture)
-            .then(response => response.json())
-            .then(data => {
-                const contentDiv = document.getElementById('factureDetailsContent');
-                contentDiv.innerHTML = `
-                    <p><strong>ID Facture:</strong> ${data.id_facture}</p>
-                    <p><strong>ID Réparation:</strong> ${data.id_reparation || 'N/A'}</p>
-                    <p><strong>Nom du Demandeur:</strong> ${data.nom_demandeur || 'N/A'}</p>
-                    <p><strong>Date Facture:</strong> ${data.date_facture}</p>
-                    <p><strong>Montant Total:</strong> ${parseFloat(data.montant_total).toFixed(2)} FCFA</p>
-                    <p><strong>Montant Réglé:</strong> ${parseFloat(data.montant_regle).toFixed(2)} FCFA</p>
-                    <p><strong>Reste à Payer:</strong> ${parseFloat(data.reste_a_payer).toFixed(2)} FCFA</p>
-                    <p><strong>Détails:</strong> ${data.details || 'Aucun'}</p>
-                    <p><strong>Statut Paiement:</strong> ${data.statut_paiement}</p>
-                    `;
-                const modal = document.getElementById('viewFactureModal');
-                modal.classList.remove('hidden');
-                modal.classList.add('flex');
-            })
-            .catch(error => {
-                console.error('Erreur lors de la récupération des détails de la facture:', error);
-                alert('Erreur lors de la récupération des détails de la facture.');
-            });
+    function openDetailsModal(data) {
+        const detailModal = document.getElementById('detailModal');
+        const content = document.getElementById('detailContent');
+        content.innerHTML = `
+            <div><strong>ID Facture:</strong> ${data.id_facture}</div>
+            <div class="pt-4"><strong>Nom du Demandeur:</strong> ${data.nom_demandeur || 'N/A'}</div>
+            <div class="pt-4"><strong>Date Facture:</strong> ${data.date_facture}</div>
+            <div class="pt-4"><strong>Montant Total:</strong> ${parseFloat(data.montant_total).toFixed(2)} FCFA</div>
+            <div class="pt-4"><strong>Montant Réglé:</strong> ${parseFloat(data.montant_regle).toFixed(2)} FCFA</div>
+            <div class="pt-4"><strong>Reste à Payer:</strong> ${parseFloat(data.reste_a_payer).toFixed(2)} FCFA</div>
+            <div class="pt-4"><strong>Statut Paiement:</strong> ${data.statut_paiement}</div>
+            <div class="pt-4"><strong>Détails:</strong> ${data.details || 'Aucun'}</div>
+        `;
+        detailModal.classList.remove('hidden');
+        detailModal.classList.add('flex');
     }
 
-    function closeViewFactureModal() {
-        const modal = document.getElementById('viewFactureModal');
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
+    function closeDetailsModal() {
+        const detailModal = document.getElementById('detailModal');
+        if (detailModal) {
+            detailModal.classList.add('hidden');
+            detailModal.classList.remove('flex');
+        }
     }
 
     function confirmDeleteFacture(id) {
         if (confirm("Êtes-vous sûr de vouloir supprimer cette facture ?")) {
-            window.location.href = 'delete_facture.php?id_facture=' + encodeURIComponent(id);
+            window.location.href = 'delete.php?id_facture=' + encodeURIComponent(id);
         }
     }
+
+
+
+    function exportFacturesToPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({
+            orientation: 'landscape'
+        });
+        const pageWidth = doc.internal.pageSize.getWidth();
+
+        // --- Ajouter le Logo (Centré et plus grand) ---
+        const imgData = 'jd.png'; // Assurez-vous que le chemin est correct
+        const logoWidth = 40;
+        const logoHeight = 27;
+        const logoX = (pageWidth - logoWidth) / 2; // Centrer horizontalement
+        const logoY = 5; // Marge du haut
+        doc.addImage(imgData, 'PNG', logoX, logoY, logoWidth, logoHeight);
+        const yAfterLogo = logoY + logoHeight + 5; // Espace après le logo
+
+        doc.setFontSize(16);
+        const title = "Liste des Factures";
+        const titleWidth = doc.getTextWidth(title);
+        const titleX = (pageWidth - titleWidth) / 2;
+        doc.text(title, titleX, yAfterLogo + 7); // Centrer le titre sous le logo
+        const yAfterTitle = yAfterLogo + 12; // Espace après le titre
+
+        const tableColumn = ["ID Facture", "Nom du Demandeur", "Date Facture", "Montant Total", "Montant Réglé", "Reste à Payer", "Statut Paiement"];
+        const tableRows = [];
+
+        const rows = document.querySelectorAll("#factureTable tbody tr");
+        rows.forEach(row => {
+            const cols = row.querySelectorAll("td");
+            const rowData = [];
+            for (let i = 0; i < Math.min(cols.length, tableColumn.length); i++) {
+                rowData.push(cols[i].innerText);
+            }
+            tableRows.push(rowData);
+        });
+
+        // Style du tableau chic avec bordures
+        const styles = {
+            fontSize: 10,
+            borderColor: '#000000',
+            lineWidth: 0.5,
+            textColor: '#34495e',
+            fillColor: '#f9f9f9',
+            padding: 2,
+        };
+
+        const headerStyles = {
+            fillColor: '#34495e',
+            textColor: '#fff',
+            fontStyle: 'bold',
+        };
+
+        doc.autoTable({
+            head: [tableColumn],
+            body: tableRows,
+            startY: yAfterTitle + 10, // Début du tableau après le logo et le titre
+            styles: styles,
+            headStyles: headerStyles,
+        });
+
+        doc.save("factures_paysage.pdf");
+    }
+
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
 
 <?php include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/footer.php'; ?>

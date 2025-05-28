@@ -421,15 +421,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_demande'])) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
 <script>
-    function exportToPDF() {
+            function exportToPDF() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF({
             orientation: 'landscape',
             unit: 'mm',
             format: 'a4'
         });
+        const pageWidth = doc.internal.pageSize.getWidth();
 
-        doc.text("Liste des demandes de réparation", 14, 15);
+        // --- Ajouter le Logo (Centré et taille ajustée) ---
+        const imgData = 'jd.png'; // Assurez-vous que le chemin est correct
+        const logoWidth = 40; // Diminuer la largeur
+        const logoHeight = 27; // Conserver le ratio approximativement
+        const logoX = (pageWidth - logoWidth) / 2; // Centrer horizontalement
+        const logoY = 5; // Réduire la marge du haut
+        doc.addImage(imgData, 'PNG', logoX, logoY, logoWidth, logoHeight);
+        const yAfterLogo = logoY + logoHeight + 5; // Réduire l'espace après le logo
+
+        doc.setFontSize(14);
+        const title = "Liste des demandes de réparation";
+        const titleWidth = doc.getTextWidth(title);
+        const titleX = (pageWidth - titleWidth) / 2;
+        doc.text(title, titleX, yAfterLogo + 7); // Réduire l'espace avant le titre
+        const yAfterTitle = yAfterLogo + 12; // Position après le titre
 
         const headers = [["Nom complet", "Numéro", "Email", "Adresse", "Marque", "Problème", "Date", "Type"]];
         const rows = [];
@@ -447,7 +462,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_demande'])) {
         doc.autoTable({
             head: headers,
             body: rows,
-            startY: 25
+            startY: yAfterTitle + 5 // Réduire l'espace avant le tableau
         });
 
         doc.save("demandes_reparation.pdf");

@@ -38,7 +38,8 @@ if ($pdo) {
         $nombreFactures = $stmt->fetchColumn();
 
         // Chiffre d'affaires (somme des montants totaux des factures payées)
-        $stmt = $pdo->query("SELECT COALESCE(SUM(montant_paye), 0) FROM traitement");
+
+        $stmt = $pdo->query("SELECT COALESCE(SUM(montant_regle), 0) FROM facture ");
         $chiffreAffaires = $stmt->fetchColumn();
         // Chiffre d'affaires montant paye(somme des montants totaux des factures payées)
         // $stmt = $pdo->query("SELECT COALESCE(SUM(montant_paye), 0) FROM traitement ");
@@ -100,7 +101,7 @@ if ($pdo) {
             </div>
             <div>
                 <p class="text-sm text-gray-500 dark:text-gray-300">Demandes</p>
-                <p class="text-lg font-semibold text-gray-800 dark:text-gray-200"><?= htmlspecialchars($nombreDemandes) ?></p>
+                <p class="text-lg font-semibold text-gray-800 dark:text-gray-200"><strong><?= htmlspecialchars($nombreDemandes) ?></strong></p>
             </div>
         </div>
 
@@ -110,7 +111,7 @@ if ($pdo) {
             </div>
             <div>
                 <p class="text-sm text-gray-500 dark:text-gray-300">Réparations</p>
-                <p class="text-lg font-semibold text-gray-800 dark:text-gray-200"><?= htmlspecialchars($nombreReparations) ?></p>
+                <p class="text-lg font-semibold text-gray-800 dark:text-gray-200"><strong><?= htmlspecialchars($nombreReparations) ?></strong></p>
             </div>
         </div>
 
@@ -120,17 +121,19 @@ if ($pdo) {
             </div>
             <div>
                 <p class="text-sm text-gray-500 dark:text-gray-300">Factures</p>
-                <p class="text-lg font-semibold text-gray-800 dark:text-gray-200"><?= htmlspecialchars($nombreFactures) ?></p>
+                <p class="text-lg font-semibold text-gray-800 dark:text-gray-200"><strong><?= htmlspecialchars($nombreFactures) ?></strong></p>
             </div>
         </div>
 
         <div class="bg-gray-700 text-white shadow rounded-lg p-4 flex items-center justify-center h-32 w-full md:w-auto">
             <div class="mr-4 text-center md:text-left">
-                <i class="fa-solid fa-coins fa-2x"></i>
+            <i class="fa-solid fa-coins fa-2x"></i>
             </div>
             <div>
-                <p class="text-sm text-white/70">Chiffre d'affaires</p>
-                <p class="text-lg font-semibold"><?= htmlspecialchars(number_format($chiffreAffaires, 2)) ?> FCFA</p>
+            <p class="text-sm text-white/70">Chiffre d'affaires</p>
+            <p class="text-2xl font-bold text-green-500 transition-transform duration-200 hover:scale-110">
+                <?= htmlspecialchars(number_format($chiffreAffaires, 2)) ?> FCFA
+            </p>
             </div>
         </div>
         <!-- <div class="bg-blue-900 text-white shadow rounded-lg p-4 flex items-center justify-center h-32 w-full md:w-auto">
@@ -148,8 +151,8 @@ if ($pdo) {
                 <i class="fa-solid fa-check-circle fa-2x"></i>
             </div>
             <div>
-                <p class="text-sm text-gray-500 dark:text-gray-300">Payées</p>
-                <p class="text-lg font-semibold text-gray-800 dark:text-gray-200"><?= htmlspecialchars($nombreFacturesPayees) ?></p>
+                <p class="text-sm text-gray-500 dark:text-gray-300">Totalement Payées</p>
+                <p class="text-lg font-semibold text-gray-800 dark:text-gray-200"><strong><?= htmlspecialchars($nombreFacturesPayees) ?></strong></p>
             </div>
         </div>
 
@@ -159,7 +162,7 @@ if ($pdo) {
             </div>
             <div>
                 <p class="text-sm text-gray-500 dark:text-gray-300">Reparations Echouee</p>
-                <p class="text-lg font-semibold text-gray-800 dark:text-gray-200"><?= htmlspecialchars($nombrerepfail) ?></p>
+                <p class="text-lg font-semibold text-gray-800 dark:text-gray-200"><strong><?= htmlspecialchars($nombrerepfail) ?></strong></p>
             </div>
         </div>
 
@@ -169,7 +172,7 @@ if ($pdo) {
             </div>
             <div>
                 <p class="text-sm text-gray-500 dark:text-gray-300">Utilisateurs</p>
-                <p class="text-lg font-semibold text-gray-800 dark:text-gray-200"><?= htmlspecialchars($nombreUtilisateurs) ?></p>
+                <p class="text-lg font-semibold text-gray-800 dark:text-gray-200"><strong><?= htmlspecialchars($nombreUtilisateurs) ?></strong></p>
             </div>
         </div>
 
@@ -179,7 +182,7 @@ if ($pdo) {
             </div>
             <div>
                 <p class="text-sm text-gray-500 dark:text-gray-300">Techniciens</p>
-                <p class="text-lg font-semibold text-gray-800 dark:text-gray-200"><?= htmlspecialchars($nombreTechniciens) ?></p>
+                <p class="text-lg font-semibold text-gray-800 dark:text-gray-200"></p><strong><?= htmlspecialchars($nombreTechniciens) ?></strong></p>
             </div>
         </div>
 
@@ -189,7 +192,7 @@ if ($pdo) {
             </div>
             <div>
                 <p class="text-sm text-gray-500 dark:text-gray-300">Prêtes à récupérer</p>
-                <p class="text-lg font-semibold text-gray-800 dark:text-gray-200"><?= htmlspecialchars($nombreReparationsPretes) ?></p>
+                <p class="text-lg font-semibold text-gray-800 dark:text-gray-200"></p><strong><?= htmlspecialchars($nombreReparationsPretes) ?></strong></p>
             </div>
         </div>
     </div>

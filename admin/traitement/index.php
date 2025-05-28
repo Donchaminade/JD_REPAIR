@@ -302,15 +302,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enregistrer_reparatio
         }
     }
 
-    function exportToPDF() {
+        function exportToPDF() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF({
             orientation: 'landscape',
             unit: 'mm',
             format: 'a4'
         });
+        const pageWidth = doc.internal.pageSize.getWidth();
 
-        doc.text("Liste des Traitements", 14, 15);
+        // --- Ajouter le Logo (Centré et taille ajustée) ---
+        const imgData = 'jd.png'; // Assurez-vous que le chemin est correct
+        const logoWidth = 40; // Taille du logo
+        const logoHeight = 27;
+        const logoX = (pageWidth - logoWidth) / 2; // Centrer horizontalement
+        const logoY = 5; // Marge du haut
+        doc.addImage(imgData, 'PNG', logoX, logoY, logoWidth, logoHeight);
+        const yAfterLogo = logoY + logoHeight + 5; // Espace après le logo
+
+        doc.setFontSize(14);
+        const title = "Liste des Traitements";
+        const titleWidth = doc.getTextWidth(title);
+        const titleX = (pageWidth - titleWidth) / 2;
+        doc.text(title, titleX, yAfterLogo + 7); // Position du titre
+        const yAfterTitle = yAfterLogo + 12; // Position après le titre
 
         const headers = [["ID Traitement", "Nom Demandeur", "Date Réception", "Montant Total", "Montant Payé", "Type Réparation", "Technicien"]];
         const rows = [];
@@ -322,7 +337,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enregistrer_reparatio
             if (allRows[i].style.display !== "none" && allRows[i].id !== "noResults") {
                 const rowData = [];
                 const cells = allRows[i].getElementsByTagName("td");
-                for (let j = 0; j < cells.length - 1; j++) {
+                for (let j = 0; j < cells.length - 1; j++) { // Exclude the last column
                     rowData.push(cells[j].textContent.trim());
                 }
                 rows.push(rowData);
@@ -332,7 +347,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enregistrer_reparatio
         doc.autoTable({
             head: headers,
             body: rows,
-            startY: 25
+            startY: yAfterTitle + 5 // Position du tableau
         });
 
         doc.save("traitements.pdf");
