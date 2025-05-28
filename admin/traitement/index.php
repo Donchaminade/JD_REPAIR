@@ -155,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enregistrer_reparatio
                 <label for="statut_reparation" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Statut</label>
                 <select name="statut_reparation" id="statut_reparation" class="w-full px-4 py-2 border rounded-md bg-gray-100 dark:bg-gray-800 dark:text-white">
                     <option value="En cours">En cours</option>
-                    <option value="Terminé">Terminé</option>
+                    <option value="Endommagé">Echouée</option>
                     <option value="Prêt à récupérer">Prêt à récupérer</option>
                 </select>
             </div>

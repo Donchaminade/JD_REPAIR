@@ -1,4 +1,5 @@
 <?php
+ob_start(); // Start output buffering
 include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/config/db.php';
 require_once($_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/libs/fpdf/fpdf.php');
 
@@ -68,8 +69,8 @@ class PDF extends FPDF
 
     function sansAccent($str) {
         $str = str_replace(array('é', 'è', 'ê', 'ë', 'à', 'â', 'ä', 'î', 'ï', 'ô', 'ö', 'û', 'ü', 'ç'),
-                           array('e', 'e', 'e', 'e', 'a', 'a', 'a', 'i', 'i', 'o', 'o', 'u', 'u', 'c'),
-                           $str);
+                            array('e', 'e', 'e', 'e', 'a', 'a', 'a', 'i', 'i', 'o', 'o', 'u', 'u', 'c'),
+                            $str);
         return $str;
     }
 
@@ -106,16 +107,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $montant_total = $_POST['facture_montant_total'];
     $montant_regle = $_POST['montant_regle'];
     $details = $_POST['details'];
+    $statut_paiement = $_POST['statut_paiement']; // Récupérer le statut de paiement
     $date_facture_pdf = $date_facture;
 
+    // Insertion des informations de la facture
+    $stmt_facture_insert = $pdo->prepare("INSERT INTO facture (id_reparation, date_facture, montant_total, montant_regle, reste_a_payer, details, statut_paiement) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $reste_a_payer = $montant_total - $montant_regle;
+    $stmt_facture_insert->execute([$id_reparation, $date_facture, $montant_total, $montant_regle, $reste_a_payer, $details, $statut_paiement]);
+
+    $id_facture = $pdo->lastInsertId();
+    $id_facture_pdf = $id_facture;
+
+    // Récupération des informations de la réparation APRÈS l'insertion de la facture
     $stmt_reparation = $pdo->prepare("
         SELECT
             dr.nom_complet,
             dr.marque_telephone,
             dr.probleme,
-            r.montant_total,
-            r.montant_paye,
-            CASE WHEN r.montant_total = r.montant_paye THEN 'Oui' ELSE 'Non' END AS solde
+            r.montant_total AS montant_total_reparation -- Alias pour éviter la confusion
         FROM reparation r
         INNER JOIN demande_reparation dr ON r.id_demande = dr.id_demande
         WHERE r.id_reparation = ?
@@ -123,49 +132,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt_reparation->execute([$id_reparation]);
     $reparation_info = $stmt_reparation->fetch(PDO::FETCH_ASSOC);
 
-    $nom_demandeur = $reparation_info['nom_complet'];
-    $marque_telephone = $reparation_info['marque_telephone'];
-    $probleme = $reparation_info['probleme'];
-    $montant_total_reparation = $reparation_info['montant_total'];
-    $montant_paye = $reparation_info['montant_paye'];
-    $solde = $reparation_info['solde'];
+    if ($reparation_info) {
+        $nom_demandeur = $reparation_info['nom_complet'];
+        $marque_telephone = $reparation_info['marque_telephone'];
+        $probleme = $reparation_info['probleme'];
+        $montant_total_reparation = $reparation_info['montant_total_reparation'];
+        $montant_paye = $montant_regle; // Utiliser le montant réglé lors de la création de la facture
+        $solde = ($montant_paye >= $montant_total) ? 'Oui' : 'Non'; // Vérifier le solde
 
-    $reste_a_payer = $montant_total - $montant_regle;
+        $pdf = new PDF('P');
+        $pdf->AliasNbPages();
+        $pdf->AddPage();
 
-    $stmt_facture_insert = $pdo->prepare("INSERT INTO facture (id_reparation, date_facture, montant_total, montant_regle, reste_a_payer, details) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt_facture_insert->execute([$id_reparation, $date_facture, $montant_total, $montant_regle, $reste_a_payer, $details]);
+        $header = array('Description', 'Details');
+        $data = array(
+            array('Nom du demandeur', $nom_demandeur),
+            array('Marque du telephone', $marque_telephone),
+            array('Probleme', $probleme),
+            array('Montant Total', number_format($montant_total_reparation, 2) . ' FCFA'),
+            array('Montant Paye', number_format($montant_paye, 2) . ' FCFA'),
+            array('Solde', $solde)
+        );
+        $pdf->FancyTable($header, $data);
 
-    $id_facture = $pdo->lastInsertId();
-    $id_facture_pdf = $id_facture;
+        $pdf->Ln(10);
+        $pdf->SetFont('Arial','',10);
+        $pdf->MultiCell(0, 6, $pdf->sansAccent('Details supplementaires: ') . htmlspecialchars($pdf->sansAccent($details)), 0, 'L');
 
-    $pdf = new PDF('P');
-    $pdf->AliasNbPages();
-    $pdf->AddPage();
+        $pdf->Ln(5);
+        $pdf->SetFont('Arial','',10);
+        $pdf->MultiCell(0, 6, $pdf->sansAccent('Conditions et modalites de paiement: Le paiement est du dans 15 jours.'), 0, 'L');
 
-    $header = array('Description', 'Details');
-    $data = array(
-        array('Nom du demandeur', $nom_demandeur),
-        array('Marque du telephone', $marque_telephone),
-        array('Probleme', $probleme),
-        array('Montant Total', number_format($montant_total_reparation, 2) . ' FCFA'),
-        array('Montant Paye', number_format($montant_paye, 2) . ' FCFA'),
-        array('Solde', $solde)
-    );
-    $pdf->FancyTable($header, $data);
+        $pdf->SetY(-30);
+        $pdf->SetFont('Arial','I',10);
+        $pdf->Cell(0, 5, $pdf->sansAccent('Signature'), 0, 1, 'R');
 
-    $pdf->Ln(10);
-    $pdf->SetFont('Arial','',10);
-     $pdf->MultiCell(0, 6, $pdf->sansAccent('Details supplementaires: ') . htmlspecialchars($pdf->sansAccent($details)), 0, 'L');
+        $pdf->Output('I', 'facture_' . $id_facture . '.pdf');
+        ob_end_flush(); // Send output buffer
+        exit();
 
-    $pdf->Ln(5);
-    $pdf->SetFont('Arial','',10);
-    $pdf->MultiCell(0, 6, $pdf->sansAccent('Conditions et modalites de paiement: Le paiement est du dans 15 jours.'), 0, 'L');
-
-    $pdf->SetY(-30);
-    $pdf->SetFont('Arial','I',10);
-    $pdf->Cell(0, 5, $pdf->sansAccent('Signature'), 0, 1, 'R');
-
-    $pdf->Output('facture_' . $id_facture . '.pdf', 'I');
+    } else {
+        echo "Erreur: Informations de la réparation non trouvées.";
+    }
 
 } else {
     echo "Methode non autorisee.";

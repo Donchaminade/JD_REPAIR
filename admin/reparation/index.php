@@ -211,7 +211,7 @@ $reparations = $stmt->fetchAll();
 
 
  <!-- Moodal de facture -->
- <div id="factureModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+<div id="factureModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
     <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-md w-full relative">
         <button onclick="closeFactureModal()" class="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-xl">
             <i class="fa fa-times w-6 h-6"></i>
@@ -256,6 +256,15 @@ $reparations = $stmt->fetchAll();
                 <textarea name="details" id="facture_details_traitement" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none focus:ring-2 dark:bg-gray-700 dark:text-gray-200"></textarea>
             </div>
 
+            <div>
+                <label for="facture_statut_paiement_traitement" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Statut Paiement:</label>
+                <select name="statut_paiement" id="facture_statut_paiement_traitement" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none focus:ring-2 dark:bg-gray-700 dark:text-gray-200">
+                    <option value="Non payée" selected>Non payée</option>
+                    <option value="Partiellement payée">Partiellement payée</option>
+                    <option value="Payée">Payée</option>
+                </select>
+            </div>
+
             <div class="flex justify-end gap-4">
                 <button type="button" onclick="closeFactureModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400">
                     Annuler
@@ -267,6 +276,48 @@ $reparations = $stmt->fetchAll();
         </form>
     </div>
 </div>
+
+<script>
+    // Fonction pour fermer le modal de facture
+    function closeFactureModal() {
+        const factureModal = document.getElementById("factureModal");
+        if (factureModal) {
+            factureModal.classList.add("hidden");
+            factureModal.classList.remove("flex");
+        }
+    }
+
+    // modal de facture
+    function openFactureModal(data) {
+        const factureId = document.getElementById('facture_id_reparation_traitement');
+        const factureNom = document.getElementById('facture_nom_demandeur_traitement');
+        const factureTech = document.getElementById('facture_technicien_traitement');
+        const factureDateRec = document.getElementById('facture_date_reception_traitement');
+        const factureMontantTotal = document.getElementById('facture_montant_total_traitement');
+        const factureMontantTotalHidden = document.getElementById('facture_montant_total_hidden_traitement');
+        const factureMontantRegle = document.getElementById('facture_montant_regle_traitement');
+        const factureDateFacture = document.getElementById('facture_date_facture_traitement');
+        const factureDetails = document.getElementById('facture_details_traitement');
+        const factureStatutPaiement = document.getElementById('facture_statut_paiement_traitement');
+
+        if (factureId) factureId.value = data.id_reparation || '';
+        if (factureNom) factureNom.value = data.nom_demandeur || '';
+        if (factureTech) factureTech.value = data.nom_technicien || 'Non assigné';
+        if (factureDateRec) factureDateRec.value = data.date_reparation || '';
+        if (factureMontantTotal) factureMontantTotal.value = data.montant_total || '';
+        if (factureMontantTotalHidden) factureMontantTotalHidden.value = data.montant_total || '';
+        if (factureMontantRegle) factureMontantRegle.value = ''; // Réinitialiser le montant réglé
+        if (factureDateFacture) factureDateFacture.value = new Date().toISOString().split('T')[0]; // Date du jour par défaut
+        if (factureDetails) factureDetails.value = ''; // Réinitialiser les détails
+        if (factureStatutPaiement) factureStatutPaiement.value = 'Non payée'; // Valeur par défaut
+
+        const factureModal = document.getElementById("factureModal");
+        if (factureModal) {
+            factureModal.classList.remove("hidden");
+            factureModal.classList.add("flex");
+        }
+    }
+</script>
  <!-- ---------------------- -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -311,14 +362,7 @@ $reparations = $stmt->fetchAll();
     //     }
     // }
 
-    // Fonction pour fermer le modal de facture
-    function closeFactureModal() {
-        const factureModal = document.getElementById("factureModal");
-        if (factureModal) {
-            factureModal.classList.add("hidden");
-            factureModal.classList.remove("flex");
-        }
-    }
+ 
 
     // Ouvrir le modal de détails
     function openDetailsModal(data) {
@@ -347,34 +391,34 @@ $reparations = $stmt->fetchAll();
     }
 
 
-    // modal de facture
-    function openFactureModal(data) {
-        const factureId = document.getElementById('facture_id_reparation_traitement');
-        const factureNom = document.getElementById('facture_nom_demandeur_traitement');
-        const factureTech = document.getElementById('facture_technicien_traitement');
-        const factureDateRec = document.getElementById('facture_date_reception_traitement');
-        const factureMontantTotal = document.getElementById('facture_montant_total_traitement');
-        const factureMontantTotalHidden = document.getElementById('facture_montant_total_hidden_traitement');
-        const factureMontantRegle = document.getElementById('facture_montant_regle_traitement');
-        const factureDateFacture = document.getElementById('facture_date_facture_traitement');
-        const factureDetails = document.getElementById('facture_details_traitement');
+    // modal de facture anciennne version
+    // function openFactureModal(data) {
+    //     const factureId = document.getElementById('facture_id_reparation_traitement');
+    //     const factureNom = document.getElementById('facture_nom_demandeur_traitement');
+    //     const factureTech = document.getElementById('facture_technicien_traitement');
+    //     const factureDateRec = document.getElementById('facture_date_reception_traitement');
+    //     const factureMontantTotal = document.getElementById('facture_montant_total_traitement');
+    //     const factureMontantTotalHidden = document.getElementById('facture_montant_total_hidden_traitement');
+    //     const factureMontantRegle = document.getElementById('facture_montant_regle_traitement');
+    //     const factureDateFacture = document.getElementById('facture_date_facture_traitement');
+    //     const factureDetails = document.getElementById('facture_details_traitement');
 
-        if (factureId) factureId.value = data.id_reparation || '';
-        if (factureNom) factureNom.value = data.nom_demandeur || '';
-        if (factureTech) factureTech.value = data.nom_technicien || 'Non assigné';
-        if (factureDateRec) factureDateRec.value = data.date_reparation || '';
-        if (factureMontantTotal) factureMontantTotal.value = data.montant_total || '';
-        if (factureMontantTotalHidden) factureMontantTotalHidden.value = data.montant_total || '';
-        if (factureMontantRegle) factureMontantRegle.value = ''; // Réinitialiser le montant réglé
-        if (factureDateFacture) factureDateFacture.value = new Date().toISOString().split('T')[0]; // Date du jour par défaut
-        if (factureDetails) factureDetails.value = ''; // Réinitialiser les détails
+    //     if (factureId) factureId.value = data.id_reparation || '';
+    //     if (factureNom) factureNom.value = data.nom_demandeur || '';
+    //     if (factureTech) factureTech.value = data.nom_technicien || 'Non assigné';
+    //     if (factureDateRec) factureDateRec.value = data.date_reparation || '';
+    //     if (factureMontantTotal) factureMontantTotal.value = data.montant_total || '';
+    //     if (factureMontantTotalHidden) factureMontantTotalHidden.value = data.montant_total || '';
+    //     if (factureMontantRegle) factureMontantRegle.value = ''; // Réinitialiser le montant réglé
+    //     if (factureDateFacture) factureDateFacture.value = new Date().toISOString().split('T')[0]; // Date du jour par défaut
+    //     if (factureDetails) factureDetails.value = ''; // Réinitialiser les détails
 
-        const factureModal = document.getElementById("factureModal");
-        if (factureModal) {
-            factureModal.classList.remove("hidden");
-            factureModal.classList.add("flex");
-        }
-    }
+    //     const factureModal = document.getElementById("factureModal");
+    //     if (factureModal) {
+    //         factureModal.classList.remove("hidden");
+    //         factureModal.classList.add("flex");
+    //     }
+    // }
 
     function confirmDelete(id) {
         if (confirm("Êtes-vous sûr de vouloir supprimer cette réparation ?")) {
