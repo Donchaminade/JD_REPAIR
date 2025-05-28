@@ -76,6 +76,7 @@
         <i id="theme-toggle-icon" class="fas fa-moon"></i>
     </button>
     <script>
+
     // Fonction pour appliquer le thème
     function setTheme(dark) {
         if (dark) {
@@ -137,54 +138,56 @@
         document.documentElement.classList.add('light');
     }
     </script>
+
+    <!-- Styles personnalisés pour le mode sombre -->
     <style>
-    /* Mode sombre personnalisé pour le body et textes */
-    .dark body {
-        background-color: #18181b !important;
-        color: #f3f4f6 !important;
-    }
-    .dark .bg-white { background-color: #23272f !important; }
-    .dark .bg-gray-50 { background-color: #18181b !important; }
-    .dark .bg-gray-100 { background-color: #23272f !important; }
-    .dark .bg-blue-600, .dark header.bg-blue-600 { background-color: #23272f !important; }
-    .dark .bg-blue-700, .dark #mobile-menu.bg-blue-700 { background-color: #18181b !important; }
-    .dark .bg-blue-900 { background-color: #1e293b !important; }
-    .dark .bg-gray-900, .dark header.bg-gray-900 { background-color: #0f172a !important; }
-    .dark .bg-gray-200 { background-color: #23272f !important; }
-    .dark .text-gray-700, .dark .text-gray-600, .dark .text-gray-500 { color: #d1d5db !important; }
-    .dark .text-blue-600 { color: #60a5fa !important; }
-    .dark .text-blue-700 { color: #3b82f6 !important; }
-    .dark .text-purple-600 { color: #a78bfa !important; }
-    .dark .text-green-600 { color: #6ee7b7 !important; }
-    .dark .text-yellow-600 { color: #fde68a !important; }
-    .dark .text-red-600 { color: #f87171 !important; }
-    .dark .text-indigo-600 { color: #818cf8 !important; }
-    .dark .text-pink-600 { color: #f472b6 !important; }
-    .dark .text-gray-800 { color: #f3f4f6 !important; }
-    .dark .border { border-color: #374151 !important; }
-    .dark input, .dark textarea, .dark select {
-        background-color: #23272f !important;
-        color: #f3f4f6 !important;
-        border-color: #374151 !important;
-    }
-    .dark .shadow-lg, .dark .shadow-md {
-        box-shadow: 0 4px 24px 0 rgba(0,0,0,0.7) !important;
-    }
-    .dark .bg-purple-100 { background-color: #312e81 !important; }
-    .dark .bg-blue-100 { background-color: #1e40af !important; }
-    .dark .bg-green-100 { background-color: #064e3b !important; }
-    .dark .bg-yellow-100 { background-color: #78350f !important; }
-    .dark .bg-red-100 { background-color: #7f1d1d !important; }
-    .dark .bg-indigo-100 { background-color: #3730a3 !important; }
-    .dark .bg-pink-100 { background-color: #831843 !important; }
-    .dark .text-white { color: #f3f4f6 !important; }
-    .dark .hover\:bg-gray-100:hover { background-color: #374151 !important; }
-    .dark .hover\:bg-blue-700:hover { background-color: #1d4ed8 !important; }
-    .dark .hover\:bg-blue-600:hover { background-color: #2563eb !important; }
-    .dark .hover\:bg-blue-50:hover { background-color: #1e293b !important; }
-    .dark .hover\:bg-gray-700:hover { background-color: #23272f !important; }
-    .dark .hover\:bg-green-600:hover { background-color: #047857 !important; }
-    .dark .hover\:bg-green-500:hover { background-color: #22c55e !important; }
+            /* Mode sombre personnalisé pour le body et textes */
+            .dark body {
+                background-color: #18181b !important;
+                color: #f3f4f6 !important;
+            }
+            .dark .bg-white { background-color: #23272f !important; }
+            .dark .bg-gray-50 { background-color: #18181b !important; }
+            .dark .bg-gray-100 { background-color: #23272f !important; }
+            .dark .bg-blue-600, .dark header.bg-blue-600 { background-color: #23272f !important; }
+            .dark .bg-blue-700, .dark #mobile-menu.bg-blue-700 { background-color: #18181b !important; }
+            .dark .bg-blue-900 { background-color: #1e293b !important; }
+            .dark .bg-gray-900, .dark header.bg-gray-900 { background-color: #0f172a !important; }
+            .dark .bg-gray-200 { background-color: #23272f !important; }
+            .dark .text-gray-700, .dark .text-gray-600, .dark .text-gray-500 { color: #d1d5db !important; }
+            .dark .text-blue-600 { color: #60a5fa !important; }
+            .dark .text-blue-700 { color: #3b82f6 !important; }
+            .dark .text-purple-600 { color: #a78bfa !important; }
+            .dark .text-green-600 { color: #6ee7b7 !important; }
+            .dark .text-yellow-600 { color: #fde68a !important; }
+            .dark .text-red-600 { color: #f87171 !important; }
+            .dark .text-indigo-600 { color: #818cf8 !important; }
+            .dark .text-pink-600 { color: #f472b6 !important; }
+            .dark .text-gray-800 { color: #f3f4f6 !important; }
+            .dark .border { border-color: #374151 !important; }
+            .dark input, .dark textarea, .dark select {
+                background-color: #23272f !important;
+                color: #f3f4f6 !important;
+                border-color: #374151 !important;
+            }
+            .dark .shadow-lg, .dark .shadow-md {
+                box-shadow: 0 4px 24px 0 rgba(0,0,0,0.7) !important;
+            }
+            .dark .bg-purple-100 { background-color: #312e81 !important; }
+            .dark .bg-blue-100 { background-color: #1e40af !important; }
+            .dark .bg-green-100 { background-color: #064e3b !important; }
+            .dark .bg-yellow-100 { background-color: #78350f !important; }
+            .dark .bg-red-100 { background-color: #7f1d1d !important; }
+            .dark .bg-indigo-100 { background-color: #3730a3 !important; }
+            .dark .bg-pink-100 { background-color: #831843 !important; }
+            .dark .text-white { color: #f3f4f6 !important; }
+            .dark .hover\:bg-gray-100:hover { background-color: #374151 !important; }
+            .dark .hover\:bg-blue-700:hover { background-color: #1d4ed8 !important; }
+            .dark .hover\:bg-blue-600:hover { background-color: #2563eb !important; }
+            .dark .hover\:bg-blue-50:hover { background-color: #1e293b !important; }
+            .dark .hover\:bg-gray-700:hover { background-color: #23272f !important; }
+            .dark .hover\:bg-green-600:hover { background-color: #047857 !important; }
+            .dark .hover\:bg-green-500:hover { background-color: #22c55e !important; }
     </style>
 
     <header class="bg-blue-600 text-white shadow-lg sticky top-0 z-40">
@@ -416,6 +419,8 @@
             </div>
         </div>
     </section>
+
+    
     <script>
         // Affichage/masquage des services supplémentaires
         document.addEventListener('DOMContentLoaded', function () {
@@ -473,7 +478,7 @@
                     <div class="flex flex-wrap gap-4 mb-6">
                         <div class="flex items-center">
                             <i class="fas fa-check-circle text-green-500 mr-2"></i>
-                            <span>Techniciens certifiés</span>
+                            <span>Techniciens formés</span>
                         </div>
                         <div class="flex items-center">
                             <i class="fas fa-check-circle text-green-500 mr-2"></i>
@@ -505,57 +510,106 @@
                 </div>
             </div>
         </div>
+
+        <!-- Carousel logos marques téléphones -->
+        <div class="w-full bg-white py-4 border-t border-b border-blue-100 mt-12 overflow-hidden relative">
+            <div id="brand-carousel" class="flex items-center gap-10 whitespace-nowrap will-change-transform" style="animation: brand-marquee 30s linear infinite;">
+                <!-- Ajoutez ici les logos des marques (images libres de droits ou logos officiels) -->
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple" class="h-12 w-auto inline-block mx-4 grayscale hover:grayscale-0 transition" />
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg" alt="Samsung" class="h-10 w-auto inline-block mx-4 grayscale hover:grayscale-0 transition" />
+                <img src="https://www.dafont.com/forum/attach/orig/8/8/884058.png" alt="Huawei" class="h-10 w-auto inline-block mx-4 grayscale hover:grayscale-0 transition" />
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/29/Xiaomi_logo.svg" alt="Xiaomi" class="h-10 w-auto inline-block mx-4 grayscale hover:grayscale-0 transition" />
+                <img src="https://logodix.com/logo/23122.png" alt="Oppo" class="h-10 w-auto inline-block mx-4 grayscale hover:grayscale-0 transition" />
+                <img src="https://1000logos.net/wp-content/uploads/2022/11/OnePlus-Logo-2013.png" alt="OnePlus" class="h-10 w-auto inline-block mx-4 grayscale hover:grayscale-0 transition" />
+                <img src="https://th.bing.com/th/id/OIP.uu_v0RkHe0r7n_hxKkSVyQHaEK?w=1536&h=864&rs=1&pid=ImgDetMain" alt="Google Pixel" class="h-10 w-auto inline-block mx-4 grayscale hover:grayscale-0 transition" />
+                <img src="https://w7.pngwing.com/pngs/852/187/png-transparent-sony-xperia-s-sony-ericsson-xperia-neo-sony-ericsson-xperia-ray-sony-xperia-u-sony-xperia-neo-l-sonylogoeps-trademark-logo-business-thumbnail.png" alt="Sony" class="h-10 w-auto inline-block mx-4 grayscale hover:grayscale-0 transition" />
+                <img src="https://th.bing.com/th/id/R.c455bf919acf15afbe80254a1aa20cef?rik=MN9MRqUHOwRSPA&riu=http%3a%2f%2fall-spares.ua%2fnfs%2fcontent%2f7398%2ffile%2fnokia_logo.png&ehk=xivOMw9B9RMhyNWg7lKd4tTwiXFJLFYNkRSsjtSOCWE%3d&risl=&pid=ImgRaw&r=0" alt="Nokia" class="h-10 w-auto inline-block mx-4 grayscale hover:grayscale-0 transition" />
+                <img src="https://www.hdwallpapers.in/download/realme_logo_yellow_background_hd_realme-HD.jpg" alt="Realme" class="h-10 w-auto inline-block mx-4 grayscale hover:grayscale-0 transition" />
+                <img src="https://th.bing.com/th/id/OIP.k80XVI2jn0LKRn2bzJznywHaB1?w=850&h=210&rs=1&pid=ImgDetMain" alt="Asus" class="h-10 w-auto inline-block mx-4 grayscale hover:grayscale-0 transition" />
+                <img src="https://static.vecteezy.com/system/resources/previews/020/927/745/non_2x/lenovo-logo-brand-phone-symbol-name-red-design-china-mobile-illustration-free-vector.jpg" alt="Lenovo" class="h-10 w-auto inline-block mx-4 grayscale hover:grayscale-0 transition" />
+                <img src="https://logowik.com/content/uploads/images/motorola-nuevo3473.logowik.com.webp" alt="Motorola" class="h-10 w-auto inline-block mx-4 grayscale hover:grayscale-0 transition" />
+                <!-- Dupliquez pour effet infini -->
+
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple" class="h-12 w-auto inline-block mx-4 grayscale hover:grayscale-0 transition" />
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg" alt="Samsung" class="h-10 w-auto inline-block mx-4 grayscale hover:grayscale-0 transition" />
+                <img src="https://www.dafont.com/forum/attach/orig/8/8/884058.png" alt="Huawei" class="h-10 w-auto inline-block mx-4 grayscale hover:grayscale-0 transition" />
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/29/Xiaomi_logo.svg" alt="Xiaomi" class="h-10 w-auto inline-block mx-4 grayscale hover:grayscale-0 transition" />
+                <img src="https://logodix.com/logo/23122.png" alt="Oppo" class="h-10 w-auto inline-block mx-4 grayscale hover:grayscale-0 transition" />
+                <img src="https://1000logos.net/wp-content/uploads/2022/11/OnePlus-Logo-2013.png" alt="OnePlus" class="h-10 w-auto inline-block mx-4 grayscale hover:grayscale-0 transition" />
+                <img src="https://th.bing.com/th/id/OIP.uu_v0RkHe0r7n_hxKkSVyQHaEK?w=1536&h=864&rs=1&pid=ImgDetMain" alt="Google Pixel" class="h-10 w-auto inline-block mx-4 grayscale hover:grayscale-0 transition" />
+                <img src="https://w7.pngwing.com/pngs/852/187/png-transparent-sony-xperia-s-sony-ericsson-xperia-neo-sony-ericsson-xperia-ray-sony-xperia-u-sony-xperia-neo-l-sonylogoeps-trademark-logo-business-thumbnail.png" alt="Sony" class="h-10 w-auto inline-block mx-4 grayscale hover:grayscale-0 transition" />
+                <img src="https://th.bing.com/th/id/R.c455bf919acf15afbe80254a1aa20cef?rik=MN9MRqUHOwRSPA&riu=http%3a%2f%2fall-spares.ua%2fnfs%2fcontent%2f7398%2ffile%2fnokia_logo.png&ehk=xivOMw9B9RMhyNWg7lKd4tTwiXFJLFYNkRSsjtSOCWE%3d&risl=&pid=ImgRaw&r=0" alt="Nokia" class="h-10 w-auto inline-block mx-4 grayscale hover:grayscale-0 transition" />
+                <img src="https://www.hdwallpapers.in/download/realme_logo_yellow_background_hd_realme-HD.jpg" alt="Realme" class="h-10 w-auto inline-block mx-4 grayscale hover:grayscale-0 transition" />
+                <img src="https://th.bing.com/th/id/OIP.k80XVI2jn0LKRn2bzJznywHaB1?w=850&h=210&rs=1&pid=ImgDetMain" alt="Asus" class="h-10 w-auto inline-block mx-4 grayscale hover:grayscale-0 transition" />
+                <img src="https://static.vecteezy.com/system/resources/previews/020/927/745/non_2x/lenovo-logo-brand-phone-symbol-name-red-design-china-mobile-illustration-free-vector.jpg" alt="Lenovo" class="h-10 w-auto inline-block mx-4 grayscale hover:grayscale-0 transition" />
+                <img src="https://logowik.com/content/uploads/images/motorola-nuevo3473.logowik.com.webp" alt="Motorola" class="h-10 w-auto inline-block mx-4 grayscale hover:grayscale-0 transition" />
+               
+            </div>
+        </div>
+
+        <!-- styles pour les animations de flottement -->
         <style>
-        /* Animations pour les formes flottantes */
-        @keyframes float-shape {
-            0% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-30px) scale(1.05); }
-            100% { transform: translateY(0) scale(1); }
-        }
-        @keyframes float-shape2 {
-            0% { transform: translate(30%,30%) scale(1); }
-            50% { transform: translate(30%,10%) scale(1.08); }
-            100% { transform: translate(30%,30%) scale(1); }
-        }
-        @keyframes float-shape3 {
-            0% { transform: translate(-50%,-50%) scale(1); }
-            50% { transform: translate(-50%,-60%) scale(1.1); }
-            100% { transform: translate(-50%,-50%) scale(1); }
-        }
-        @keyframes float-shape4 {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(25px); }
-            100% { transform: translateY(0); }
-        }
-        @keyframes float-shape5 {
-            0% { transform: translateX(0); }
-            50% { transform: translateX(30px); }
-            100% { transform: translateX(0); }
-        }
-        @keyframes float-shape6 {
-            0% { transform: scale(1) rotate(0deg);}
-            50% { transform: scale(1.08) rotate(8deg);}
-            100% { transform: scale(1) rotate(0deg);}
-        }
-        .animate-float-shape {
-            animation: float-shape 7s ease-in-out infinite;
-        }
-        .animate-float-shape2 {
-            animation: float-shape2 9s ease-in-out infinite;
-        }
-        .animate-float-shape3 {
-            animation: float-shape3 8s ease-in-out infinite;
-        }
-        .animate-float-shape4 {
-            animation: float-shape4 6s ease-in-out infinite;
-        }
-        .animate-float-shape5 {
-            animation: float-shape5 10s ease-in-out infinite;
-        }
-        .animate-float-shape6 {
-            animation: float-shape6 12s ease-in-out infinite;
-        }
+            /* Animations pour les formes flottantes */
+            @keyframes float-shape {
+                0% { transform: translateY(0) scale(1); }
+                50% { transform: translateY(-30px) scale(1.05); }
+                100% { transform: translateY(0) scale(1); }
+            }
+            @keyframes float-shape2 {
+                0% { transform: translate(30%,30%) scale(1); }
+                50% { transform: translate(30%,10%) scale(1.08); }
+                100% { transform: translate(30%,30%) scale(1); }
+            }
+            @keyframes float-shape3 {
+                0% { transform: translate(-50%,-50%) scale(1); }
+                50% { transform: translate(-50%,-60%) scale(1.1); }
+                100% { transform: translate(-50%,-50%) scale(1); }
+            }
+            @keyframes float-shape4 {
+                0% { transform: translateY(0); }
+                50% { transform: translateY(25px); }
+                100% { transform: translateY(0); }
+            }
+            @keyframes float-shape5 {
+                0% { transform: translateX(0); }
+                50% { transform: translateX(30px); }
+                100% { transform: translateX(0); }
+            }
+            @keyframes float-shape6 {
+                0% { transform: scale(1) rotate(0deg);}
+                50% { transform: scale(1.08) rotate(8deg);}
+                100% { transform: scale(1) rotate(0deg);}
+            }
+            .animate-float-shape {
+                animation: float-shape 7s ease-in-out infinite;
+            }
+            .animate-float-shape2 {
+                animation: float-shape2 9s ease-in-out infinite;
+            }
+            .animate-float-shape3 {
+                animation: float-shape3 8s ease-in-out infinite;
+            }
+            .animate-float-shape4 {
+                animation: float-shape4 6s ease-in-out infinite;
+            }
+            .animate-float-shape5 {
+                animation: float-shape5 10s ease-in-out infinite;
+            }
+            .animate-float-shape6 {
+                animation: float-shape6 12s ease-in-out infinite;
+            }
+            /* Carousel logos marques */
+            @keyframes brand-marquee {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-50%); }
+            }
+            #brand-carousel {
+                min-width: 200%;
+            }
         </style>
+
+
+<!-- Particules bleues animées -->
         <script>
         // Particules bleues animées
         (function() {
