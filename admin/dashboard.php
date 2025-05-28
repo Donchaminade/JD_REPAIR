@@ -39,7 +39,7 @@ if ($pdo) {
 
         // Chiffre d'affaires (somme des montants totaux des factures payées)
 
-        $stmt = $pdo->query("SELECT COALESCE(SUM(montant_regle), 0) FROM facture ");
+        $stmt = $pdo->query("SELECT COALESCE(SUM(montant_paye), 0) FROM traitement ");
         $chiffreAffaires = $stmt->fetchColumn();
         // Chiffre d'affaires montant paye(somme des montants totaux des factures payées)
         // $stmt = $pdo->query("SELECT COALESCE(SUM(montant_paye), 0) FROM traitement ");
@@ -197,129 +197,48 @@ if ($pdo) {
         </div>
     </div>
 <br>
-<h1 class="text-xl text-center justify-center font-semibold text-gray-800 dark:text-gray-200 mb-4">Raccourcis Details Tableau</h1>
-    <div class="flex mb-6">
-        <div class="w-1/3 pr-4">
-            <div class="bg-white dark:bg-gray-700 shadow rounded-lg overflow-x-auto">
-                <div class="p-4">
-                    <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">Réparations prêtes à récupérer</h4>
-                    <?php
-                    if ($pdo) {
-                        $stmt = $pdo->query("SELECT dr.nom_complet, dr.numero, r.id_reparation
-                                               FROM reparation r
-                                               JOIN demande_reparation dr ON r.id_demande = dr.id_demande
-                                               WHERE r.statut = 'Prêt à récupérer'");
-                        $reparationsPretes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                        if (count($reparationsPretes) > 0) {
-                            echo '<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">';
-                            echo '<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">';
-                            echo '<tr>';
-                            echo '<th class="py-3 px-6">Nom du client</th>';
-                            echo '<th class="py-3 px-6">Numéro</th>';
-                            echo '<th class="py-3 px-6">Actions</th>';
-                            echo '</tr>';
-                            echo '</thead>';
-                            echo '<tbody>';
-                            foreach ($reparationsPretes as $reparation) {
-                                echo '<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">';
-                                echo '<td class="py-4 px-6">' . htmlspecialchars($reparation['nom_complet']) . '</td>';
-                                echo '<td class="py-4 px-6">' . htmlspecialchars($reparation['numero']) . '</td>';
-                                echo '<td class="py-4 px-6">';
-                                echo '<a href="mailto:?subject=Votre réparation est prête&body=Bonjour ' . htmlspecialchars($reparation['nom_complet']) . ',%0D%0AVotre réparation est prête à être récupérée." class="text-blue-500 hover:underline mr-2"><i class="fa-solid fa-envelope"></i></a>';
-                                echo '<a href="https://wa.me/' . htmlspecialchars($reparation['numero']) . '?text=Bonjour,%20votre%20réparation%20est%20prête%20à%20être%20récupérée." target="_blank" class="text-green-500 hover:underline"><i class="fa-brands fa-whatsapp"></i></a>';
-                                echo '</td>';
-                                echo '</tr>';
-                            }
-                            echo '</tbody>';
-                            echo '</table>';
-                        } else {
-                            echo '<p class="text-gray-600 dark:text-gray-300">Aucune réparation n\'est actuellement prête à être récupérée.</p>';
-                        }
-                    } else {
-                        echo '<p class="text-red-500">Erreur de connexion à la base de données.</p>';
-                    }
-                    ?>
-                </div>
-            </div>
-        </div>
-        <div class="flex-1">
-            <div class="bg-white dark:bg-gray-700 shadow rounded-lg overflow-x-auto">
-                <div class="p-4">
-                    <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">Dernières demandes</h4>
-                    <?php
-                    if ($pdo) {
-                        $stmt = $pdo->query("SELECT id_demande, nom_complet, numero, date_demande FROM demande_reparation ORDER BY date_demande ASC LIMIT 20");
-                        $dernieresDemandes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-                        if (count($dernieresDemandes) > 0) {
-                            echo '<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">';
-                            echo '<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">';
-                            echo '<tr>';
-                            echo '<th class="py-3 px-6">Nom du client</th>';
-                            echo '<th class="py-3 px-6">Numéro</th>';
-                            echo '<th class="py-3 px-6">Date de la demande</th>';
-                            echo '<th class="py-3 px-6">Action</th>';
-                            echo '</tr>';
-                            echo '</thead>';
-                            echo '<tbody>';
-                            foreach ($dernieresDemandes as $demande) {
-                                echo '<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">';
-                                echo '<td class="py-4 px-6">' . htmlspecialchars($demande['nom_complet']) . '</td>';
-                                echo '<td class="py-4 px-6">' . htmlspecialchars($demande['numero']) . '</td>';
-                                echo '<td class="py-4 px-6">' . htmlspecialchars($demande['date_demande']) . '</td>';
-                                echo '<td class="py-4 px-6">';
-                                echo '<a href="/JD_REPAIR/demande/update.php?id=' . htmlspecialchars($demande['id_demande']) . '" class="text-indigo-500 hover:underline"><i class="fa-solid fa-pen-to-square"></i> Traiter</a>';
-                                echo '</td>';
-                                echo '</tr>';
-                            }
-                            echo '</tbody>';
-                            echo '</table>';
-                        } else {
-                            echo '<p class="text-gray-600 dark:text-gray-300">Aucune nouvelle demande pour le moment.</p>';
-                        }
-                    } else {
-                        echo '<p class="text-red-500">Erreur de connexion à la base de données.</p>';
-                    }
-                    ?>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- <div class="flex">
-        <div class="bg-white dark:bg-gray-700 shadow rounded-lg overflow-x-auto w-full md:w-2/3 lg:w-1/2">
-            <div class="p-4">
-                <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2 text-center">Techniciens et réparations en cours</h4>
+<h1 class="text-2xl text-center font-bold text-gray-800 dark:text-gray-200 mb-8 tracking-wide">Raccourcis & Statistiques</h1>
+<div class="flex flex-col lg:flex-row gap-8">
+    <!-- Bloc Réparations prêtes à récupérer -->
+    <div class="w-full lg:w-1/3">
+        <div class="bg-white dark:bg-gray-700 shadow-lg rounded-2xl overflow-hidden">
+            <div class="p-6">
+                <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 text-center border-b pb-2">Réparations prêtes à récupérer</h4>
                 <?php
                 if ($pdo) {
-                    $stmt = $pdo->query("SELECT u.nom_complet, COUNT(t.id_traitement) AS nombre_reparations
-                                           FROM utilisateurs u
-                                           LEFT JOIN traitement t ON u.id_utilisateur = t.id_technicien
-                                           WHERE u.role = 'technicien'
-                                           GROUP BY u.id_utilisateur
-                                           ORDER BY nombre_reparations DESC");
-                    $techniciensReparations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    $stmt = $pdo->query("SELECT dr.nom_complet, dr.numero, r.id_reparation
+                                           FROM reparation r
+                                           JOIN demande_reparation dr ON r.id_demande = dr.id_demande
+                                           WHERE r.statut = 'Prêt à récupérer'");
+                    $reparationsPretes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                    if (count($techniciensReparations) > 0) {
+                    if (count($reparationsPretes) > 0) {
+                        echo '<div class="overflow-x-auto">';
                         echo '<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">';
                         echo '<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">';
                         echo '<tr>';
-                        echo '<th class="py-3 px-6">Technicien</th>';
-                        echo '<th class="py-3 px-6">Réparations en cours</th>';
+                        echo '<th class="py-3 px-4">Nom du client</th>';
+                        echo '<th class="py-3 px-4">Numéro</th>';
+                        echo '<th class="py-3 px-4 text-center">Actions</th>';
                         echo '</tr>';
                         echo '</thead>';
                         echo '<tbody>';
-                        foreach ($techniciensReparations as $tech) {
-                            echo '<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">';
-                            echo '<td class="py-4 px-6">' . htmlspecialchars($tech['nom_complet']) . '</td>';
-                            echo '<td class="py-4 px-6">' . htmlspecialchars($tech['nombre_reparations']) . '</td>';
+                        foreach ($reparationsPretes as $reparation) {
+                            echo '<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition">';
+                            echo '<td class="py-3 px-4">' . htmlspecialchars($reparation['nom_complet']) . '</td>';
+                            echo '<td class="py-3 px-4">' . htmlspecialchars($reparation['numero']) . '</td>';
+                            echo '<td class="py-3 px-4 text-center">';
+                            echo '<a href="mailto:?subject=Votre réparation est prête&body=Bonjour ' . htmlspecialchars($reparation['nom_complet']) . ',%0D%0AVotre réparation est prête à être récupérée." class="text-blue-500 hover:text-blue-700 mx-2" title="Envoyer Email"><i class="fa-solid fa-envelope"></i></a>';
+                            echo '<a href="https://wa.me/' . htmlspecialchars($reparation['numero']) . '?text=Bonjour,%20votre%20réparation%20est%20prête%20à%20être%20récupérée." target="_blank" class="text-green-500 hover:text-green-700 mx-2" title="Envoyer WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>';
+                            echo '</td>';
                             echo '</tr>';
                         }
                         echo '</tbody>';
                         echo '</table>';
+                        echo '</div>';
                     } else {
-                        echo '<p class="text-gray-600 dark:text-gray-300 text-center">Aucun technicien trouvé.</p>';
+                        echo '<p class="text-gray-600 dark:text-gray-300 text-center">Aucune réparation n\'est actuellement prête à être récupérée.</p>';
                     }
                 } else {
                     echo '<p class="text-red-500 text-center">Erreur de connexion à la base de données.</p>';
@@ -327,7 +246,280 @@ if ($pdo) {
                 ?>
             </div>
         </div>
-    </div> -->
+    </div>
+
+    <!-- Bloc Graphiques -->
+    <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Statuts de réparation -->
+        <div class="bg-white dark:bg-gray-700 shadow-lg rounded-2xl p-6 flex flex-col items-center">
+            <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 text-center">Statuts de réparation</h4>
+            <canvas id="pieStatutReparation" width="220" height="220"></canvas>
+        </div>
+        <!-- Statuts de traitement -->
+        <div class="bg-white dark:bg-gray-700 shadow-lg rounded-2xl p-6 flex flex-col items-center">
+            <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 text-center">Traitements : Endommagé vs Prêt à récupérer</h4>
+            <canvas id="pieStatutTraitement" width="220" height="220"></canvas>
+        </div>
+        <!-- Statuts de factures -->
+        <div class="bg-white dark:bg-gray-700 shadow-lg rounded-2xl p-6 flex flex-col items-center">
+            <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 text-center">Factures : Payée vs Non payée</h4>
+            <canvas id="pieStatutFacture" width="220" height="220"></canvas>
+        </div>
+        <!-- Utilisateurs -->
+        <div class="bg-white dark:bg-gray-700 shadow-lg rounded-2xl p-6 flex flex-col items-center">
+            <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 text-center">Utilisateurs</h4>
+            <canvas id="pieUtilisateurs" width="220" height="220"></canvas>
+        </div>
+    </div>
 </div>
+
+<!-- Deuxième ligne : Graphiques -->
+<div class="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <!-- Techniciens ayant le plus réparé -->
+    <div class="bg-white dark:bg-gray-700 shadow-lg rounded-2xl p-6">
+        <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 text-center">Top Techniciens</h4>
+        <canvas id="doughnutTechniciensReparations" height="260"></canvas>
+    </div>
+    <!-- Evolution des demandes par mois et par année -->
+    <div class="bg-white dark:bg-gray-700 shadow-lg rounded-2xl p-6">
+        <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 text-center">Evolution des demandes (mois/année)</h4>
+        <canvas id="lineDemandesMoisAnnee" height="260"></canvas>
+    </div>
+</div>
+
+<?php
+// Statuts de réparation (table reparation)
+$statuts = ['En cours', 'Prêt à récupérer', 'Endommagé'];
+$statutCounts = [];
+if ($pdo) {
+    foreach ($statuts as $statut) {
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM reparation WHERE statut = ?");
+        $stmt->execute([$statut]);
+        $statutCounts[] = (int)$stmt->fetchColumn();
+    }
+} else {
+    $statutCounts = [0, 0, 0];
+}
+
+// Statuts de traitement (juste Endommagé et Prêt à récupérer)
+$statutsTraitement = ['Endommagé', 'Prêt à récupérer'];
+$statutTraitementCounts = [];
+if ($pdo) {
+    foreach ($statutsTraitement as $statut) {
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM reparation WHERE statut = ?");
+        $stmt->execute([$statut]);
+        $statutTraitementCounts[] = (int)$stmt->fetchColumn();
+    }
+} else {
+    $statutTraitementCounts = [0, 0];
+}
+
+// Statuts de factures (Payée vs Non payée)
+$facturePayee = 0;
+$factureNonPayee = 0;
+if ($pdo) {
+    $stmt = $pdo->query("SELECT COUNT(*) FROM facture WHERE statut_paiement = 'Payée'");
+    $facturePayee = (int)$stmt->fetchColumn();
+    $stmt = $pdo->query("SELECT COUNT(*) FROM facture WHERE statut_paiement != 'Payée'");
+    $factureNonPayee = (int)$stmt->fetchColumn();
+}
+
+// Utilisateurs : techniciens vs autres
+$nbTechniciens = 0;
+$nbAutres = 0;
+if ($pdo) {
+    $stmt = $pdo->query("SELECT COUNT(*) FROM utilisateurs WHERE role = 'technicien'");
+    $nbTechniciens = (int)$stmt->fetchColumn();
+    $stmt = $pdo->query("SELECT COUNT(*) FROM utilisateurs WHERE role != 'technicien' OR role IS NULL OR role = ''");
+    $nbAutres = (int)$stmt->fetchColumn();
+}
+
+// Evolution des demandes par mois et par année (diagramme en lignes)
+$barLabels = [];
+$barDatasets = [];
+if ($pdo) {
+    // Récupérer les années distinctes
+    $stmt = $pdo->query("SELECT DISTINCT YEAR(date_demande) as annee FROM demande_reparation ORDER BY annee ASC");
+    $annees = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+    // Générer les labels de mois (01 à 12)
+    $moisLabels = [];
+    for ($m = 1; $m <= 12; $m++) {
+        $moisLabels[] = sprintf('%02d', $m);
+    }
+    $barLabels = $moisLabels;
+
+    // Pour chaque année, récupérer les demandes par mois
+    foreach ($annees as $annee) {
+        $data = array_fill(0, 12, 0);
+        $stmt = $pdo->prepare("
+            SELECT MONTH(date_demande) as mois, COUNT(*) as total
+            FROM demande_reparation
+            WHERE YEAR(date_demande) = ?
+            GROUP BY mois
+        ");
+        $stmt->execute([$annee]);
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($results as $row) {
+            $data[(int)$row['mois'] - 1] = (int)$row['total'];
+        }
+        $barDatasets[] = [
+            'label' => $annee,
+            'data' => $data,
+        ];
+    }
+}
+// Couleurs pour les datasets (max 5 années)
+$barColors = ['#6366f1', '#10b981', '#f59e42', '#ef4444', '#a78bfa'];
+foreach ($barDatasets as $i => &$ds) {
+    $ds['borderColor'] = $barColors[$i % count($barColors)];
+    $ds['backgroundColor'] = $barColors[$i % count($barColors)];
+    $ds['fill'] = false;
+    $ds['tension'] = 0.3;
+}
+unset($ds);
+
+// Récupérer les techniciens et le nombre de réparations effectuées
+$techLabels = [];
+$techData = [];
+if ($pdo) {
+    $stmt = $pdo->query("
+        SELECT u.nom_complet, COUNT(r.id_reparation) AS nb_reparations
+        FROM utilisateurs u
+        LEFT JOIN traitement t ON u.id_utilisateur = t.id_technicien
+        LEFT JOIN reparation r ON r.id_traitement = t.id_traitement
+        WHERE u.role = 'technicien'
+        GROUP BY u.id_utilisateur
+        ORDER BY nb_reparations DESC
+        LIMIT 10
+    ");
+    $techs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    foreach ($techs as $tech) {
+        $techLabels[] = $tech['nom_complet'];
+        $techData[] = (int)$tech['nb_reparations'];
+    }
+}
+// Couleurs pour le doughnut techniciens
+$doughnutColors = ['#6366f1', '#10b981', '#f59e42', '#ef4444', '#a78bfa', '#f472b6', '#34d399', '#fbbf24', '#60a5fa', '#f87171'];
+?>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Diagramme circulaire : Statuts de réparation
+    new Chart(document.getElementById('pieStatutReparation').getContext('2d'), {
+        type: 'pie',
+        data: {
+            labels: <?= json_encode($statuts) ?>,
+            datasets: [{
+                data: <?= json_encode($statutCounts) ?>,
+                backgroundColor: [
+                    '#3b82f6', // En cours
+                    '#10b981', // Prêt à récupérer
+                    '#ef4444'  // Endommagé
+                ],
+            }]
+        },
+        options: {
+            responsive: false,
+            plugins: { legend: { position: 'bottom' } }
+        }
+    });
+
+    // Diagramme circulaire : Statuts de traitement
+    new Chart(document.getElementById('pieStatutTraitement').getContext('2d'), {
+        type: 'pie',
+        data: {
+            labels: <?= json_encode($statutsTraitement) ?>,
+            datasets: [{
+                data: <?= json_encode($statutTraitementCounts) ?>,
+                backgroundColor: [
+                    '#ef4444', // Endommagé
+                    '#10b981'  // Prêt à récupérer
+                ],
+            }]
+        },
+        options: {
+            responsive: false,
+            plugins: { legend: { position: 'bottom' } }
+        }
+    });
+
+    // Diagramme circulaire : Statuts de factures
+    new Chart(document.getElementById('pieStatutFacture').getContext('2d'), {
+        type: 'pie',
+        data: {
+            labels: ['Payée', 'Non payée'],
+            datasets: [{
+                data: [<?= $facturePayee ?>, <?= $factureNonPayee ?>],
+                backgroundColor: [
+                    '#10b981', // Payée
+                    '#ef4444'  // Non payée
+                ],
+            }]
+        },
+        options: {
+            responsive: false,
+            plugins: { legend: { position: 'bottom' } }
+        }
+    });
+
+    // Diagramme circulaire : Utilisateurs
+    new Chart(document.getElementById('pieUtilisateurs').getContext('2d'), {
+        type: 'pie',
+        data: {
+            labels: ['Techniciens', 'Autres'],
+            datasets: [{
+                data: [<?= $nbTechniciens ?>, <?= $nbAutres ?>],
+                backgroundColor: [
+                    '#f59e42', // Techniciens
+                    '#6366f1'  // Autres
+                ],
+            }]
+        },
+        options: {
+            responsive: false,
+            plugins: { legend: { position: 'bottom' } }
+        }
+    });
+
+    // Diagramme doughnut : Techniciens ayant le plus réparé
+    new Chart(document.getElementById('doughnutTechniciensReparations').getContext('2d'), {
+        type: 'doughnut',
+        data: {
+            labels: <?= json_encode($techLabels) ?>,
+            datasets: [{
+                label: 'Nombre de réparations',
+                data: <?= json_encode($techData) ?>,
+                backgroundColor: <?= json_encode(array_slice($doughnutColors, 0, count($techLabels))) ?>
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+
+    // Diagramme en lignes : Evolution des demandes par mois et par année
+    new Chart(document.getElementById('lineDemandesMoisAnnee').getContext('2d'), {
+        type: 'line',
+        data: {
+            labels: <?= json_encode($barLabels) ?>,
+            datasets: <?= json_encode($barDatasets) ?>
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'top' }
+            },
+            scales: {
+                y: { beginAtZero: true },
+                x: { title: { display: true, text: 'Mois' } }
+            }
+        }
+    });
+</script>
 
 <?php include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/footer.php'; ?>
