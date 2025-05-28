@@ -611,78 +611,78 @@
 
 <!-- Particules bleues animées -->
         <script>
-        // Particules bleues animées
-        (function() {
-            const canvas = document.getElementById('blue-particles');
-            if (!canvas) return;
-            let ctx, particles = [];
-            const colors = [
-                'rgba(59,130,246,0.8)', // blue-600
-                'rgba(37,99,235,0.7)',  // blue-700
-                'rgba(96,165,250,0.6)', // blue-400
-                'rgba(147,197,253,0.5)' // blue-200
-            ];
-            const PARTICLE_COUNT = 32;
-            function resize() {
-                canvas.width = canvas.offsetWidth;
-                canvas.height = canvas.offsetHeight;
-            }
-            function random(min, max) {
-                return Math.random() * (max - min) + min;
-            }
-            function createParticles() {
-                particles = [];
-                for (let i = 0; i < PARTICLE_COUNT; i++) {
-                    particles.push({
-                        x: random(0, canvas.width),
-                        y: random(0, canvas.height),
-                        r: random(6, 18),
-                        color: colors[Math.floor(Math.random() * colors.length)],
-                        dx: random(-0.3, 0.3),
-                        dy: random(-0.2, 0.2),
-                        alpha: random(0.5, 1)
-                    });
+            // Particules bleues animées
+            (function() {
+                const canvas = document.getElementById('blue-particles');
+                if (!canvas) return;
+                let ctx, particles = [];
+                const colors = [
+                    'rgba(59,130,246,0.8)', // blue-600
+                    'rgba(37,99,235,0.7)',  // blue-700
+                    'rgba(96,165,250,0.6)', // blue-400
+                    'rgba(147,197,253,0.5)' // blue-200
+                ];
+                const PARTICLE_COUNT = 32;
+                function resize() {
+                    canvas.width = canvas.offsetWidth;
+                    canvas.height = canvas.offsetHeight;
                 }
-            }
-            function draw() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                for (let p of particles) {
-                    ctx.save();
-                    ctx.globalAlpha = p.alpha;
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.r, 0, 2 * Math.PI);
-                    ctx.fillStyle = p.color;
-                    ctx.shadowColor = p.color;
-                    ctx.shadowBlur = 16;
-                    ctx.fill();
-                    ctx.restore();
+                function random(min, max) {
+                    return Math.random() * (max - min) + min;
                 }
-            }
-            function animate() {
-                for (let p of particles) {
-                    p.x += p.dx;
-                    p.y += p.dy;
-                    // rebondir sur les bords
-                    if (p.x < -p.r) p.x = canvas.width + p.r;
-                    if (p.x > canvas.width + p.r) p.x = -p.r;
-                    if (p.y < -p.r) p.y = canvas.height + p.r;
-                    if (p.y > canvas.height + p.r) p.y = -p.r;
+                function createParticles() {
+                    particles = [];
+                    for (let i = 0; i < PARTICLE_COUNT; i++) {
+                        particles.push({
+                            x: random(0, canvas.width),
+                            y: random(0, canvas.height),
+                            r: random(6, 18),
+                            color: colors[Math.floor(Math.random() * colors.length)],
+                            dx: random(-0.3, 0.3),
+                            dy: random(-0.2, 0.2),
+                            alpha: random(0.5, 1)
+                        });
+                    }
                 }
-                draw();
-                requestAnimationFrame(animate);
-            }
-            function init() {
-                ctx = canvas.getContext('2d');
-                resize();
-                createParticles();
-                animate();
-            }
-            window.addEventListener('resize', () => {
-                resize();
-                createParticles();
-            });
-            setTimeout(init, 200); // attendre que le layout soit prêt
-        })();
+                function draw() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    for (let p of particles) {
+                        ctx.save();
+                        ctx.globalAlpha = p.alpha;
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.r, 0, 2 * Math.PI);
+                        ctx.fillStyle = p.color;
+                        ctx.shadowColor = p.color;
+                        ctx.shadowBlur = 16;
+                        ctx.fill();
+                        ctx.restore();
+                    }
+                }
+                function animate() {
+                    for (let p of particles) {
+                        p.x += p.dx;
+                        p.y += p.dy;
+                        // rebondir sur les bords
+                        if (p.x < -p.r) p.x = canvas.width + p.r;
+                        if (p.x > canvas.width + p.r) p.x = -p.r;
+                        if (p.y < -p.r) p.y = canvas.height + p.r;
+                        if (p.y > canvas.height + p.r) p.y = -p.r;
+                    }
+                    draw();
+                    requestAnimationFrame(animate);
+                }
+                function init() {
+                    ctx = canvas.getContext('2d');
+                    resize();
+                    createParticles();
+                    animate();
+                }
+                window.addEventListener('resize', () => {
+                    resize();
+                    createParticles();
+                });
+                setTimeout(init, 200); // attendre que le layout soit prêt
+            })();
         </script>
     </section>
 
@@ -778,30 +778,32 @@
         </div>
     </section>
 
-    <section id="contact" class="py-16 bg-blue-600 text-white">
+    <!-- Section Contact animée -->
+    <section id="contact" class="py-16 bg-blue-600 text-white transition-all duration-700 opacity-0 translate-y-8">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row">
                 <div class="md:w-1/2 mb-8 md:mb-0">
                     <h2 class="text-3xl font-bold mb-6">Contactez-nous</h2>
                     <p class="mb-6">
-                        Vous avez besoin de réparer votre téléphone? Remplissez le formulaire ou contactez-nous directement.
+                        Besoin d'aide ou d'informations ? Contactez JD Repair à Lomé, Togo.<br>
+                        Nous répondons rapidement à toutes vos demandes !
                     </p>
                     <div class="space-y-4">
                         <div class="flex items-center">
                             <i class="fas fa-map-marker-alt mr-4 text-xl"></i>
-                            <span>123 Rue de la Réparation, 75000 Paris</span>
+                            <span>Lomé, Togo</span>
                         </div>
                         <div class="flex items-center">
                             <i class="fas fa-phone-alt mr-4 text-xl"></i>
-                            <span>01 23 45 67 89</span>
+                            <span>+228 92 59 56 61</span>
                         </div>
                         <div class="flex items-center">
                             <i class="fas fa-envelope mr-4 text-xl"></i>
-                            <span>contact@jdrepair.fr</span>
+                            <span>contact@jdrepair.tg</span>
                         </div>
                         <div class="flex items-center">
                             <i class="fas fa-clock mr-4 text-xl"></i>
-                            <span>Lundi-Vendredi: 9h-19h | Samedi: 10h-18h</span>
+                            <span>Lundi-Samedi: 8h-19h</span>
                         </div>
                     </div>
                     <div class="mt-8 flex space-x-4">
@@ -817,55 +819,158 @@
                     </div>
                 </div>
                 <div class="md:w-1/2 md:pl-12">
-                    <form method="post" action="traitement_formulaire.php" class="bg-white text-gray-800 p-6 rounded-xl shadow-lg">
-                        <h3 class="text-xl font-bold mb-4 text-blue-600">Demande de consultation</h3>
+                    <?php
+                    // Affichage du message de succès ou d'erreur
+                    $contact_success = false;
+                    $contact_error = '';
+                    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_form'])) {
+                        $name = trim($_POST['name'] ?? '');
+                        $email = trim($_POST['email'] ?? '');
+                        $message = trim($_POST['message'] ?? '');
+                        if ($name && $email && $message) {
+                            // Ici, vous pouvez envoyer un email ou enregistrer en BDD
+                            $contact_success = true;
+                        } else {
+                            $contact_error = "Veuillez remplir tous les champs.";
+                        }
+                    }
+                    ?>
+                    <form method="post" action="#contact" class="bg-white text-gray-800 p-6 rounded-xl shadow-lg">
+                        <input type="hidden" name="contact_form" value="1">
+                        <h3 class="text-xl font-bold mb-4 text-blue-600">Formulaire de contact</h3>
+                        <?php if ($contact_success): ?>
+                            <div class="mb-4 p-3 rounded bg-green-100 text-green-800">Votre message a bien été envoyé !</div>
+                        <?php elseif ($contact_error): ?>
+                            <div class="mb-4 p-3 rounded bg-red-100 text-red-800"><?= htmlspecialchars($contact_error) ?></div>
+                        <?php endif; ?>
                         <div class="mb-4">
                             <label for="name" class="block text-gray-700 mb-2">Nom complet</label>
-                            <input type="text" id="name" name="name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <input type="text" id="name" name="name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                         </div>
                         <div class="mb-4">
                             <label for="email" class="block text-gray-700 mb-2">Email</label>
-                            <input type="email" id="email" name="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <input type="email" id="email" name="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                         </div>
                         <div class="mb-4">
-                            <label for="phone" class="block text-gray-700 mb-2">Téléphone</label>
-                            <input type="tel" id="phone" name="phone" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        </div>
-                        <div class="mb-4">
-                            <label for="device" class="block text-gray-700 mb-2">Appareil à réparer</label>
-                            <select id="device" name="device" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                <option value="">Sélectionnez votre appareil</option>
-                                <option value="iphone">iPhone</option>
-                                <option value="samsung">Samsung</option>
-                                <option value="huawei">Huawei</option>
-                                <option value="other">Autre</option>
-                            </select>
-                        </div>
-                        <div class="mb-4">
-                            <label for="problem" class="block text-gray-700 mb-2">Problème rencontré</label>
-                            <textarea id="problem" name="problem" rows="3" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                            <label for="message" class="block text-gray-700 mb-2">Message</label>
+                            <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
                         </div>
                         <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition">
-                            Envoyer la demande
+                            Envoyer
                         </button>
                     </form>
                 </div>
             </div>
         </div>
+        <script>
+            // Animation d'apparition de la section contact
+            window.addEventListener('DOMContentLoaded', function() {
+                const contactSection = document.getElementById('contact');
+                setTimeout(() => {
+                    contactSection.classList.remove('opacity-0', 'translate-y-8');
+                    contactSection.classList.add('opacity-100', 'translate-y-0');
+                }, 200);
+            });
+        </script>
     </section>
 
-    <section id="check-request" class="py-16 bg-white">
-        <div class="container mx-auto px-4 max-w-2xl">
+    <!-- Sous-section : Demande de devis -->
+    <section id="devis-verif" class="py-16 bg-white transition-all duration-700 opacity-0 translate-y-8">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <div class="flex justify-center mb-8 gap-4">
+                <button id="btn-devis" class="px-6 py-3 rounded-full font-bold bg-blue-600 text-white hover:bg-blue-700 transition focus:outline-none focus:ring-2 focus:ring-blue-400">Demande de devis</button>
+                <button id="btn-verif" class="px-6 py-3 rounded-full font-bold bg-gray-200 text-blue-700 hover:bg-blue-100 transition focus:outline-none focus:ring-2 focus:ring-blue-400">Vérifier ma demande</button>
+            </div>
+            <div id="devis-form-block" class="block">
+                <div class="bg-gray-50 p-8 rounded-xl shadow-lg flex flex-col md:flex-row gap-8">
+                    <!-- Bloc infos à gauche -->
+                    <div class="md:w-2/5 flex flex-col items-center md:items-start mb-8 md:mb-0">
+                        <div class="flex items-center mb-4">
+                            <img src="https://cdn-icons-png.flaticon.com/512/545/545705.png" alt="Aide" class="w-10 h-10 mr-3 inline-block">
+                            <h3 class="text-xl font-bold text-blue-700">Besoin d'aide&nbsp;?</h3>
+                        </div>
+                        <div class="text-gray-700 text-base leading-relaxed mb-4">
+                            <p class="mb-2">
+                                <b>Comment ça marche&nbsp;?</b>
+                            </p>
+                            <ol class="list-decimal pl-6 mb-2">
+                                <li>Indiquez vos coordonnées et décrivez le problème rencontré.</li>
+                                <li>Notre équipe analyse votre demande et vous contacte sous 24h avec une estimation précise.</li>
+                                <li>Vous recevez un SMS ou un appel pour confirmer le devis et planifier la réparation.</li>
+                                <li>Vous pouvez suivre l’état de votre demande via la section «&nbsp;Vérifier ma demande&nbsp;».</li>
+                            </ol>
+                            <ul class="list-disc pl-6 text-sm text-gray-600 mb-2">
+                                <li>Service sans engagement&nbsp;: vous êtes libre d’accepter ou non le devis.</li>
+                                <li>Vos données sont confidentielles et ne seront jamais partagées.</li>
+                                <li>Pour toute question urgente, contactez-nous directement par WhatsApp ou téléphone.</li>
+                            </ul>
+                        </div>
+                        <div class="mt-2 text-gray-500 text-sm">
+                            Nous vous répondrons sous 24h avec une estimation personnalisée.<br>
+                            <span class="block mt-2">Besoin d’une réponse immédiate&nbsp;? <a href="https://wa.me/22892595661" target="_blank" class="text-blue-600 hover:underline">Contactez-nous sur WhatsApp</a>.</span>
+                        </div>
+                    </div>
+                    <!-- Formulaire à droite -->
+                    <div class="md:w-3/5">
+                        <?php
+                        // Affichage du message de succès ou d'erreur pour le devis
+                        $devis_success = false;
+                        $devis_error = '';
+                        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['devis_form'])) {
+                            $nom = trim($_POST['devis_nom'] ?? '');
+                            $telephone = trim($_POST['devis_telephone'] ?? '');
+                            $appareil = trim($_POST['devis_appareil'] ?? '');
+                            $probleme = trim($_POST['devis_probleme'] ?? '');
+                            if ($nom && $telephone && $appareil && $probleme) {
+                                // Ici, vous pouvez insérer en BDD (table devis)
+                                $devis_success = true;
+                            } else {
+                                $devis_error = "Tous les champs sont obligatoires.";
+                            }
+                        }
+                        ?>
+                        <h2 class="text-3xl font-bold text-center mb-8 text-blue-700">Demande de devis</h2>
+                        <form method="post" action="#devis-verif" class="space-y-4">
+                            <input type="hidden" name="devis_form" value="1">
+                            <?php if ($devis_success): ?>
+                                <div class="mb-4 p-3 rounded bg-green-100 text-green-800">Votre demande de devis a bien été envoyée ! Un conseiller vous contactera sous peu.</div>
+                            <?php elseif ($devis_error): ?>
+                                <div class="mb-4 p-3 rounded bg-red-100 text-red-800"><?= htmlspecialchars($devis_error) ?></div>
+                            <?php endif; ?>
+                            <div>
+                                <label for="devis_nom" class="block text-gray-700 mb-2">Nom complet</label>
+                                <input type="text" id="devis_nom" name="devis_nom" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                            </div>
+                            <div>
+                                <label for="devis_telephone" class="block text-gray-700 mb-2">Téléphone</label>
+                                <input type="tel" id="devis_telephone" name="devis_telephone" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                            </div>
+                            <div>
+                                <label for="devis_appareil" class="block text-gray-700 mb-2">Appareil</label>
+                                <input type="text" id="devis_appareil" name="devis_appareil" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required placeholder="Ex: iPhone 12, Samsung S21...">
+                            </div>
+                            <div>
+                                <label for="devis_probleme" class="block text-gray-700 mb-2">Problème rencontré</label>
+                                <textarea id="devis_probleme" name="devis_probleme" rows="3" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required placeholder="Décrivez le souci (ex: écran cassé, batterie faible...)"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition">
+                                Envoyer la demande de devis
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8"></div>
+        </div>
+        <div class="container mx-auto px-4 max-w-2xl" id="verif-form-block" style="display:none;">
             <div class="bg-gray-50 p-8 rounded-xl shadow-lg">
                 <h2 class="text-3xl font-bold text-center mb-8">Vérifier l'état de ma demande</h2>
-
-                <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>#check-request" class="space-y-4">
+                <form method="post" action="#devis-verif" class="space-y-4">
                     <input type="text" name="verif_nom" placeholder="Nom complet" class="border rounded px-3 py-2 w-full">
                     <div class="text-center font-semibold">OU</div>
                     <input type="text" name="verif_numero" placeholder="Numéro de téléphone" class="border rounded px-3 py-2 w-full">
                     <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded w-full">Vérifier l'état</button>
                 </form>
-
                 <div class="mt-8" id="request-status">
                     <?php
                     // Simuler une vérification de l'état (à remplacer par une logique réelle)
@@ -897,8 +1002,8 @@
 
                         if ($verif_message): ?>
                             <div class="mt-4 p-3 rounded <?php
-                                strpos($verif_message,'✅') !== false ? 'bg-green-100 text-green-800' :
-                                (strpos($verif_message, '⚠️') !== false ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-100 text-blue-800')
+                                echo strpos($verif_message,'✅') !== false ? 'bg-green-100 text-green-800' :
+                                (strpos($verif_message, '⚠️') !== false ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-100 text-blue-800');
                             ?>">
                                 <?= $verif_message ?>
                             </div>
@@ -918,7 +1023,6 @@
                     }
                     ?>
                 </div>
-
                 <div class="mt-8 text-center">
                     <p class="text-gray-600">Vous n'avez pas encore fait de demande?</p>
                     <a href="#contact" class="text-blue-600 font-semibold hover:text-blue-800 transition inline-block mt-2">
@@ -927,6 +1031,56 @@
                 </div>
             </div>
         </div>
+
+        <!-- Script pour la gestion des devis et vérifications -->
+        <script>
+            // Animation d'apparition de la section
+            window.addEventListener('DOMContentLoaded', function() {
+                const section = document.getElementById('devis-verif');
+                setTimeout(() => {
+                    section.classList.remove('opacity-0', 'translate-y-8');
+                    section.classList.add('opacity-100', 'translate-y-0');
+                }, 400);
+
+                // Gestion des boutons
+                const btnDevis = document.getElementById('btn-devis');
+                const btnVerif = document.getElementById('btn-verif');
+                const devisBlock = document.getElementById('devis-form-block');
+                const verifBlock = document.getElementById('verif-form-block');
+
+                function showDevis() {
+                    devisBlock.style.display = 'block';
+                    verifBlock.style.display = 'none';
+                    btnDevis.classList.add('bg-blue-600', 'text-white');
+                    btnDevis.classList.remove('bg-gray-200', 'text-blue-700');
+                    btnVerif.classList.remove('bg-blue-600', 'text-white');
+                    btnVerif.classList.add('bg-gray-200', 'text-blue-700');
+                }
+                function showVerif() {
+                    devisBlock.style.display = 'none';
+                    verifBlock.style.display = 'block';
+                    btnVerif.classList.add('bg-blue-600', 'text-white');
+                    btnVerif.classList.remove('bg-gray-200', 'text-blue-700');
+                    btnDevis.classList.remove('bg-blue-600', 'text-white');
+                    btnDevis.classList.add('bg-gray-200', 'text-blue-700');
+                }
+
+                btnDevis.addEventListener('click', showDevis);
+                btnVerif.addEventListener('click', showVerif);
+
+                // Si l'URL contient #check-request, afficher la vérif directement
+                if (window.location.hash === '#check-request') {
+                    showVerif();
+                    window.location.hash = '#devis-verif';
+                }
+                // Si POST pour devis, rester sur devis, si POST pour verif, rester sur verif
+                <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['verif_nom'])): ?>
+                    showVerif();
+                <?php elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['devis_form'])): ?>
+                    showDevis();
+                <?php endif; ?>
+            });
+        </script>
     </section>
 
     <footer class="bg-gray-900 text-white py-8">
