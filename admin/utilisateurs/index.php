@@ -1,6 +1,8 @@
 <?php
+include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/admin/auth.php';
 include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/config/db.php';
 include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/header.php';
+include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/navbar.php';
 include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/sidebar.php';
 
 $stmt = $pdo->prepare("SELECT * FROM utilisateurs");
@@ -43,46 +45,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_utilisateur']
 
         <div class="overflow-x-auto bg-white dark:bg-gray-900 rounded-lg shadow-lg">
             <table class="min-w-full text-sm text-left text-gray-700 dark:text-gray-200">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-200">
-                        <tr>
-                            <th class="px-6 py-3">Nom complet</th>
-                            <th class="px-6 py-3">Email</th>
-                            <th class="px-6 py-3">Rôle</th>
-                            <th class="px-6 py-3 no-export">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($utilisateurs as $utilisateur): ?>
-                            <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
-                                <?php 
-                                    foreach ($utilisateur as $key => $value) {
-                                        if ($key == 'mot_de_passe') {
-                                            // Afficher un bouton "Voir mot de passe"
-                                            echo '<td class="px-6 py-4">
-                                                <button onclick="openAuthModal(\'' . $utilisateur['id_utilisateur'] . '\')" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-1 px-2 rounded inline-flex items-center">
-                                                    <i class="fa-solid fa-eye"></i>
-                                                    <span>Voir</span>
-                                                </button>
-                                                </td>';
-                                        } else {
-                                            echo '<td class="px-6 py-4">' . htmlspecialchars($value) . '</td>';
-                                        }
-                                    }
-                                ?>
-                                <td class="px-6 py-4 flex gap-2 no-export">
-                                    <button onclick="openDetailModal(<?= htmlspecialchars(json_encode($utilisateur)) ?>)" class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-700 text-xs flex items-center gap-1">
-                                        <i class="fa-solid fa-eye "></i> Voir
-                                    </button>
-                                    <button onclick="openUpdateModal(<?= htmlspecialchars(json_encode($utilisateur)) ?>)" class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-blue-700 text-xs flex items-center gap-1">
-                                        <i class="fa-solid fa-edit "></i> Modifier
-                                    </button>
-                                    <a href="delete_utilisateur.php?id_utilisateur=<?= $utilisateur['id_utilisateur'] ?>" onclick="return confirm('Supprimer cet utilisateur ?')" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-800 text-xs flex items-center gap-1">
-                                        <i class="fa-solid fa-trash "></i> Supprimer
-                                    </a>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
+            <thead class="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-200">
+                <tr>
+                <th class="px-6 py-3">Nom complet</th>
+                <th class="px-6 py-3">Email</th>
+                <th class="px-6 py-3">Rôle</th>
+                <th class="px-6 py-3">Mot de passe</th>
+                <th class="px-6 py-3 no-export">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($utilisateurs as $utilisateur): ?>
+                <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
+                    <td class="px-6 py-4"><?= htmlspecialchars($utilisateur['nom_complet']) ?></td>
+                    <td class="px-6 py-4"><?= htmlspecialchars($utilisateur['email']) ?></td>
+                    <td class="px-6 py-4"><?= htmlspecialchars($utilisateur['role']) ?></td>
+                    <td class="px-6 py-4">
+                    <button onclick="openAuthModal('<?= $utilisateur['id_utilisateur'] ?>')" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-1 px-2 rounded inline-flex items-center">
+                        <i class="fa-solid fa-eye"></i>
+                        <span>Voir</span>
+                    </button>
+                    </td>
+                    <td class="px-6 py-4 flex gap-2 no-export">
+                    <button onclick="openDetailModal(<?= htmlspecialchars(json_encode($utilisateur)) ?>)" class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-700 text-xs flex items-center gap-1">
+                        <i class="fa-solid fa-eye "></i> Voir
+                    </button>
+                    <button onclick="openUpdateModal(<?= htmlspecialchars(json_encode($utilisateur)) ?>)" class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-blue-700 text-xs flex items-center gap-1">
+                        <i class="fa-solid fa-edit "></i> Modifier
+                    </button>
+                    <a href="delete_utilisateur.php?id_utilisateur=<?= $utilisateur['id_utilisateur'] ?>" onclick="return confirm('Supprimer cet utilisateur ?')" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-800 text-xs flex items-center gap-1">
+                        <i class="fa-solid fa-trash "></i> Supprimer
+                    </a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
             </table>
         </div>
     </div>

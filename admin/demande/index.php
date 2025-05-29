@@ -1,6 +1,8 @@
 <?php
+include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/admin/auth.php';
 include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/config/db.php';
 include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/header.php';
+include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/navbar.php';
 include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/sidebar.php';
 
 $stmt = $pdo->prepare("SELECT * FROM demande_reparation ORDER BY date_demande DESC");

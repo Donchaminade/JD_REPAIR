@@ -1,6 +1,8 @@
 <?php
+include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/admin/auth.php';
 include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/config/db.php';
 include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/header.php';
+include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/navbar.php';
 include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/sidebar.php';
 
 // Connexion à la base de données
