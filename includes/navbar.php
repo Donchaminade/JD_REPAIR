@@ -4,7 +4,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 ?>
 
-<nav class="bg-black py-2 fixed top-0 left-0 w-full z-50 shadow-lg">
+<nav class="bg-gray-800 py-2 fixed top-0 left-0 w-full z-50 shadow-lg">
     <div class="container mx-auto flex items-center justify-between">
         <div class="flex items-center space-x-6">
             <a href="dashboard.php" class="text-white font-bold text-xl"></a>
