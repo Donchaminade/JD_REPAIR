@@ -1,9 +1,9 @@
 <?php
-include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/admin/auth.php';
+include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/auth.php';
 include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/config/db.php';
 include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/header.php';
-include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/navbar.php';
-include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/sidebar.php';
+
+// include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/sidebar.php';
 
 $stmt = $pdo->prepare("SELECT * FROM utilisateurs");
 $stmt->execute();
@@ -36,6 +36,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_utilisateur']
 ?>
 
 <div id="main-content" class="flex-1 overflow-x-hidden overflow-y-auto p-6 transition-all duration-300 md:ml-64">
+    <?php include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/navbar.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/sidebar.php'; ?>
     <div class="container mx-auto py-6 px-4">
         <div class="flex flex-col md:flex-row justify-between mb-4 gap-4">
             <a href="#addModal" onclick="document.getElementById('addModal').classList.remove('hidden')" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-md shadow">
@@ -73,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_utilisateur']
                     <button onclick="openUpdateModal(<?= htmlspecialchars(json_encode($utilisateur)) ?>)" class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-blue-700 text-xs flex items-center gap-1">
                         <i class="fa-solid fa-edit "></i> Modifier
                     </button>
-                    <a href="delete_utilisateur.php?id_utilisateur=<?= $utilisateur['id_utilisateur'] ?>" onclick="return confirm('Supprimer cet utilisateur ?')" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-800 text-xs flex items-center gap-1">
+                    <a href="delete.php?id_utilisateur=<?= $utilisateur['id_utilisateur'] ?>" onclick="return confirm('Supprimer cet utilisateur ?')" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-800 text-xs flex items-center gap-1">
                         <i class="fa-solid fa-trash "></i> Supprimer
                     </a>
                     </td>

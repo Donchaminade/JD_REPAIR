@@ -1,9 +1,9 @@
 <?php
-include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/admin/auth.php';
+include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/auth.php';
 include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/config/db.php';
 include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/header.php';
-include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/navbar.php';
-include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/sidebar.php';
+// include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/navbar.php';
+// include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/sidebar.php';
 
 // Connexion à la base de données
 $pdo = null;
@@ -95,6 +95,9 @@ if ($pdo) {
 ?>
 
 <div id="main-content" class="flex-1 overflow-x-hidden overflow-y-auto p-6 transition-all duration-300 md:ml-64">
+    <?php include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/sidebar.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/navbar.php'; ?>
+    <br>
     <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-4">Bienvenue sur le tableau de bord !</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <div class="bg-white dark:bg-gray-700 shadow rounded-lg p-4 flex items-center justify-center h-32 w-full md:w-auto">

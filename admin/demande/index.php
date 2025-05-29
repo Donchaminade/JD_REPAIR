@@ -1,9 +1,9 @@
 <?php
-include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/admin/auth.php';
+include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/auth.php';
 include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/config/db.php';
 include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/header.php';
-include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/navbar.php';
-include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/sidebar.php';
+// include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/navbar.php';
+// include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/sidebar.php';
 
 $stmt = $pdo->prepare("SELECT * FROM demande_reparation ORDER BY date_demande DESC");
 $stmt->execute();
@@ -38,6 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_demande'])) {
 <script src="https://unpkg.com/lucide@latest"></script>
 
 <div id="main-content" class="flex-1 overflow-x-hidden overflow-y-auto p-6 transition-all duration-300 md:ml-64">
+    <?php include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/sidebar.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/navbar.php'; ?>
     <div class="container mx-auto py-6 px-4">
         <div class="flex flex-col md:flex-row justify-between mb-4 gap-4">
             <a href="#addModal" onclick="document.getElementById('addModal').classList.remove('hidden')" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-md shadow">

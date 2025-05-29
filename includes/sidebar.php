@@ -60,10 +60,48 @@
                 <span class="md:block font-medium text-gray-700 dark:text-gray-200 group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors duration-300 sidebar-text">Thème</span>
             </button>
 
-            <button class="w-full flex items-center gap-3 px-3 py-3 rounded-xl bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-300 group hover:shadow-md transform hover:-translate-y-0.5" aria-label="Paramètres">
+            <!-- <button class="w-full flex items-center gap-3 px-3 py-3 rounded-xl bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-300 group hover:shadow-md transform hover:-translate-y-0.5" aria-label="Paramètres">
                 <i class="fa-solid fa-sliders text-xl group-hover:text-blue-500 transition-colors duration-300 w-8 text-center animate-spin-slow" aria-hidden="true"></i>
                 <span class="md:block font-medium text-gray-700 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300 sidebar-text">Paramètres</span>
-            </button>
+            </button> -->
+
+            <a href="/JD_REPAIR/admin/logout.php" class="w-full flex items-center gap-3 px-3 py-3 rounded-xl bg-gray-100 dark:bg-gray-700 hover:bg-red-100 dark:hover:bg-red-700 transition-all duration-300 group hover:shadow-md transform hover:-translate-y-0.5" aria-label="Déconnexion">
+                <i class="fa-solid fa-right-from-bracket text-xl group-hover:text-red-500 transition-colors duration-300 w-8 text-center" aria-hidden="true"></i>
+                <span class="md:block font-medium text-gray-700 dark:text-gray-200 group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors duration-300 sidebar-text">Déconnexion</span>
+            </a>
         </div>
     </div>
+
+    <script>
+        // Fonction pour garder le hover sur le lien actif du sidebar
+        document.addEventListener('DOMContentLoaded', function () {
+            // Récupère tous les liens du menu
+            const links = document.querySelectorAll('#sidebar nav a');
+            // Récupère le chemin courant (sans query string)
+            const currentPath = window.location.pathname.replace(/\/+$/, '');
+
+            links.forEach(link => {
+                // Normalise le href pour la comparaison
+                const linkPath = link.getAttribute('href').replace(/\/+$/, '');
+                if (linkPath === currentPath) {
+                    // Ajoute les classes de hover et d'active
+                    link.classList.add('bg-blue-50', 'dark:bg-gray-700', 'shadow-md', '-translate-y-1');
+                    // Ajoute la bordure colorée selon la couleur du hover
+                    if (link.className.includes('hover:border-blue-500')) {
+                        link.classList.add('border-blue-500');
+                    } else if (link.className.includes('hover:border-green-500')) {
+                        link.classList.add('border-green-500');
+                    } else if (link.className.includes('hover:border-purple-500')) {
+                        link.classList.add('border-purple-500');
+                    } else if (link.className.includes('hover:border-yellow-500')) {
+                        link.classList.add('border-yellow-500');
+                    } else if (link.className.includes('hover:border-red-500')) {
+                        link.classList.add('border-red-500');
+                    } else if (link.className.includes('hover:border-indigo-500')) {
+                        link.classList.add('border-indigo-500');
+                    }
+                }
+            });
+        });
+    </script>
 </aside>

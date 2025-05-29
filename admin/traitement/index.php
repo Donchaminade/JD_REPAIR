@@ -1,9 +1,9 @@
 <?php
-include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/admin/auth.php';
+include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/auth.php';
 include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/config/db.php';
 include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/header.php';
-include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/navbar.php';
-include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/sidebar.php';
+// include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/navbar.php';
+// include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/sidebar.php';
 
 // Récupérer les données de la table 'traitement' avec les noms correspondants
 $stmt = $pdo->prepare("
@@ -59,6 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enregistrer_reparatio
 <script src="https://unpkg.com/lucide@latest"></script>
 
 <div id="main-content" class="flex-1 overflow-x-hidden overflow-y-auto p-6 transition-all duration-300 md:ml-64">
+    <?php include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/sidebar.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/navbar.php'; ?>
     <div class="container mx-auto py-6 px-4">
         <h2 class="text-2xl font-semibold text-gray-800 dark:text-white mb-4">Liste des Traitements</h2>
 
