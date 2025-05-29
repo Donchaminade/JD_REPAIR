@@ -55,10 +55,10 @@
         </div>
 
         <div class="space-y-3 mt-6">
-            <button onclick="toggleTheme()" class="w-full flex items-center gap-3 px-3 py-3 rounded-xl bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-300 group hover:shadow-md transform hover:-translate-y-0.5" aria-label="Changer le thème">
+            <!-- <button onclick="toggleTheme()" class="w-full flex items-center gap-3 px-3 py-3 rounded-xl bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-300 group hover:shadow-md transform hover:-translate-y-0.5" aria-label="Changer le thème">
                 <i id="themeButtonIcon" class="fa-solid fa-moon text-xl group-hover:text-yellow-500 transition-colors duration-300 w-8 text-center" aria-hidden="true"></i>
                 <span class="md:block font-medium text-gray-700 dark:text-gray-200 group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors duration-300 sidebar-text">Thème</span>
-            </button>
+            </button> -->
 
             <!-- <button class="w-full flex items-center gap-3 px-3 py-3 rounded-xl bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-300 group hover:shadow-md transform hover:-translate-y-0.5" aria-label="Paramètres">
                 <i class="fa-solid fa-sliders text-xl group-hover:text-blue-500 transition-colors duration-300 w-8 text-center animate-spin-slow" aria-hidden="true"></i>
@@ -103,5 +103,53 @@
                 }
             });
         });
+    </script>
+
+    <script>
+        // Détection et application du thème sombre par défaut
+        (function() {
+            const root = document.documentElement;
+            const themeButtonIcon = document.getElementById('themeButtonIcon');
+            // Vérifie le stockage local ou la préférence système
+            let theme = localStorage.getItem('theme');
+            if (!theme) {
+                theme = 'dark';
+                localStorage.setItem('theme', 'dark');
+            }
+            if (theme === 'dark') {
+                root.classList.add('dark');
+                if (themeButtonIcon) {
+                    themeButtonIcon.classList.remove('fa-sun');
+                    themeButtonIcon.classList.add('fa-moon');
+                }
+            } else {
+                root.classList.remove('dark');
+                if (themeButtonIcon) {
+                    themeButtonIcon.classList.remove('fa-moon');
+                    themeButtonIcon.classList.add('fa-sun');
+                }
+            }
+        })();
+
+        // Fonction pour basculer le thème
+        function toggleTheme() {
+            const root = document.documentElement;
+            const themeButtonIcon = document.getElementById('themeButtonIcon');
+            if (root.classList.contains('dark')) {
+                root.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                if (themeButtonIcon) {
+                    themeButtonIcon.classList.remove('fa-moon');
+                    themeButtonIcon.classList.add('fa-sun');
+                }
+            } else {
+                root.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                if (themeButtonIcon) {
+                    themeButtonIcon.classList.remove('fa-sun');
+                    themeButtonIcon.classList.add('fa-moon');
+                }
+            }
+        }
     </script>
 </aside>

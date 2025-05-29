@@ -40,9 +40,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_utilisateur']
     <?php include $_SERVER['DOCUMENT_ROOT'].'/JD_REPAIR/includes/sidebar.php'; ?>
     <div class="container mx-auto py-6 px-4">
         <div class="flex flex-col md:flex-row justify-between mb-4 gap-4">
-            <a href="#addModal" onclick="document.getElementById('addModal').classList.remove('hidden')" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-md shadow">
-                + Ajouter un utilisateur
-            </a>
+            <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
+                <a href="#addModal" onclick="document.getElementById('addModal').classList.remove('hidden')" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-md shadow">
+                    + Ajouter un utilisateur
+                </a>
+            <?php else: ?>
+                <button class="px-4 py-2 bg-gray-400 text-white font-semibold rounded-md shadow cursor-not-allowed" disabled>
+                    + Ajouter un utilisateur
+                </button>
+            <?php endif; ?>
         </div>
 
         <div class="overflow-x-auto bg-white dark:bg-gray-900 rounded-lg shadow-lg">
@@ -63,21 +69,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_utilisateur']
                     <td class="px-6 py-4"><?= htmlspecialchars($utilisateur['email']) ?></td>
                     <td class="px-6 py-4"><?= htmlspecialchars($utilisateur['role']) ?></td>
                     <td class="px-6 py-4">
-                    <button onclick="openAuthModal('<?= $utilisateur['id_utilisateur'] ?>')" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-1 px-2 rounded inline-flex items-center">
-                        <i class="fa-solid fa-eye"></i>
-                        <span>Voir</span>
-                    </button>
+                        <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
+                            <button onclick="openAuthModal('<?= $utilisateur['id_utilisateur'] ?>')" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-1 px-2 rounded inline-flex items-center">
+                                <i class="fa-solid fa-eye"></i>
+                                <span>Voir</span>
+                            </button>
+                        <?php else: ?>
+                            <button class="bg-gray-200 text-gray-400 font-semibold py-1 px-2 rounded inline-flex items-center cursor-not-allowed" disabled>
+                                <i class="fa-solid fa-eye"></i>
+                                <span>Voir</span>
+                            </button>
+                        <?php endif; ?>
                     </td>
                     <td class="px-6 py-4 flex gap-2 no-export">
-                    <button onclick="openDetailModal(<?= htmlspecialchars(json_encode($utilisateur)) ?>)" class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-700 text-xs flex items-center gap-1">
-                        <i class="fa-solid fa-eye "></i> Voir
-                    </button>
-                    <button onclick="openUpdateModal(<?= htmlspecialchars(json_encode($utilisateur)) ?>)" class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-blue-700 text-xs flex items-center gap-1">
-                        <i class="fa-solid fa-edit "></i> Modifier
-                    </button>
-                    <a href="delete.php?id_utilisateur=<?= $utilisateur['id_utilisateur'] ?>" onclick="return confirm('Supprimer cet utilisateur ?')" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-800 text-xs flex items-center gap-1">
-                        <i class="fa-solid fa-trash "></i> Supprimer
-                    </a>
+                        <button onclick="openDetailModal(<?= htmlspecialchars(json_encode($utilisateur)) ?>)" class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-700 text-xs flex items-center gap-1">
+                            <i class="fa-solid fa-eye "></i> Voir
+                        </button>
+                        <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
+                            <button onclick="openUpdateModal(<?= htmlspecialchars(json_encode($utilisateur)) ?>)" class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-blue-700 text-xs flex items-center gap-1">
+                                <i class="fa-solid fa-edit "></i> Modifier
+                            </button>
+                            <a href="delete.php?id_utilisateur=<?= $utilisateur['id_utilisateur'] ?>" onclick="return confirm('Supprimer cet utilisateur ?')" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-800 text-xs flex items-center gap-1">
+                                <i class="fa-solid fa-trash "></i> Supprimer
+                            </a>
+                        <?php else: ?>
+                            <button class="bg-yellow-200 text-gray-400 px-2 py-1 rounded text-xs flex items-center gap-1 cursor-not-allowed" disabled>
+                                <i class="fa-solid fa-edit "></i> Modifier
+                            </button>
+                            <button class="bg-red-200 text-gray-400 px-2 py-1 rounded text-xs flex items-center gap-1 cursor-not-allowed" disabled>
+                                <i class="fa-solid fa-trash "></i> Supprimer
+                            </button>
+                        <?php endif; ?>
                     </td>
                 </tr>
                 <?php endforeach; ?>
