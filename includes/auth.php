@@ -63,4 +63,4 @@ if (!is_user_authorized($required_role)) {
     exit;
 }
 */
-?>```
+?>

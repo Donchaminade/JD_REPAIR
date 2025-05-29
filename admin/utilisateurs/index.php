@@ -42,11 +42,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_utilisateur']
         <div class="flex flex-col md:flex-row justify-between mb-4 gap-4">
             <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
                 <a href="#addModal" onclick="document.getElementById('addModal').classList.remove('hidden')" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-md shadow">
-                    + Ajouter un utilisateur
+                    <i class="fa-solid fa-plus"></i> Ajouter un utilisateur
                 </a>
             <?php else: ?>
                 <button class="px-4 py-2 bg-gray-400 text-white font-semibold rounded-md shadow cursor-not-allowed" disabled>
-                    + Ajouter un utilisateur
+                    <i class="fa-solid fa-plus"></i> Ajouter un utilisateur
                 </button>
             <?php endif; ?>
         </div>
