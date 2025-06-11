@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $stmt = $pdo->prepare("UPDATE utilisateurs SET mot_de_passe = ? WHERE id_utilisateur = ?");
                     $stmt->execute([$hashed_password, $user['id_utilisateur']]);
                     echo json_encode(['success' => true, 'message' => 'Votre mot de passe a été réinitialisé avec succès. Vous pouvez maintenant vous connecter.']);
+                    exit;
                 } else {
                     echo json_encode(['success' => false, 'message' => 'Nom complet et email incorrects.']);
                 }
