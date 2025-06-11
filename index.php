@@ -64,6 +64,17 @@
     </style>
 </head>
 <body class="font-sans bg-gray-50">
+    <style>
+        body {
+            margin: 0; /* Élimine les marges par défaut du navigateur */
+            padding: 0; /* Élimine les paddings par défaut du navigateur */
+            width: 100%; /* Assure que le body prend toujours 100% de la largeur du viewport */
+            min-height: 100vh; /* Assure que le body prend au moins toute la hauteur de la vue */
+            box-sizing: border-box; /* S'assure que padding et border sont inclus dans la largeur/hauteur */
+            /* display: flex; /* Peut être utile si vous voulez que les sections s'empilent ou se répartissent */
+            /* flex-direction: column; */
+        }
+    </style>
     <a href="https://wa.me/+22892595661" target="_blank" rel="noopener noreferrer"
        class="fixed bottom-8 right-8 bg-green-500 text-white w-16 h-16 rounded-full flex items-center justify-center text-3xl shadow-lg hover:bg-green-600 transition whatsapp-float z-50">
         <i class="fab fa-whatsapp"></i>
@@ -217,7 +228,7 @@
                     <i class="fas fa-envelope"></i>
                     Contact
                 </a>
-                <a href="#check-request" class="bg-white text-blue-600 px-4 py-2 rounded-full font-bold hover:bg-gray-100 transition flex items-center gap-2">
+                <a href="#verif-form-block" class="bg-white text-blue-600 px-4 py-2 rounded-full font-bold hover:bg-gray-100 transition flex items-center gap-2">
                     <i class="fas fa-search"></i>
                     Vérifier ma demande
                 </a>
@@ -233,7 +244,7 @@
                 <a href="#about" class="py-2 hover:text-blue-200 transition">À propos</a>
                 <a href="#reviews" class="py-2 hover:text-blue-200 transition">Avis</a>
                 <a href="#contact" class="py-2 hover:text-blue-200 transition">Contact</a>
-                <a href="#check-request" class="bg-white text-blue-600 px-4 py-2 rounded-full font-bold hover:bg-gray-100 transition text-center mt-2">
+                <a href="#verif-form-block" class="bg-white text-blue-600 px-4 py-2 rounded-full font-bold hover:bg-gray-100 transition text-center mt-2">
                     Vérifier ma demande
                 </a>
             </div>
@@ -251,7 +262,7 @@
                             <a href="#contact" class="bg-white text-blue-600 px-6 py-3 rounded-full font-bold hover:bg-gray-100 transition inline-block pulse">
                                 Demander un devis
                             </a>
-                            <a href="#check-request" class="bg-transparent border-2 border-white text-white px-6 py-3 rounded-full font-bold hover:bg-white hover:text-blue-600 transition inline-block">
+                            <a href="#verif-form-block" class="bg-transparent border-2 border-white text-white px-6 py-3 rounded-full font-bold hover:bg-white hover:text-blue-600 transition inline-block">
                                 Vérifier ma demande
                             </a>
                         </div>
@@ -270,10 +281,10 @@
                         <h2 class="text-4xl md:text-5xl font-bold mb-4">Écran cassé? Nous le réparons!</h2>
                         <p class="text-xl mb-6">Remplacement d'écran avec des pièces de qualité premium.</p>
                         <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                            <a href="#contact" class="bg-white text-purple-600 px-6 py-3 rounded-full font-bold hover:bg-gray-100 transition inline-block pulse">
+                            <a href="#devis-form-block" class="bg-white text-purple-600 px-6 py-3 rounded-full font-bold hover:bg-gray-100 transition inline-block pulse">
                                 Demander un devis
                             </a>
-                            <a href="#check-request" class="bg-transparent border-2 border-white text-white px-6 py-3 rounded-full font-bold hover:bg-white hover:text-purple-600 transition inline-block">
+                            <a href="#verif-form-block" class="bg-transparent border-2 border-white text-white px-6 py-3 rounded-full font-bold hover:bg-white hover:text-purple-600 transition inline-block">
                                 Vérifier ma demande
                             </a>
                         </div>
@@ -290,12 +301,12 @@
                 <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
                     <div class="md:w-1/2 text-white text-center md:text-left mb-8 md:mb-0">
                         <h2 class="text-4xl md:text-5xl font-bold mb-4">Batterie faible? Nous la changeons!</h2>
-                        <p class="text-xl mb-6">Remplacement de batterie avec garantie d'un an.</p>
+                        <p class="text-xl mb-6">Remplacement de batterie avec garantie.</p>
                         <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                            <a href="#contact" class="bg-white text-green-600 px-6 py-3 rounded-full font-bold hover:bg-gray-100 transition inline-block pulse">
+                            <a href="#devis-form-block" class="bg-white text-green-600 px-6 py-3 rounded-full font-bold hover:bg-gray-100 transition inline-block pulse">
                                 Demander un devis
                             </a>
-                            <a href="#check-request" class="bg-transparent border-2 border-white text-white px-6 py-3 rounded-full font-bold hover:bg-white hover:text-green-600 transition inline-block">
+                            <a href="#verif-form-block" class="bg-transparent border-2 border-white text-white px-6 py-3 rounded-full font-bold hover:bg-white hover:text-green-600 transition inline-block">
                                 Vérifier ma demande
                             </a>
                         </div>
@@ -455,7 +466,7 @@
                          class="rounded-xl shadow-lg w-full h-[38rem] md:h-[44rem] object-cover max-w-4xl mx-auto">
                 </div>
                 <div class="md:w-1/2 md:pl-12">
-                    <h2 class="text-3xl font-bold mb-6">À propos de JD Repair</h2>
+                    <h2 class="text-3xl font-bold mb-6">À propos de <span class="text-blue-600">JD Repair</span></h2>
                     <p class="text-gray-700 mb-4">
                         Fondé en 2015 à Lomé, JD Repair s’est imposé comme le leader de la réparation de téléphones en Afrique de l’Ouest. 
                         Présent au <b>Togo</b>, <b>Ghana</b>, <b>Bénin</b>, <b>Côte d’Ivoire</b> et bientôt dans d’autres pays, notre réseau de centres agréés accompagne particuliers et entreprises pour tous types de réparations mobiles.
@@ -835,7 +846,7 @@
                         }
                     }
                     ?>
-                    <form method="post" action="#contact" class="bg-white text-gray-800 p-6 rounded-xl shadow-lg">
+                    <form method="post" action="contact.php" class="bg-white text-gray-800 p-6 rounded-xl shadow-lg">
                         <input type="hidden" name="contact_form" value="1">
                         <h3 class="text-xl font-bold mb-4 text-blue-600">Formulaire de contact</h3>
                         <?php if ($contact_success): ?>
@@ -874,157 +885,85 @@
         </script>
     </section>
 
-    <!-- Sous-section : Demande de devis -->
-    <section id="devis-verif" class="py-16 bg-white transition-all duration-700 opacity-0 translate-y-8">
-        <div class="container mx-auto px-4 max-w-4xl">
-            <div class="flex justify-center mb-8 gap-4">
-                <button id="btn-devis" class="px-6 py-3 rounded-full font-bold bg-blue-600 text-white hover:bg-blue-700 transition focus:outline-none focus:ring-2 focus:ring-blue-400">Demande de devis</button>
-                <button id="btn-verif" class="px-6 py-3 rounded-full font-bold bg-gray-200 text-blue-700 hover:bg-blue-100 transition focus:outline-none focus:ring-2 focus:ring-blue-400">Vérifier ma demande</button>
-            </div>
-            <div id="devis-form-block" class="block">
-                <div class="bg-gray-50 p-8 rounded-xl shadow-lg flex flex-col md:flex-row gap-8">
-                    <!-- Bloc infos à gauche -->
-                    <div class="md:w-2/5 flex flex-col items-center md:items-start mb-8 md:mb-0">
-                        <div class="flex items-center mb-4">
-                            <img src="https://cdn-icons-png.flaticon.com/512/545/545705.png" alt="Aide" class="w-10 h-10 mr-3 inline-block">
-                            <h3 class="text-xl font-bold text-blue-700">Besoin d'aide&nbsp;?</h3>
-                        </div>
-                        <div class="text-gray-700 text-base leading-relaxed mb-4">
-                            <p class="mb-2">
-                                <b>Comment ça marche&nbsp;?</b>
-                            </p>
-                            <ol class="list-decimal pl-6 mb-2">
-                                <li>Indiquez vos coordonnées et décrivez le problème rencontré.</li>
-                                <li>Notre équipe analyse votre demande et vous contacte sous 24h avec une estimation précise.</li>
-                                <li>Vous recevez un SMS ou un appel pour confirmer le devis et planifier la réparation.</li>
-                                <li>Vous pouvez suivre l’état de votre demande via la section «&nbsp;Vérifier ma demande&nbsp;».</li>
-                            </ol>
-                            <ul class="list-disc pl-6 text-sm text-gray-600 mb-2">
-                                <li>Service sans engagement&nbsp;: vous êtes libre d’accepter ou non le devis.</li>
-                                <li>Vos données sont confidentielles et ne seront jamais partagées.</li>
-                                <li>Pour toute question urgente, contactez-nous directement par WhatsApp ou téléphone.</li>
-                            </ul>
-                        </div>
-                        <div class="mt-2 text-gray-500 text-sm">
-                            Nous vous répondrons sous 24h avec une estimation personnalisée.<br>
-                            <span class="block mt-2">Besoin d’une réponse immédiate&nbsp;? <a href="https://wa.me/22892595661" target="_blank" class="text-blue-600 hover:underline">Contactez-nous sur WhatsApp</a>.</span>
-                        </div>
-                    </div>
-                    <!-- Formulaire à droite -->
-                    <div class="md:w-3/5">
-                        <?php
-                        // Affichage du message de succès ou d'erreur pour le devis
-                        $devis_success = false;
-                        $devis_error = '';
-                        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['devis_form'])) {
-                            $nom = trim($_POST['devis_nom'] ?? '');
-                            $telephone = trim($_POST['devis_telephone'] ?? '');
-                            $appareil = trim($_POST['devis_appareil'] ?? '');
-                            $probleme = trim($_POST['devis_probleme'] ?? '');
-                            if ($nom && $telephone && $appareil && $probleme) {
-                                // Ici, vous pouvez insérer en BDD (table devis)
-                                $devis_success = true;
-                            } else {
-                                $devis_error = "Tous les champs sont obligatoires.";
-                            }
-                        }
-                        ?>
-                        <h2 class="text-3xl font-bold text-center mb-8 text-blue-700">Demande de devis</h2>
-                        <form method="post" action="#devis-verif" class="space-y-4">
-                            <input type="hidden" name="devis_form" value="1">
-                            <?php if ($devis_success): ?>
-                                <div class="mb-4 p-3 rounded bg-green-100 text-green-800">Votre demande de devis a bien été envoyée ! Un conseiller vous contactera sous peu.</div>
-                            <?php elseif ($devis_error): ?>
-                                <div class="mb-4 p-3 rounded bg-red-100 text-red-800"><?= htmlspecialchars($devis_error) ?></div>
-                            <?php endif; ?>
-                            <div>
-                                <label for="devis_nom" class="block text-gray-700 mb-2">Nom complet</label>
-                                <input type="text" id="devis_nom" name="devis_nom" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                            </div>
-                            <div>
-                                <label for="devis_telephone" class="block text-gray-700 mb-2">Téléphone</label>
-                                <input type="tel" id="devis_telephone" name="devis_telephone" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                            </div>
-                            <div>
-                                <label for="devis_appareil" class="block text-gray-700 mb-2">Appareil</label>
-                                <input type="text" id="devis_appareil" name="devis_appareil" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required placeholder="Ex: iPhone 12, Samsung S21...">
-                            </div>
-                            <div>
-                                <label for="devis_probleme" class="block text-gray-700 mb-2">Problème rencontré</label>
-                                <textarea id="devis_probleme" name="devis_probleme" rows="3" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required placeholder="Décrivez le souci (ex: écran cassé, batterie faible...)"></textarea>
-                            </div>
-                            <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition">
-                                Envoyer la demande de devis
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-8"></div>
+
+
+    <!-- debut du bloc -->
+<section id="devis-verif" class="py-16 bg-white transition-all duration-700 opacity-0 translate-y-8">
+    <div class="container mx-auto px-4 max-w-4xl">
+        <div class="flex justify-center mb-8 gap-4">
+            <button id="btn-devis" class="px-6 py-3 rounded-full font-bold bg-blue-600 text-white hover:bg-blue-700 transition focus:outline-none focus:ring-2 focus:ring-blue-400">Demande de devis</button>
+            <button id="btn-verif" class="px-6 py-3 rounded-full font-bold bg-gray-200 text-blue-700 hover:bg-blue-100 transition focus:outline-none focus:ring-2 focus:ring-blue-400">Vérifier ma demande</button>
         </div>
-        <div class="container mx-auto px-4 max-w-2xl" id="verif-form-block" style="display:none;">
-            <div class="bg-gray-50 p-8 rounded-xl shadow-lg">
-                <h2 class="text-3xl font-bold text-center mb-8">Vérifier l'état de ma demande</h2>
-                <form method="post" action="#devis-verif" class="space-y-4">
-                    <input type="text" name="verif_nom" placeholder="Nom complet" class="border rounded px-3 py-2 w-full">
-                    <div class="text-center font-semibold">OU</div>
-                    <input type="text" name="verif_numero" placeholder="Numéro de téléphone" class="border rounded px-3 py-2 w-full">
-                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded w-full">Vérifier l'état</button>
-                </form>
-                <div class="mt-8" id="request-status">
-                    <?php
-                    // Simuler une vérification de l'état (à remplacer par une logique réelle)
-                    if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST['verif_nom']) || isset($_POST['verif_numero']))) {
-                        $nom_verif = $_POST['verif_nom'] ?? '';
-                        $numero_verif = $_POST['verif_numero'] ?? '';
 
-                        // Exemple de données de réparation (à remplacer par une requête BDD)
-                        $reparations = [
-                            ['nom_complet' => 'Marie D.', 'numero' => '0123456789', 'date_reparation' => '2025-05-25', 'statut' => 'Réparé', 'montant_total' => 80, 'montant_paye' => 80, 'reste_a_payer' => 0],
-                            ['nom_complet' => 'Jean P.', 'numero' => '0698765432', 'date_reparation' => '2025-05-28', 'statut' => 'En cours', 'montant_total' => 50, 'montant_paye' => 20, 'reste_a_payer' => 30],
-                            // ... plus de réparations
-                        ];
+        <div id="devis-form-block" class="bg-gray-50 p-8 rounded-xl shadow-lg" style="display: block;">
+            <p>Service bientôt disponible, veuillez nous laisser un mail via le formulaire de contact.</p>
+            </div>
 
-                        $verif_message = '';
-                        $verif_infos = null;
+        <div id="verif-form-block" class="bg-gray-50 p-8 rounded-xl shadow-lg" style="display: none;">
+            <h2 class="text-3xl font-bold text-center mb-8">Vérifier l'état de ma demande</h2>
+            <form id="checkStatusForm" class="space-y-4">
+                <input type="text" name="verif_nom" placeholder="Nom complet" class="border rounded px-3 py-2 w-full">
+                <div class="text-center font-semibold">OU</div>
+                <input type="text" name="verif_numero" placeholder="Numéro de téléphone" class="border rounded px-3 py-2 w-full">
+                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded w-full">Vérifier l'état</button>
+            </form>
+        </div>
+        <div class="mt-8"></div>
+    </div>
+</section>
 
-                        foreach ($reparations as $reparation) {
-                            if (($nom_verif && strtolower($reparation['nom_complet']) === strtolower($nom_verif)) || ($numero_verif && $reparation['numero'] === $numero_verif)) {
-                                $verif_infos = $reparation;
-                                $verif_message = '✅ Demande trouvée ! Voici les informations :';
-                                break;
-                            }
-                        }
+<div id="statusModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-11/12 md:w-1/2 lg:w-1/3 relative">
+        <button id="closeModal" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-2xl font-bold">&times;</button>
+        <h3 id="modalTitle" class="text-2xl font-bold mb-4"></h3>
+        <div id="modalContent" class="text-sm space-y-2"></div>
+        <div id="contactOptions" class="mt-6 border-t pt-4 text-center">
+            <h4 class="text-lg font-semibold mb-3">Besoin d'aide supplémentaire ?</h4>
+            <div class="flex flex-col space-y-3">
+                <a href="https://wa.me/22899181626?text=Bonjour,%20je%20souhaite%20en%20savoir%20plus%20sur%20l'état%20de%20ma%20réparation." target="_blank" class="bg-green-500 text-white px-5 py-2 rounded-lg flex items-center justify-center hover:bg-green-600 transition duration-300">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/1200px-WhatsApp.svg.png" alt="WhatsApp" class="w-5 h-5 mr-2"> Contacter par WhatsApp
+                </a>
+                <a href="tel:22899181626" class="bg-blue-500 text-white px-5 py-2 rounded-lg flex items-center justify-center hover:bg-blue-600 transition duration-300">
+                    <img src="https://cdn-icons-png.flaticon.com/512/483/483947.png" alt="Appel" class="w-5 h-5 mr-2"> Appeler directement
+                </a>
+                <a href="mailto:votre-email@example.com?subject=Demande%20d'informations%20sur%20ma%20réparation" class="bg-red-500 text-white px-5 py-2 rounded-lg flex items-center justify-center hover:bg-red-600 transition duration-300">
+                    <img src="https://cdn-icons-png.flaticon.com/512/281/281769.png" alt="Email" class="w-5 h-5 mr-2"> Envoyer un Email
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 
-                        if (!$verif_infos && ($nom_verif || $numero_verif)) {
-                            $verif_message = '⚠️ Aucune demande trouvée avec ces informations.';
-                        }
+<?php if (!empty($reparations_pretes)): ?>
+    <h2 class="text-2xl font-bold mt-8 mb-4">Réparations Prêtes à Récupérer</h2>
+    <div class="space-y-4">
+        <?php foreach ($reparations_pretes as $reparation): ?>
+            <div class="border rounded p-4">
+                <p><b>Nom :</b> <?= htmlspecialchars($reparation['nom_complet']) ?></p>
+                <p><b>Téléphone :</b> <?= htmlspecialchars($reparation['numero']) ?></p>
+                <p><b>Marque Tél. :</b> <?= htmlspecialchars($reparation['marque_telephone']) ?></p>
+                <p><b>Problème :</b> <?= htmlspecialchars($reparation['probleme']) ?></p>
+                <p><b>Date de réparation :</b> <?= htmlspecialchars($reparation['date_reparation']) ?></p>
+                <p><b>Statut :</b> <?= htmlspecialchars($reparation['statut_reparation']) ?></p>
+                <p><b>Montant total :</b> <?= htmlspecialchars($reparation['montant_total']) ?> FCFA</p>
+                <p><b>Montant payé :</b> <?= htmlspecialchars($reparation['montant_paye']) ?> FCFA</p>
+                <p><b>Reste à payer :</b> <?= htmlspecialchars($reparation['reste_a_payer']) ?> FCFA</p>
+                <?php if ($reparation['statut_paiement']): ?>
+                    <p><b>Statut Paiement :</b> <?= htmlspecialchars($reparation['statut_paiement']) ?></p>
+                    <p><b>Montant Total Facturé :</b> <?= htmlspecialchars($reparation['montant_facture_total']) ?> FCFA</p>
+                    <p><b>Montant Réglé :</b> <?= htmlspecialchars($reparation['montant_regle']) ?> FCFA</p>
+                    <p><b>Solde Facture :</b> <?= htmlspecialchars($reparation['reste_a_payer_facture']) ?> FCFA</p>
+                <?php else: ?>
+                    <p><b>Aucune facture associée à cette réparation pour l'instant.</b></p>
+                <?php endif; ?>
+            </div>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>
+<!-- fin du bloc -->
 
-                        if ($verif_message): ?>
-                            <div class="mt-4 p-3 rounded <?php
-                                echo strpos($verif_message,'✅') !== false ? 'bg-green-100 text-green-800' :
-                                (strpos($verif_message, '⚠️') !== false ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-100 text-blue-800');
-                            ?>">
-                                <?= $verif_message ?>
-                            </div>
-                        <?php endif; ?>
-
-                        <?php if ($verif_infos): ?>
-                            <div class="mt-2 text-sm">
-                                <div><b>Nom :</b> <?= htmlspecialchars($verif_infos['nom_complet']) ?></div>
-                                <div><b>Téléphone :</b> <?= htmlspecialchars($verif_infos['numero']) ?></div>
-                                <div><b>Date de réparation :</b> <?= htmlspecialchars($verif_infos['date_reparation']) ?></div>
-                                <div><b>Statut :</b> <?= htmlspecialchars($verif_infos['statut']) ?></div>
-                                <div><b>Montant total :</b> <?= htmlspecialchars($verif_infos['montant_total']) ?> FCFA</div>
-                                <div><b>Montant payé :</b> <?= htmlspecialchars($verif_infos['montant_paye']) ?> FCFA</div>
-                                <div><b>Reste à payer :</b> <?= htmlspecialchars($verif_infos['reste_a_payer']) ?> FCFA</div>
-                            </div>
-                        <?php endif;
-                    }
-                    ?>
-                </div>
-                <div class="mt-8 text-center">
-                    <p class="text-gray-600">Vous n'avez pas encore fait de demande?</p>
+        <div class="mt-8 text-center">
+            <p class="text-gray-600">Vous n'avez pas encore fait de demande?</p>
                     <a href="#contact" class="text-blue-600 font-semibold hover:text-blue-800 transition inline-block mt-2">
                         Faire une demande de réparation <i class="fas fa-arrow-right ml-1"></i>
                     </a>
@@ -1033,7 +972,7 @@
         </div>
 
         <!-- Script pour la gestion des devis et vérifications -->
-        <script>
+        <!-- <script>
             // Animation d'apparition de la section
             window.addEventListener('DOMContentLoaded', function() {
                 const section = document.getElementById('devis-verif');
@@ -1080,8 +1019,8 @@
                     showDevis();
                 <?php endif; ?>
             });
-        </script>
-    </section>
+        </script> -->
+
 
     <footer class="bg-gray-900 text-white py-8">
         <div class="container mx-auto px-4">
@@ -1175,52 +1114,353 @@
     </script>
 
     <script>
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            if (href.length > 1 && document.querySelector(href)) {
-                e.preventDefault();
-                document.querySelector(href).scrollIntoView({
-                    behavior: 'smooth'
-                });
-                // Fermer le menu mobile après navigation
-                if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
-                    mobileMenu.classList.add('hidden');
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href.length > 1 && document.querySelector(href)) {
+                    e.preventDefault();
+                    document.querySelector(href).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    // Fermer le menu mobile après navigation
+                    if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
                 }
-            }
+            });
         });
-    });
 
-    // Animation d'apparition des sections au scroll
-    function revealSectionsOnScroll() {
-        const sections = document.querySelectorAll('section, footer');
-        const windowHeight = window.innerHeight;
-        sections.forEach(section => {
-            const sectionTop = section.getBoundingClientRect().top;
-            if (sectionTop < windowHeight - 80) {
-                section.classList.add('animate-fadein');
-            }
+        // Animation d'apparition des sections au scroll
+        function revealSectionsOnScroll() {
+            const sections = document.querySelectorAll('section, footer');
+            const windowHeight = window.innerHeight;
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                if (sectionTop < windowHeight - 80) {
+                    section.classList.add('animate-fadein');
+                }
+            });
+        }
+
+        // Ajout de la classe d'animation initialement
+        document.querySelectorAll('section, footer').forEach(section => {
+            section.classList.add('opacity-0', 'transition-opacity', 'duration-700');
         });
-    }
 
-    // Ajout de la classe d'animation initialement
-    document.querySelectorAll('section, footer').forEach(section => {
-        section.classList.add('opacity-0', 'transition-opacity', 'duration-700');
-    });
+        // Définir l'animation fadein via Tailwind ou CSS custom
+        const style = document.createElement('style');
+        style.innerHTML = `
+        .animate-fadein {
+            opacity: 1 !important;
+            transition: opacity 0.7s;
+        }
+        `;
+        document.head.appendChild(style);
 
-    // Définir l'animation fadein via Tailwind ou CSS custom
-    const style = document.createElement('style');
-    style.innerHTML = `
-    .animate-fadein {
-        opacity: 1 !important;
-        transition: opacity 0.7s;
-    }
-    `;
-    document.head.appendChild(style);
-
-    window.addEventListener('scroll', revealSectionsOnScroll);
-    window.addEventListener('load', revealSectionsOnScroll);
+        window.addEventListener('scroll', revealSectionsOnScroll);
+        window.addEventListener('load', revealSectionsOnScroll);
     </script>
+
+
+<!-- Script pour la gestion du formulaire avec option reset des champs -->
+ <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- Éléments pour la bascule des formulaires ---
+        const btnDevis = document.getElementById('btn-devis');
+        const btnVerif = document.getElementById('btn-verif');
+        const devisFormBlock = document.getElementById('devis-form-block');
+        const verifFormBlock = document.getElementById('verif-form-block');
+
+        // --- Éléments pour la modale de statut ---
+        const checkStatusForm = document.getElementById('checkStatusForm');
+        const statusModal = document.getElementById('statusModal');
+        const closeModalButton = document.getElementById('closeModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalContent = document.getElementById('modalContent');
+        const contactOptions = document.getElementById('contactOptions');
+
+        // Fonction pour afficher le bloc "Demande de devis"
+        function showDevisBlock() {
+            if (devisFormBlock) devisFormBlock.style.display = 'block';
+            if (verifFormBlock) verifFormBlock.style.display = 'none';
+
+            // Mettre à jour les styles des boutons
+            if (btnDevis) {
+                btnDevis.classList.add('bg-blue-600', 'text-white');
+                btnDevis.classList.remove('bg-gray-200', 'text-blue-700');
+            }
+            if (btnVerif) {
+                btnVerif.classList.remove('bg-blue-600', 'text-white');
+                btnVerif.classList.add('bg-gray-200', 'text-blue-700');
+            }
+        }
+
+        // Fonction pour afficher le bloc "Vérifier ma demande"
+        function showVerifBlock() {
+            if (devisFormBlock) devisFormBlock.style.display = 'none';
+            if (verifFormBlock) verifFormBlock.style.display = 'block';
+
+            // Mettre à jour les styles des boutons
+            if (btnVerif) {
+                btnVerif.classList.add('bg-blue-600', 'text-white');
+                btnVerif.classList.remove('bg-gray-200', 'text-blue-700');
+            }
+            if (btnDevis) {
+                btnDevis.classList.remove('bg-blue-600', 'text-white');
+                btnDevis.classList.add('bg-gray-200', 'text-blue-700');
+            }
+        }
+
+        // --- Gestion des clics sur les boutons de bascule ---
+        if (btnDevis) {
+            btnDevis.addEventListener('click', showDevisBlock);
+        }
+        if (btnVerif) {
+            btnVerif.addEventListener('click', showVerifBlock);
+        }
+
+        // --- Afficher le bloc "Devis" par défaut au chargement de la page ---
+        showDevisBlock();
+
+
+        // --- Gestion de la soumission du formulaire de vérification (via AJAX) ---
+        if (checkStatusForm) {
+            checkStatusForm.addEventListener('submit', function(e) {
+                e.preventDefault(); // Empêche le rechargement de la page
+
+                const formData = new FormData(this);
+
+                fetch('check_status.php', { // Assurez-vous que ce chemin est correct
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json()) // Parse la réponse JSON
+                .then(data => {
+                    modalTitle.textContent = data.message; // Affiche le message principal
+                    modalContent.innerHTML = ''; // Réinitialise le contenu
+                    contactOptions.style.display = 'none'; // Cache les options de contact par défaut
+
+                    if (data.success) {
+                        const info = data.data;
+                        let htmlContent = `
+                            <p><b>Nom complet :</b> ${info.nom_complet || 'Non spécifié'}</p>
+                            <p><b>Téléphone :</b> ${info.numero || 'Non spécifié'}</p>
+                            <p><b>Marque Tél. :</b> ${info.marque_telephone || 'Non spécifié'}</p>
+                            <p><b>Problème :</b> ${info.probleme || 'Non spécifié'}</p>
+                        `;
+
+                        if (info.date_reparation) { // Si des infos de réparation existent
+                            htmlContent += `
+                                <p class="mt-3"><b>Détails de la Réparation :</b></p>
+                                <p><b>Date de réparation :</b> ${info.date_reparation}</p>
+                                <p><b>Statut Réparation :</b> ${info.statut_reparation}</p>
+                                <p><b>Coût Total Est. :</b> ${info.montant_total_reparation} FCFA</p>
+                                <p><b>Montant Payé (Rép.) :</b> ${info.montant_paye_reparation} FCFA</p>
+                                <p><b>Reste à Payer (Rép.) :</b> ${info.reste_a_payer_reparation} FCFA</p>
+                            `;
+                        } else {
+                            htmlContent += `<p class="mt-3 text-gray-600">Aucune réparation enregistrée pour cette demande pour l'instant.</p>`;
+                        }
+
+                        if (info.statut_paiement) { // Si des infos de facture existent
+                            htmlContent += `
+                                <p class="mt-3"><b>Statut de Paiement (Facture) :</b></p>
+                                <p><b>Statut Paiement :</b> ${info.statut_paiement}</p>
+                                <p><b>Montant Total Facturé :</b> ${info.montant_facture_total} FCFA</p>
+                                <p><b>Montant Réglé :</b> ${info.montant_regle_facture} FCFA</p>
+                                <p><b>Solde Facture :</b> ${info.reste_a_payer_facture} FCFA</p>
+                            `;
+                        } else {
+                            htmlContent += `<p class="mt-3 text-gray-600">Aucune facture associée à cette réparation pour l'instant.</p>`;
+                        }
+
+                        modalContent.innerHTML = htmlContent;
+                        contactOptions.style.display = 'block'; // Affiche les options de contact
+                    } else {
+                        modalContent.innerHTML = `<p>${data.message}</p>`; // Affiche juste le message si non trouvée
+                        contactOptions.style.display = 'none'; // Cache les options de contact si aucune demande n'est trouvée
+                    }
+                    statusModal.classList.remove('hidden'); // Affiche la modale
+                    
+                    // --- AJOUTEZ CETTE LIGNE ICI pour réinitialiser le formulaire après un SUCCÈS ---
+                    this.reset(); 
+                })
+                .catch(error => {
+                    console.error('Erreur :', error);
+                    modalTitle.textContent = 'Erreur de connexion';
+                    modalContent.innerHTML = '<p>Impossible de vérifier l\'état de la demande. Veuillez réessayer plus tard.</p>';
+                    statusModal.classList.remove('hidden');
+                    
+                    // --- AJOUTEZ CETTE LIGNE ICI pour réinitialiser le formulaire même en cas d'ERREUR ---
+                    this.reset(); 
+                });
+            });
+        }
+
+
+        // --- Gestion de la fermeture de la modale ---
+        if (closeModalButton) {
+            closeModalButton.addEventListener('click', function() {
+                statusModal.classList.add('hidden'); // Cache la modale
+            });
+        }
+
+        if (statusModal) {
+            statusModal.addEventListener('click', function(e) {
+                if (e.target === statusModal) { // Ne ferme que si le clic est sur l'arrière-plan de la modale
+                    statusModal.classList.add('hidden');
+                }
+            });
+        }
+    });
+</script>
+
+<!-- Ancien script sans option de reset -->
+<!-- <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- Éléments pour la bascule des formulaires ---
+        const btnDevis = document.getElementById('btn-devis');
+        const btnVerif = document.getElementById('btn-verif');
+        const devisFormBlock = document.getElementById('devis-form-block');
+        const verifFormBlock = document.getElementById('verif-form-block');
+
+        // --- Éléments pour la modale de statut ---
+        const checkStatusForm = document.getElementById('checkStatusForm');
+        const statusModal = document.getElementById('statusModal');
+        const closeModalButton = document.getElementById('closeModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalContent = document.getElementById('modalContent');
+        const contactOptions = document.getElementById('contactOptions');
+
+        // Fonction pour afficher le bloc "Demande de devis"
+        function showDevisBlock() {
+            if (devisFormBlock) devisFormBlock.style.display = 'block';
+            if (verifFormBlock) verifFormBlock.style.display = 'none';
+
+            // Mettre à jour les styles des boutons
+            if (btnDevis) {
+                btnDevis.classList.add('bg-blue-600', 'text-white');
+                btnDevis.classList.remove('bg-gray-200', 'text-blue-700');
+            }
+            if (btnVerif) {
+                btnVerif.classList.remove('bg-blue-600', 'text-white');
+                btnVerif.classList.add('bg-gray-200', 'text-blue-700');
+            }
+        }
+
+        // Fonction pour afficher le bloc "Vérifier ma demande"
+        function showVerifBlock() {
+            if (devisFormBlock) devisFormBlock.style.display = 'none';
+            if (verifFormBlock) verifFormBlock.style.display = 'block';
+
+            // Mettre à jour les styles des boutons
+            if (btnVerif) {
+                btnVerif.classList.add('bg-blue-600', 'text-white');
+                btnVerif.classList.remove('bg-gray-200', 'text-blue-700');
+            }
+            if (btnDevis) {
+                btnDevis.classList.remove('bg-blue-600', 'text-white');
+                btnDevis.classList.add('bg-gray-200', 'text-blue-700');
+            }
+        }
+
+        // --- Gestion des clics sur les boutons de bascule ---
+        if (btnDevis) {
+            btnDevis.addEventListener('click', showDevisBlock);
+        }
+        if (btnVerif) {
+            btnVerif.addEventListener('click', showVerifBlock);
+        }
+
+        // --- Afficher le bloc "Devis" par défaut au chargement de la page ---
+        showDevisBlock();
+
+
+        // --- Gestion de la soumission du formulaire de vérification (via AJAX) ---
+        if (checkStatusForm) {
+            checkStatusForm.addEventListener('submit', function(e) {
+                e.preventDefault(); // Empêche le rechargement de la page
+
+                const formData = new FormData(this);
+
+                fetch('check_status.php', { // Assurez-vous que ce chemin est correct
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json()) // Parse la réponse JSON
+                .then(data => {
+                    modalTitle.textContent = data.message; // Affiche le message principal
+                    modalContent.innerHTML = ''; // Réinitialise le contenu
+                    contactOptions.style.display = 'none'; // Cache les options de contact par défaut
+
+                    if (data.success) {
+                        const info = data.data;
+                        let htmlContent = `
+                            <p><b>Nom complet :</b> ${info.nom_complet}</p>
+                            <p><b>Téléphone :</b> ${info.numero}</p>
+                            <p><b>Marque Tél. :</b> ${info.marque_telephone}</p>
+                            <p><b>Problème :</b> ${info.probleme}</p>
+                        `;
+
+                        if (info.date_reparation) { // Si des infos de réparation existent
+                            htmlContent += `
+                                <p class="mt-3"><b>Détails de la Réparation :</b></p>
+                                <p><b>Date de réparation :</b> ${info.date_reparation}</p>
+                                <p><b>Statut Réparation :</b> ${info.statut_reparation}</p>
+                                <p><b>Coût Total Est. :</b> ${info.montant_total_reparation} FCFA</p>
+                                <p><b>Montant Payé (Rép.) :</b> ${info.montant_paye_reparation} FCFA</p>
+                                <p><b>Reste à Payer (Rép.) :</b> ${info.reste_a_payer_reparation} FCFA</p>
+                            `;
+                        } else {
+                            htmlContent += `<p class="mt-3 text-gray-600">Aucune réparation enregistrée pour cette demande pour l'instant.</p>`;
+                        }
+
+                        if (info.statut_paiement) { // Si des infos de facture existent
+                            htmlContent += `
+                                <p class="mt-3"><b>Statut de Paiement (Facture) :</b></p>
+                                <p><b>Statut Paiement :</b> ${info.statut_paiement}</p>
+                                <p><b>Montant Total Facturé :</b> ${info.montant_facture_total} FCFA</p>
+                                <p><b>Montant Réglé :</b> ${info.montant_regle_facture} FCFA</p>
+                                <p><b>Solde Facture :</b> ${info.reste_a_payer_facture} FCFA</p>
+                            `;
+                        } else {
+                            htmlContent += `<p class="mt-3 text-gray-600">Aucune facture associée à cette réparation pour l'instant.</p>`;
+                        }
+
+                        modalContent.innerHTML = htmlContent;
+                        contactOptions.style.display = 'block'; // Affiche les options de contact
+                    } else {
+                        modalContent.innerHTML = `<p>${data.message}</p>`; // Affiche juste le message si non trouvée
+                        contactOptions.style.display = 'none'; // Cache les options de contact si aucune demande n'est trouvée
+                    }
+                    statusModal.classList.remove('hidden'); // Affiche la modale
+                })
+                .catch(error => {
+                    console.error('Erreur :', error);
+                    modalTitle.textContent = 'Erreur de connexion';
+                    modalContent.innerHTML = '<p>Impossible de vérifier l\'état de la demande. Veuillez réessayer plus tard.</p>';
+                    statusModal.classList.remove('hidden');
+                });
+            });
+        }
+
+
+        // --- Gestion de la fermeture de la modale ---
+        if (closeModalButton) {
+            closeModalButton.addEventListener('click', function() {
+                statusModal.classList.add('hidden'); // Cache la modale
+            });
+        }
+
+        if (statusModal) {
+            statusModal.addEventListener('click', function(e) {
+                if (e.target === statusModal) { // Ne ferme que si le clic est sur l'arrière-plan de la modale
+                    statusModal.classList.add('hidden');
+                }
+            });
+        }
+    });
+</script> -->
 </body>
 </html>
